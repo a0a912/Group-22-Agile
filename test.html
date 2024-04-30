@@ -22,7 +22,12 @@
             align-items: center;
             height: 100px;
             width: 50px;
+            cursor: pointer; /* Add cursor pointer to indicate clickable */
+            margin: 1%;
 
+        }
+        .card.selected {
+            outline: 10px solid yellow; /* Yellow outline for selected card */
         }
 
         .red {
@@ -41,23 +46,23 @@
     </style>
 </head>
 <body>
-    <div id="board">
-        <h2>Player 1 Hand:</h2>
-        <div id="player_1_score"> <h3> Score: 0 </h3> </div>
+<div id="board">
+    <h2>Player 1 Hand:</h2>
+    <div id="player_1_score"> <h3> Score: 0 </h3> </div>
 
-        <div id="player_1_hand" class="player_hand"></div>
-        <hr>
-        <h2>Player 2 Hand:</h2>
-        <div id="player_2_score"> <h3> Score: 0 </h3> </div>
-        <div id="player_2_hand" class="player_hand"></div>
-        <hr>
-    </div>
+    <div id="player_1_hand" class="player_hand"></div>
+    <hr>
+    <h2>Player 2 Hand:</h2>
+    <div id="player_2_score"> <h3> Score: 0 </h3> </div>
+    <div id="player_2_hand" class="player_hand"></div>
+    <hr>
+</div>
 <button id="start">Start </button>
 <button id="reset"> Reset </button>
 
-    <div>
-        How to play: [Finish Later]
-    </div>
+<div>
+    How to play: [Finish Later]
+</div>
 
 <script>
 
@@ -71,21 +76,24 @@
     let player_2_score_div = document.getElementById("player_2_score");
 
     //Game Variables
-    let test_player_1_hand = {
-        "red": 2,
-        "blue": 4,
-        "green": 6,
-        "red": 8,
-        "red": 10
-    }
+    //Testing array. Rough Structure array of arrays
+    let test_player_1_hand = [
+        ["red", 2],
+        ["blue", 4],
+        ["green", 6],
+        ["red", 8],
+        ["red", 10]
+    ]
 
-    let test_player_2_hand = {
-        "red": 2,
-        "blue": 4,
-        "green": 6,
-        "red": 8,
-        "red": 10
-    }
+    let test_player_2_hand = [
+        ["red", 2],
+        ["blue", 4],
+        ["green", 6],
+        ["red", 8],
+        ["red", 10]
+    ]
+
+    let selectedCard = null; // Variable to store the selected card
 
 
     let deck = [];
@@ -102,25 +110,34 @@
         //Display board
         board.style.display = "block";
 
-
-
         //Reset score
         player_1_score_div.innerHTML = `<h3> Score: 0 </h3>`;
-        player_1_score_div.innerHTML = `<h3> Score: 0 </h3>`;
+        player_2_score_div.innerHTML = `<h3> Score: 0 </h3>`;
         //Function to read test data and display it as divs
         //For loop through test_player_1_hand
-        for (let card in test_player_1_hand) {
-            player_1_hand_array.push(test_player_1_hand[card]);
-            player_1_hand_div.innerHTML += `<div class="${card} card"> ${test_player_1_hand[card]} </div>`;
+        for (let card of test_player_1_hand) {
+            player_1_hand_array.push(card);
+            let cardDiv = document.createElement('div');
+            cardDiv.classList.add('card', card[0]);
+            cardDiv.textContent = card[1];
+            cardDiv.onclick = function() {
+                selectCard(this);
+            };
+            player_1_hand_div.appendChild(cardDiv);
         }
         //For loop through test_player_2_hand
-        for (let card in test_player_2_hand) {
-            player_2_hand_array.push(test_player_2_hand[card]);
-            player_2_hand_div.innerHTML += `<div class="${card} card"> ${test_player_2_hand[card]} </div>`;
+        for (let card of test_player_2_hand) {
+            player_2_hand_array.push(card);
+            let cardDiv = document.createElement('div');
+            cardDiv.classList.add('card', card[0]);
+            cardDiv.textContent = card[1];
+            cardDiv.onclick = function() {
+                selectCard(this);
+            };
+            player_2_hand_div.appendChild(cardDiv);
         }
-
-        
     }
+
 
     function reset_button_function() {
         start.disabled = false;
@@ -140,10 +157,17 @@
         player_1_score = 0;
         player_2_score = 0;
 
+    }
 
+    function selectCard(card) {
+        // Remove selection from previously selected card
+        if (selectedCard) {
+            selectedCard.classList.remove("selected");
+        }
 
-
-
+        // Add selection to the clicked card
+        card.classList.add("selected");
+        selectedCard = card;
     }
 
 
