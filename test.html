@@ -30,6 +30,14 @@
             outline: 10px solid yellow; /* Yellow outline for selected card */
         }
 
+        .selected_player_1_card{
+            outline: 10px solid yellow; /* Yellow outline for selected card */
+        }
+
+        .selected_player_2_card{
+            outline: 10px solid orchid; /* Yellow outline for selected card */
+        }
+
         .red {
             background-color: red;
 
@@ -55,6 +63,10 @@
     <h2>Player 2 Hand:</h2>
     <div id="player_2_score"> <h3> Score: 0 </h3> </div>
     <div id="player_2_hand" class="player_hand"></div>
+    <h3>Log:</h3>
+    <div id="log"></div>
+    <hr>
+    <button id="next_round"> Next Round</button>
     <hr>
 </div>
 <button id="start">Start </button>
@@ -74,6 +86,8 @@
     let reset = document.getElementById("reset");
     let player_1_score_div = document.getElementById("player_1_score");
     let player_2_score_div = document.getElementById("player_2_score");
+    let next_round_button = document.getElementById("next_round");
+    let log_div = document.getElementById("log");
 
     //Game Variables
     //Testing array. Rough Structure array of arrays
@@ -107,6 +121,7 @@
     function start_button_function() {
         start.disabled = true;
         reset.disabled = false;
+        next_round_button.disabled = true;
         //Display board
         board.style.display = "block";
 
@@ -162,11 +177,30 @@
     function selectCard(card) {
         // Remove selection from previously selected card
         if (selectedCard) {
+            // Remove the "selected" class
             selectedCard.classList.remove("selected");
+
+            //Check if the card is in the div player_1_hand_div
+            if (player_1_hand_div.contains(selectedCard)) {
+                //If it is, remove the class "selected_player_1_card"
+                selectedCard.classList.remove("selected_player_1_card");
+            } else if (player_2_hand_div.contains(selectedCard)) {
+                //If it's in player_2_hand_div, remove the class "selected_player_2_card"
+                selectedCard.classList.remove("selected_player_2_card");
+            }
         }
 
         // Add selection to the clicked card
+        if (player_1_turn) {
+            card.classList.add("selected_player_1_card");
+        } else {
+            card.classList.add("selected_player_2_card");
+        }
+
+        // Add the "selected" class to indicate that the card is selected
         card.classList.add("selected");
+
+        // Update selectedCard variable
         selectedCard = card;
     }
 
