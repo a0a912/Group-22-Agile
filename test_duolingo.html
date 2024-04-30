@@ -44,10 +44,27 @@
 
 
 <script>
+    //NOTE: Eventually replace questions with actual Duolingo questions
     // MCQ Question format: array of arrays in the format: question, options, answer
     let questions = [
         ["What is the capital of Canada?", ["Montreal", "Vancouver", "Toronto", "Ottawa"], "Ottawa"],
         ["What is the capital of Ireland?", ["Dublin", "Galway", "Sligo", "Cork"], "Dublin"]
+    ];
+
+    //MCQ questions:
+    let mcq_questions = [
+        ["Translate this from French to English: 'Quel est le capital de Canada?'", ["Montreal", "Vancouver", "Toronto", "Ottawa"], "Ottawa"],
+        ["Translate this from French to English: 'Quel est le capital de l'Irlande'", ["Dublin", "Galway", "Sligo", "Cork"], "Dublin"],
+        ["Translate this from French to English: 'quel'", ["what", "where", "why", "how"], "what"],
+        ["Translate this from English to French: 'What'", ["Quel", "quoi", "qi", "quon"], "Quel"]
+    ];
+
+    //Written Question format: array of arrays in the format: question, answer
+    let written_questions = [
+        ["Translate this from French to English: 'Quel est le capital de Canada?'", "Ottawa"],
+        ["Translate this from French to English: 'Quel est le capital de l'Irlande'", "Dublin"],
+        ["Translate this from French to English: 'quel'", "what"],
+        ["Translate this from English to French: 'What'", "Quel"]
     ];
 
    //Dom variables
@@ -98,8 +115,9 @@
 
     //Function to generate a multiple choice question
     function generate_multiple_choice_question() {
-        let question_index = random_number_generator(questions.length);
-        let current_question = questions[question_index];
+        let question_index = random_number_generator(mcq_questions.length);
+        //let current_question = questions[question_index];
+        let current_question = mcq_questions[question_index];
         current_question_description = current_question[0];
         current_question_answer = current_question[2];
 
@@ -118,7 +136,7 @@
             option_label.innerHTML = option;
             options.appendChild(option_label);
         }
-        //Set that curren question is multiple choice
+        //Set that current question is multiple choice
         question_type = 0;
         return current_question;
 
@@ -126,10 +144,12 @@
 
     //Generate Written Question
     function generate_written_question() {
-        let question_index = random_number_generator(questions.length);
-        let current_question = questions[question_index];
+        let question_index = random_number_generator(written_questions.length);
+        //let current_question = questions[question_index];
+        let current_question = written_questions[question_index];
         current_question_description = current_question[0];
-        current_question_answer = current_question[2];
+        current_question_answer = current_question[1];
+        //current_question_answer = current_question[2];
 
         //Display Question on form:
         question.innerHTML = `Written Question: ${current_question[0]}`;
