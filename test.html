@@ -4,37 +4,161 @@
     <meta charset="UTF-8">
     <title>Test Card game</title>
     <style>
+
+        #board{
+            display: none;
+        }
+
+        .player_hand {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .card {
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 50px;
+
+        }
+
         .red {
             background-color: red;
-            border-radius: 50%;
+
         }
 
         .blue {
             background-color: blue;
-            border-radius: 50%;
+
         }
         .green {
             background-color: green;
-            border-radius: 50%;
+
         }
     </style>
 </head>
 <body>
     <div id="board">
-        <div id="player_1_hand"></div>
-        <div id="player_2_hand"></div>
+        <h2>Player 1 Hand:</h2>
+        <div id="player_1_score"> <h3> Score: 0 </h3> </div>
+
+        <div id="player_1_hand" class="player_hand"></div>
+        <hr>
+        <h2>Player 2 Hand:</h2>
+        <div id="player_2_score"> <h3> Score: 0 </h3> </div>
+        <div id="player_2_hand" class="player_hand"></div>
+        <hr>
     </div>
 <button id="start">Start </button>
 <button id="reset"> Reset </button>
+
+    <div>
+        How to play: [Finish Later]
+    </div>
 
 <script>
 
     //DOM Variables
     let board = document.getElementById("board");
-    let player_1_hand = document.getElementById("player_1_hand");
-    let player_2_hand = document.getElementById("player_2_hand");
+    let player_1_hand_div = document.getElementById("player_1_hand");
+    let player_2_hand_div = document.getElementById("player_2_hand");
     let start = document.getElementById("start");
     let reset = document.getElementById("reset");
+    let player_1_score_div = document.getElementById("player_1_score");
+    let player_2_score_div = document.getElementById("player_2_score");
+
+    //Game Variables
+    let test_player_1_hand = {
+        "red": 2,
+        "blue": 4,
+        "green": 6,
+        "red": 8,
+        "red": 10
+    }
+
+    let test_player_2_hand = {
+        "red": 2,
+        "blue": 4,
+        "green": 6,
+        "red": 8,
+        "red": 10
+    }
+
+
+    let deck = [];
+    let player_1_hand_array = [];
+    let player_2_hand_array = [];
+    let player_1_score = 0;
+    let player_2_score = 0;
+    let player_1_turn = true;
+
+    //Functions
+    function start_button_function() {
+        start.disabled = true;
+        reset.disabled = false;
+        //Display board
+        board.style.display = "block";
+
+
+
+        //Reset score
+        player_1_score_div.innerHTML = `<h3> Score: 0 </h3>`;
+        player_1_score_div.innerHTML = `<h3> Score: 0 </h3>`;
+        //Function to read test data and display it as divs
+        //For loop through test_player_1_hand
+        for (let card in test_player_1_hand) {
+            player_1_hand_array.push(test_player_1_hand[card]);
+            player_1_hand_div.innerHTML += `<div class="${card} card"> ${test_player_1_hand[card]} </div>`;
+        }
+        //For loop through test_player_2_hand
+        for (let card in test_player_2_hand) {
+            player_2_hand_array.push(test_player_2_hand[card]);
+            player_2_hand_div.innerHTML += `<div class="${card} card"> ${test_player_2_hand[card]} </div>`;
+        }
+
+        
+    }
+
+    function reset_button_function() {
+        start.disabled = false;
+        reset.disabled = false;
+        //Display board
+        board.style.display = "none";
+        //Reset score
+        player_1_score_div.innerHTML = `<h3> Score: 0 </h3>`;
+        player_2_score_div.innerHTML = `<h3> Score: 0 </h3>`;
+        //Reset hand divs
+        player_1_hand_div.innerHTML = `<h3>  </h3>`
+        player_2_hand_div.innerHTML = `<h3>  </h3>`
+
+        //Reset hands and divs
+        player_1_hand_array = [];
+        player_2_hand_array = [];
+        player_1_score = 0;
+        player_2_score = 0;
+
+
+
+
+
+    }
+
+
+
+
+
+    //Event Listeners
+
+    // When player clicks start,
+    start.addEventListener("click", start_button_function);
+
+    // When player clicks reset,
+    reset.addEventListener("click", reset_button_function);
+
+
 
 </script>
 
