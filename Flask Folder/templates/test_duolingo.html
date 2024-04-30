@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Duolingo Test</title>
+    <style>
+
+        .guess_box {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1> Test Duolingo Website</h1>
+<!-- List of features to implement -->
+<ul>
+    <li>Basic Website Structure</li>
+    <li>Basic forms for questions</li>
+    <li>Maybe more question stuff</li>
+    <li>Throw it into Flask</li>
+    <li>Maybe Responsive Design with Media Queries</li>
+</ul>
+
+<h2> Main form</h2>
+<div id="guess_box" class="guess_box">
+    <h3 id="player_score_html"> Player Score: 0</h3>
+    <form id="guess_form" class="guess_form">
+        <label for="question">Question:</label>
+        <p id="question"></p>
+        <fieldset id="options"></fieldset>
+        <input id="guess_submit guess_submit_button" type="submit">
+        <br>
+    </form>
+    <hr>
+    <button id="next_question"> Next Question</button>
+    <hr>
+    <div id="log"></div>
+</div>
+
+
+<hr>
+<button id="start_game_button">Start Game </button>
+<button id="reset_game_button"> Reset Entire Session </button>
+
+
+<script>
+// Get the data from the json files that we created in flask
+ let mcq_questions = JSON.parse('{{ mcq_questions | tojson | safe }}');
+    let written_questions = JSON.parse('{{ written_questions | tojson | safe }}');
+
+
+
+
+   //Dom variables
+    let guess_box = document.getElementById("guess_box");
+    let guess_form = document.getElementById("guess_form");
+    let question = document.getElementById("question");
+    let options = document.getElementById("options");
+    //let guess_submit = document.getElementById("guess_submit");
+    //let reset_button = document.getElementById("reset_button");
+    let start_game_button = document.getElementById("start_game_button");
+    let reset_game_button = document.getElementById("reset_game_button");
+    let log = document.getElementById("log");
+    let player_score = document.getElementById("player_score_html");
+    let guess_submit_button = document.getElementById("guess_submit guess_submit_button");
+    let next_question_button = document.getElementById("next_question");
+
+    //Global Game Variables
+    //Variable that's 1 if the current question is the written question, 0 if the current question is the multiple choice question
+    let question_type;
+
+    let current_question_description;
+    let current_question_answer;
+
+    let player_score_counter = 0;
+
+    //Functions
+
+    //Function Declarations
+    function random_number_generator(number) {
+        // Generates a random number between 0 and the given number (exclusive).
+        //
+        // Parameters:
+        //   number (number): The upper bound for the random number generation.
+        //
+        // Returns:
+        //   number: The randomly generated number.
+        return Math.floor(Math.random() * number);
+    };
+
+    //Return random question
+    function generate_question() {
+        let question_index = random_number_generator(questions.length);
+        let question = questions[question_index];
+        current_question_description = question[0];
+        current_question_answer = question[2];
+        return question;
+    }
+
+    //Function to generate a multiple choice question
+    function generate_multiple_choice_question() {
+        let question_index = random_number_generator(mcq_questions.length);
+        //let current_question = questions[question_index];
+        let current_question = mcq_questions[question_index];
+        current_question_description = current_question[0];
+        current_question_answer = current_question[2];
+
+        //Display Question on form:
+        question.innerHTML = `MCQ Question: ${current_question[0]}`;
+
+        //Display Options on form:
+        options.innerHTML = "";
+        for (let option of current_question[1]) {
+            let option_element = document.createElement("input");
+            option_element.type = "radio";
+            option_element.name = "option";
+            option_element.value = option;
+            options.appendChild(option_element);
+            let option_label = document.createElement("label");
+            option_label.innerHTML = option;
+            options.appendChild(option_label);
+        }
+        //Set that current question is multiple choice
+        question_type = 0;
+        return current_question;
+
+    }
+
+    //Generate Written Question
+    function generate_written_question() {
+        let question_index = random_number_generator(written_questions.length);
+        //let current_question = questions[question_index];
+        let current_question = written_questions[question_index];
+        current_question_description = current_question[0];
+        current_question_answer = current_question[1];
+        //current_question_answer = current_question[2];
+
+        //Display Question on form:
+        question.innerHTML = `Written Question: ${current_question[0]}`;
+
+       //Box for user to type answer
+        let answer_box = document.createElement("input");
+        answer_box.type = "text";
+        answer_box.name = "answer";
+        options.appendChild(answer_box);
+
+        //Set that curren question is written
+        question_type = 1;
+
+        return current_question;
+
+    }
+
+
+    function start_game_button_function() {
+        guess_box.style.display = "block";
+        start_game_button.disabled = true;
+        reset_game_button.disabled = false;
+
+        //Get question
+        //let current_question = generate_multiple_choice_question();
+        //let current_question = generate_written_question();
+        let current_question = randomly_choose_written_or_multiple_choice();
+
+        console.log(current_question_answer)
+
+    }
+
+    //function to randomly choose a question and if it's multiple choice or written
+    function randomly_choose_written_or_multiple_choice() {
+        //randomly roll a number between 0 and 1
+        let roll = Math.random();
+        if (roll < 0.5) {
+            return random_question = generate_multiple_choice_question();
+        } else {
+            return random_question = generate_written_question();
+        }
+
+    }
+
+
+    function reset_game_button_function() {
+        guess_box.style.display = "none";
+        start_game_button.disabled = false;
+        reset_game_button.disabled = false;
+
+        //Reset score
+        player_score_counter = 0;
+        player_score.innerHTML = player_score_counter;
+
+        //Reload Page
+        window.location.reload();
+    }
+    function guess_submit(event) {
+        event.preventDefault();
+        guess_submit_button.disabled = true;
+
+        // For multiple-choice question
+        if (question_type === 0) {
+            let selected_option;
+            let options = document.getElementsByName("option");
+            for (let option of options) {
+                if (option.checked) {
+                    user_answer = option.value;
+                    break;
+                }
+            }
+            console.log("Selected option:", user_answer);
+        } else if (question_type === 1) { // For written question
+            user_answer = document.getElementsByName("answer")[0].value;
+            console.log("Written answer:", user_answer);
+        }
+
+        // Compare the answer with the correct answer here
+        check_answer(user_answer);
+    }
+
+    //Function to check if the answer is correct, display result and style page accordingly
+    function check_answer(user_answer) {
+        //Check if they match:
+        if (user_answer === current_question_answer) {
+            //Display correct
+            log.innerHTML = "Correct";
+            log.style.color = "green";
+            //Style Guess box border 10px green
+            guess_box.style.borderColor = "green";
+            guess_box.style.borderStyle = "solid";
+            guess_box.style.borderWidth = "10px";
+
+
+            //Increase player score
+            player_score_counter++;
+            player_score.innerHTML = `Score: ${player_score_counter}`
+        } else {
+            //Display wrong
+            log.innerHTML = `Wrong. The correct answer was ${current_question_answer}`;
+            log.style.color = "red";
+            //Style Guess box border
+            guess_box.style.borderColor = "red";
+            guess_box.style.borderStyle = "solid";
+            guess_box.style.borderWidth = "10px";
+        }
+
+    }
+
+    function next_question_button_function() {
+
+        //Reset guess form
+        guess_form.reset();
+        guess_submit_button.disabled = false;
+
+        //Reset options
+        options.innerHTML = "";
+
+        //Reset log
+        log.innerHTML = "";
+        //Reset border
+        guess_box.style.borderColor = "black";
+        guess_box.style.borderStyle = "solid";
+        guess_box.style.borderWidth = "1px";
+
+        //generate next question
+
+        let current_question = randomly_choose_written_or_multiple_choice();
+
+    }
+
+
+    //Event Listeners
+
+    // When player clicks start,
+    start_game_button.addEventListener("click", start_game_button_function);
+
+    // When player clicks reset session,
+    reset_game_button.addEventListener("click", reset_game_button_function);
+
+    guess_form.addEventListener("submit", guess_submit);
+
+    next_question_button.addEventListener("click", next_question_button_function);
+
+
+</script>
+</body>
+</html>
