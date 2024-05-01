@@ -1,0 +1,55 @@
+{
+    "questions": [
+        {
+            "question": "A large body of water surrounded by land.",
+            "answers": "Lake",
+            "wrong": ["Mountain", "Forest", "Desert"]
+            
+        },
+        {
+            "question": "A large, wheeled vehicle used for transporting goods or materials.",
+            "answers": "Truck",
+            "wrong":["Train", "Bus", "Bicycle"]
+        },
+        {
+            "question": "A person who designs buildings and oversees their construction.",
+            "answers": "Architect",
+            "wrong":["Chef", "Pilot", "Lawyer"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        },
+        {
+            "question": "A large, circular object in the sky that provides light during the day and heat.",
+            "answers": "Sun",
+            "wrong":["Moon", "Star", "Cloud"]
+        }
+    ]
+}
