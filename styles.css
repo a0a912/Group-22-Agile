@@ -1,15 +1,33 @@
 
+@font-face {
+    font-family: 'FeatherBold';
+    src: url('Feather Bold.ttf') format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'dine-round';
+    src: url('DINRoundPro.ttf') format('truetype');
+}
+
 body{ 
-    font-family: 'helvetica';
+    font-family: 'FeatherBold';
     color: None;
     
 }
 #heading{
     text-align: center;
-    font-family: 'helvetica';
+    font-family: 'FeatherBold';
     color: #58cc02;
 }
+ul{
+    font-family: 'dine-round', sans-serif;
+    font-size: 19px;
+    font-weight: bold;
+}
 h2{
+    font-family: 'dine-round', sans-serif;
     font-size: 20px;
     color: #58cc02;
 }
@@ -21,14 +39,19 @@ h2{
 
 #Question{
     text-align: center;
+    font-family:'dine-round';
+    font-size: 20px;
 }
 
 form {
-    border-top: 1px solid #ccc; 
+    border-top: 1px solid #ccc; /* Solid top border for visual separation */
     margin: 20px auto; 
     padding: 20px; 
     width: 50%; 
     box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    font-weight: 20px;
+    font-family: 'dine-round', sans-serif;
+    font-size: 19px;
 }
 
 

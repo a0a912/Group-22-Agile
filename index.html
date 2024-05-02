@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="myscripts.js"></script>
+    <script src="myscripts.js" defer></script>
 </head>
 <body>
     <h1 id = 'heading'>English Language Testing</h1>
@@ -28,14 +28,14 @@
     <!-- Question and List of choices -->
     <h3 id ="Question"></h3>
     <form>
-        <input type="radio" id="choice1" name="choice" value="Exciting">
-        <label for="choice">Exciting</label><br>
-        <input type="radio" id="choice2" name="choice" Value = "Sad">
-        <label for="choice">Sad</label><br>
-        <input type="radio" id="choice3" name="choice" Value = "Hungry">
-        <label for="choice">Hungry</label><br>
-        <input type="radio" id="choice4" name="choice"  Value = "Angry">
-        <label for="choice">Angry</label><br>
+        <input type="radio"  name="choice" value="a" id ='value1'>
+        <label for="choice" id='choice1'>Exciting</label><br>
+        <input type="radio"  name="choice" Value = "b" id = 'value2'>
+        <label for="choice" id="choice2">Sad</label><br>
+        <input type="radio"  name="choice" Value = "c" id = 'value3'>
+        <label for="choice" id="choice3">Hungry</label><br>
+        <input type="radio"  name="choice"  Value = "d" id = 'value4'>
+        <label for="choice" id="choice4">Angry</label><br>
         <input type="submit" value="Submit">
     </form>
 </div>
