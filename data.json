@@ -1,0 +1,128 @@
+[
+      {
+        "word": "apple",
+        "correct": "A round fruit with seeds.",
+        "incorrect": [
+          "A type of bird.",
+          "An underwater creature.",
+          "A mode of transportation."
+        ]
+      },
+      {
+        "word": "banana",
+        "correct": "A long yellow fruit.",
+        "incorrect": [
+          "A type of tree.",
+          "A colorless liquid.",
+          "A musical instrument."
+        ]
+      },
+      {
+        "word": "cat",
+        "correct": "A small domesticated animal.",
+        "incorrect": [
+          "A large reptile.",
+          "A type of weather phenomenon.",
+          "A mathematical equation."
+        ]
+      },
+      {
+        "word": "dog",
+        "correct": "A common household pet.",
+        "incorrect": [
+          "A species of fish.",
+          "A type of flower.",
+          "A unit of measurement."
+        ]
+      },
+      {
+        "word": "elephant",
+        "correct": "A large mammal with tusks.",
+        "incorrect": [
+          "A type of insect.",
+          "A musical instrument.",
+          "A form of currency."
+        ]
+      },
+      {
+        "word": "frog",
+        "correct": "An amphibian with long hind legs.",
+        "incorrect": [
+          "A type of cloud.",
+          "A musical genre.",
+          "A cooking utensil."
+        ]
+      },
+      {
+        "word": "giraffe",
+        "correct": "A tall African mammal with a long neck.",
+        "incorrect": [
+          "A type of dessert.",
+          "A mode of transportation.",
+          "A type of plant."
+        ]
+      },
+      {
+        "word": "horse",
+        "correct": "A large domesticated animal used for riding.",
+        "incorrect": [
+          "A type of bird.",
+          "A body of water.",
+          "A type of musical instrument."
+        ]
+      },
+      {
+        "word": "iguana",
+        "correct": "A large lizard native to tropical areas.",
+        "incorrect": [
+          "A type of fruit.",
+          "A mode of communication.",
+          "A type of building material."
+        ]
+      },
+      {
+        "word": "jellyfish",
+        "correct": "A marine animal with gelatinous tentacles.",
+        "incorrect": [
+          "A type of pastry.",
+          "A form of entertainment.",
+          "A weather condition."
+        ]
+      },
+      {
+        "word": "kangaroo",
+        "correct": "A marsupial known for hopping.",
+        "incorrect": [
+          "A type of dance.",
+          "A mode of transportation.",
+          "A musical genre."
+        ]
+      },
+      {
+        "word": "lion",
+        "correct": "A large carnivorous feline.",
+        "incorrect": [
+          "A type of fish.",
+          "A mode of communication.",
+          "A type of weather."
+        ]
+      },
+      {
+        "word": "monkey",
+        "correct": "A primate with a long tail.",
+        "incorrect": [
+          "A type of tree.",
+          "A mode of transportation.",
+          "A type of clothing."
+        ]
+      },
+      {
+        "word": "newt",
+        "correct": "A small amphibian with a long tail.",
+        "incorrect": [
+          "A type of food.",
+          "A mode of communication.",
+          "A type of musical instrument."
+        ]
+      }
+]
