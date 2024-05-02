@@ -1,4 +1,4 @@
-import requests, json ,random
+import requests, json ,random,os
 from pathlib import Path
 from model import Word
 
@@ -39,7 +39,11 @@ if __name__ == "__main__":
             word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3]).__dict__
             list_of_words_processed.append(word_for_question)
     # write the object into a json file
-    with open(f'./my_json.json', 'w') as file:
+    database_path = Path(f'./database')
+    if not database_path.exists():
+        Path(f'./database').mkdir()
+    database_file = database_path.joinpath('my_json.json')
+    with open(database_file, 'w') as file:
         json.dump(list_of_words_processed,file, indent=4)
 
 
