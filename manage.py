@@ -24,8 +24,9 @@ def get_meaning_phone(word):
             if word["word"] == my_word:
                 my_word_meaning = word["correct"]
                 my_word_incorrect_meaning_list = word["incorrect"]
+                my_word_example = word["example"]
                 break
-        return my_word,my_word_phonetics,my_word_meaning,my_word_incorrect_meaning_list
+        return my_word,my_word_phonetics,my_word_meaning,my_word_incorrect_meaning_list,my_word_example
 
 if __name__ == "__main__":
     # an empty list to store the processed words (objects of Word class)
@@ -36,7 +37,7 @@ if __name__ == "__main__":
         for word in data:
             word_tuple = get_meaning_phone(word["word"])
             # make it into an object
-            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3]).__dict__
+            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4]).__dict__
             list_of_words_processed.append(word_for_question)
     # write the object into a json file
     database_path = Path(f'./database')
