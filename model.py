@@ -1,3 +1,4 @@
+# file for the model class
 import random
 class Word:
     def __init__(self,word,phonetics,correct,incorrect_list,word_example):
