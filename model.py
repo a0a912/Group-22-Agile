@@ -1,14 +1,15 @@
 # file for the model class
 import random
 class Word:
-    def __init__(self,word,phonetics,correct,incorrect_list,word_example):
+    def __init__(self,id,word,phonetics,correct,incorrect_list,word_example):
+        self.id = id
         self.word = word
         self.phonetics = phonetics
         self.correct = correct
         self.incorrect_list = incorrect_list
         self.word_example = word_example
     def __str__(self):
-        return f'{self.word} {self.phonetics} {self.correct} {self.incorrect_list} {self.word_example}'
+        return f'{self.id} {self.word} {self.phonetics} {self.correct} {self.incorrect_list} {self.word_example}'
     def choose_word(self,data):
         self.incorrect_list = random.choices(data, k=3)
         self.correct = self.word
