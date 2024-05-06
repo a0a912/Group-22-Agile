@@ -1,3 +1,7 @@
+
+from model import Word
+#get sqite3
+import sqlite3
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect
 from user_crud_func import auth, sign_up
@@ -34,6 +38,17 @@ def register():
     if result[0]:
         return redirect(url_for('home'))
     return redirect(url_for('register_page'))
+
+#Test to see if I can throw db data onto the website
+@app.route('/test')
+def test():
+    #Read database.db and get all the entries in the QUESTION_BLANK table
+    connection = sqlite3.connect('./database/database.db')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM QUESTION_BLANK")
+    data = cursor.fetchall()
+    
+    return render_template('test_db_data.html', data=data)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
