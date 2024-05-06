@@ -24,8 +24,8 @@
           <h1 class="mb-3">
             <img src="../static/secure-icon.png" alt="icon" width="20%" />
           </h1>
-          <h2>Login</h2>
-          <form action="/auth/login" method="POST">
+          <h2>Register</h2>
+          <form action="/auth/register" method="POST">
             <div class="form-group">
               <label for="username">Username</label>
               <input type="username" id="username" name="username" class="form-control" placeholder="User Name" />
@@ -36,7 +36,7 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
           </form>
-          <p class="mt-4">New User? <a href="/register">Register</a></p>
+          <p class="mt-4">Already Have an Account?<a href="/">Login</a></p>
           <p>Forgot Password? <a href="/auth/forgot">Reset</a></p>
         </div>
       </div>
