@@ -11,6 +11,9 @@
     </style>
 </head>
 <body>
+
+<button id="dark_mode_button">click Here to toggle Dark Mode</button>
+
 <h1> Test Duolingo Website</h1>
 <!-- List of features to implement -->
 <ul>
@@ -46,7 +49,7 @@
 <script>
 // Get the data from the json files that we created in flask
  let mcq_questions = JSON.parse('{{ mcq_questions | tojson | safe }}');
-    let written_questions = JSON.parse('{{ written_questions | tojson | safe }}');
+let written_questions = JSON.parse('{{ written_questions | tojson | safe }}');
 
 
 
@@ -64,7 +67,8 @@
     let player_score = document.getElementById("player_score_html");
     let guess_submit_button = document.getElementById("guess_submit guess_submit_button");
     let next_question_button = document.getElementById("next_question");
-
+    let dark_mode_button = document.getElementById("dark_mode_button");
+    let body = document.body;
     //Global Game Variables
     //Variable that's 1 if the current question is the written question, 0 if the current question is the multiple choice question
     let question_type;
@@ -265,8 +269,33 @@
 
     }
 
+    function light_dark_mode(event) {
+        // Toggles the background color and text color of the body element between light and dark mode.
+        //
+        // Parameters:
+        // - event: The event object representing the click event.
+        //
+        // Returns:
+        // None.  (Edits the DOM directly)
+        if (body.style.backgroundColor === "white") {
+            body.style.backgroundColor = "#2b2d42";
+            body.style.color = "white";
+            //change button color using get element by id
+
+        }
+        else {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+
+        }
+
+    }
+
 
     //Event Listeners
+
+    // When player clicks dark mode,
+    dark_mode_button.addEventListener("click", light_dark_mode);
 
     // When player clicks start,
     start_game_button.addEventListener("click", start_game_button_function);
