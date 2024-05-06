@@ -116,6 +116,21 @@ def update_score(index, score) -> tuple: # return a tuple, tuple[0] is the boole
     
 """
 how to build functions for the following functionalities:
-1. Forget password
+
+document my functions about how to use them.
+you can tell me where you need clarification.
+1. CRUD for questions
+    1.Update questions
+    2.delete questions
+2. Associate Table
+    Question_ACCOUNT
+        id
+        question_blank_id
+        question_definition_id
+        user_id
+3. Forget password
+4. Admin dashboard(delete user)
+5. rank func
+
 
 """
