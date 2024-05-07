@@ -1,5 +1,6 @@
 
 from model import Word
+import json
 #get sqite3
 import sqlite3
 # a simple login page using flask for testing the usermod.py
@@ -42,12 +43,30 @@ def register():
 #Test to see if I can throw db data onto the website
 @app.route('/test')
 def test():
-    #Read database.db and get all the entries in the QUESTION_BLANK table
+    # Read database.db and get all the entries in the QUESTION_BLANK table
     connection = sqlite3.connect('./database/database.db')
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM QUESTION_BLANK")
     question_blank = cursor.fetchall()
-    return render_template('test_db_data.html', question_blank=question_blank)
+
+    # Read database.db and get all the entries in the QUESTION_DEFINITION table
+    cursor.execute("SELECT * FROM QUESTION_DEFINITION")
+    question_definition = cursor.fetchall()
+
+    # Convert the fetched data into JSON strings
+    question_blank_json = json.dumps(question_blank)
+    question_definition_json = json.dumps(question_definition)
+
+    return render_template('test_db_data.html', question_blank=question_blank_json, question_definition=question_definition_json)
+
+#Route to read database and send the table ACCOUNT to the website
+@app.route('/scores')
+def scores():
+    connection = sqlite3.connect('./database/database.db')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM ACCOUNT")
+    scores = cursor.fetchall()
+    return render_template('scores.html', scores=scores)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
