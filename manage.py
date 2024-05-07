@@ -1,6 +1,7 @@
 import sqlite3, json,requests
 from pathlib import Path
 from model import Word
+from usermod import create_account_table
 database = './database/database.db'
 connection = sqlite3.connect(database,check_same_thread=False) # create the file if it does not exist 
 cursor = connection.cursor() # cursor is used to interact with the database 
@@ -47,13 +48,12 @@ def get_existing_words(path):
         return word_list
 
 if __name__ == "__main__":
+    create_account_table()
     # drop everything in the database before adding new tables
     question_definition = "QUESTION_DEFINITION"
     question_blank = "QUESTION_BLANK"
     question_table_list = [question_definition, question_blank]
     [drop(table) for table in question_table_list]
-    # incorrect = ['apple', 'banana', 'cherry']
-    # json_str = json.dumps(incorrect)
     # create a table for the question_defintion
     for table in question_table_list:
         statement_question_table = f"""CREATE TABLE IF NOT EXISTS {table}
@@ -64,9 +64,6 @@ if __name__ == "__main__":
                     weight INTEGER DEFAULT 1,
                     example TEXT);"""
         execute(statement_question_table)
-
-    # statement_insert = f"INSERT INTO QUESTION(word, correct, incorrect, example) VALUES ('apple', 'A round fruit with seeds.', '{json_str}', 'I enjoy eating a juicy apple for breakfast.')"
-    # execute(statement_insert)
 
     # an  list to store the words themselves
     list_of_words= get_existing_words("data.json")
@@ -101,3 +98,14 @@ if __name__ == "__main__":
                             '{json.dumps(word_blank_dictionary['incorrect_list'])}', 
                             "{word_blank_dictionary['word_example']}")"""
             execute(statement)
+    # create an associative table for the question_account
+    statement_question_account = f"""CREATE TABLE IF NOT EXISTS QUESTION_ACCOUNT
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_definition}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
+    execute(statement_question_account)
+    print("Database created")

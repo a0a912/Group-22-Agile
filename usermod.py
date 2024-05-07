@@ -61,10 +61,9 @@ def delete(table_name, condition):
     statement_delete = f"DELETE FROM {table_name} WHERE {condition}"
     execute(statement_delete)
 
-if __name__ == "__main__":
-# drop everything in the database before adding new tables
+def create_account_table():
+    # drop everything in the database before adding new tables
     drop("account")
-
     # statement to create a user table
     statement_account = """CREATE TABLE IF NOT EXISTS ACCOUNT
                 (id  INTEGER PRIMARY KEY AUTOINCREMENT,
