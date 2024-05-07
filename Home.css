@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'FeatherBold';
+    src: url('Feather Bold.ttf') format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'dine-round';
+    src: url('DINRoundPro.ttf') format('truetype');
+}
+
+:root {
+    --dark-blue: #353F98;
+}
+
+@media screen and (min-width: 800px) {
+#Welcome{
+    text-align: center;
+    font-family: 'dine-round', sans-serif;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+    font-size: 3em;
+}
+
+.banner{
+    position : relative;
+    background-color: var(--dark-blue);
+    display: flex;
+    width: 100dvw;
+    height: 20dvh;
+    margin: 0px;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+body{ 
+    font-family: 'dine-round', sans-serif;
+    background-color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+.StudyMode {
+    display: grid;
+    grid: auto / repeat(2, 1fr);
+}
+
+.StudyMode h2 {
+    font-size: 2em;
+    grid-column: 1 / span 2;
+    padding: 0.5em;
+}
+
+#Game1 {
+    width: 300px;
+    height: 300px;
+    border: 4px var(--dark-blue) solid;
+    margin: auto;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#Game1:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+#Game2 {
+    width: 300px;
+    height: 300px;
+    border: 4px var(--dark-blue) solid;
+    margin: auto; 
+    background-color: white;
+    border-radius: 10px;
+}
+
+#Game2:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+#ModeText {
+    margin: 10px;
+}
+
+#SubmitButton {
+    width: 200px;
+    height: 50px;
+    font-family: 'dine-round';
+    font: 20px;
+    color: white;
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 15px;
+}
+
+#SubmitButtonDiv {
+    margin: auto;
+    grid-column: 1/span 2;
+    padding: 2em;   
+}
+
+#SubmitButton:hover {
+    background-color: white;
+    color: var(--dark-blue);
+    border: #353F98 2px solid;
+}
+
+}
