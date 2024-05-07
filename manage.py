@@ -98,3 +98,14 @@ if __name__ == "__main__":
                             '{json.dumps(word_blank_dictionary['incorrect_list'])}', 
                             "{word_blank_dictionary['word_example']}")"""
             execute(statement)
+    # create an associative table for the question_account
+    statement_question_account = f"""CREATE TABLE IF NOT EXISTS QUESTION_ACCOUNT
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_definition}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
+    execute(statement_question_account)
+    print("Database created")

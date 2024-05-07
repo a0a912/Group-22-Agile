@@ -23,6 +23,6 @@ class Word:
             if i == self.word:
                 index = list_of_word.index(i)
                 # replace the word with blank of the same length
-                list_of_word = list_of_word[:index-1] + ["_" * len(self.word)] + list_of_word[index+1:]
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
         self.word_example = " ".join(list_of_word)
         
