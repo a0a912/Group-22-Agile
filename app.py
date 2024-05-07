@@ -46,9 +46,8 @@ def test():
     connection = sqlite3.connect('./database/database.db')
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM QUESTION_BLANK")
-    data = cursor.fetchall()
-    
-    return render_template('test_db_data.html', data=data)
+    question_blank = cursor.fetchall()
+    return render_template('test_db_data.html', question_blank=question_blank)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
