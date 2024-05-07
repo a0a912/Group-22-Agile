@@ -68,5 +68,8 @@ def scores():
     scores = cursor.fetchall()
     return render_template('scores.html', scores=scores)
 
+#POST route to update the score in the database
+#TODO: Update the score in the database
+
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888

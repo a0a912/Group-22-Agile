@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #submit_score {
+            display: none;
+        }
+        #videoPlayer {
+            display: none;
+        }
+     
+    </style>
 
-   
 </head>
 <body>
-    <!-- Test to see if I can paste data from the database --->
-
-   <!-- <h1>print data here</h1>
-
-    <p>{{ question_blank }}</p>
-    <p>{{ question_definition }}</p> -->
-    <!-- IT works!!!!!!!!! -->
 
     <h2> Main form</h2>
 <div id="guess_box" class="guess_box">
     <h3 id="player_score_html"> Player Score: 0</h3>
+    <div id="player-lives-container"></div>
     <form id="guess_form" class="guess_form">
         <label for="question">Question:</label>
         <p id="question"></p>
@@ -35,11 +37,17 @@
 <hr>
 <button id="start_game_button">Start Game </button>
 <button id="reset_game_button"> Reset Entire Session </button>
+<button id="submit_score">Submit Score</button>
+<hr>
+
+<button id="playButton">Play Video</button>
+    <video id="videoPlayer" controls>
+        <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <script>
         //DOM Variables
-
-        //Get DOM Elements
         let guess_box = document.getElementById("guess_box");
         let guess_form = document.getElementById("guess_form");
         let question = document.getElementById("question");
@@ -52,27 +60,33 @@
         let player_score = document.getElementById("player_score_html");
         let guess_submit_button = document.getElementById("guess_submit guess_submit_button");
         let next_question_button = document.getElementById("next_question");
+        let playerLivesContainer = document.getElementById("player-lives-container");
+        let submit_score = document.getElementById("submit_score");
 
 
         //Global Variables
-        //let player_lives = 3;
+        let lives = 5;
+        let mistakes = 0;
 
        // Get the data from the db files that we created in flask that we are passing up to the html
+       //It complains about it being an error but it works
        let question_blank = JSON.parse({{ question_blank | tojson | safe }});
-        let question_definition = JSON.parse({{ question_definition | tojson | safe }});
+       let question_definition = JSON.parse({{ question_definition | tojson | safe }});
 
         console.log(question_blank);
         console.log(question_definition);
 
         console.log(question_blank[0]);
 
-        //Variable that's 1 if the current question is the written question, 0 if the current question is the multiple choice question
+        //Variable that's 1 if the current question is the blank and 0 if the current question is the definition
         let question_type;
 
         let current_question_description;
         let current_question_answer;
 
         let player_score_counter = 0;
+
+        let user_name = "ahmed";
 
         //Functions
         function random_number_generator(number) {
@@ -140,6 +154,7 @@
         guess_box.style.display = "block";
         start_game_button.disabled = true;
         reset_game_button.disabled = false;
+        displayPlayerLives(lives, mistakes);
 
         //Get question
         let current_question = generate_multiple_choice_question();
@@ -198,7 +213,23 @@
             guess_box.style.borderColor = "red";
             guess_box.style.borderStyle = "solid";
             guess_box.style.borderWidth = "10px";
+            mistakes++;
+            lives--;
+            displayPlayerLives(lives, mistakes);
+
+            //Check if they have run out of lives
+            if (lives === 0) {
+                //Display Game over
+                log.innerHTML += ". Out of Lives. Game over";
+                //disable next question button
+        next_question_button.disabled = true;
+        submit_score.style.display = "block";
+        
         }
+        
+
+        }
+        
 
     }
 
@@ -225,6 +256,45 @@
 
     }
 
+    // Function to generate heart emojis or skull emojis based on the number of lives remaining and mistakes made
+function displayPlayerLives(lives, mistakes) {
+    // Clear the container first
+    playerLivesContainer.innerHTML = '';
+
+    // Display hearts for remaining lives
+    for (let i = 0; i < lives; i++) {
+        const heartEmoji = document.createElement('span');
+        heartEmoji.textContent = '💗'; // Heart emoji
+        playerLivesContainer.appendChild(heartEmoji);
+    }
+
+    // Display skulls for mistakes
+    for (let i = 0; i < mistakes; i++) {
+        const skullEmoji = document.createElement('span');
+        skullEmoji.textContent = '💀'; // Skull emoji
+        playerLivesContainer.appendChild(skullEmoji);
+    }
+}
+
+function submit_score_button_function() {
+    //TODO: Add logic here
+    console.log("Not done yet")
+}
+
+document.getElementById('playButton').addEventListener('click', function() {
+            var video = document.getElementById('videoPlayer');
+            video.style.display = 'block';
+            if (video.paused) {
+                video.play();
+                this.textContent = 'Pause Video';
+            } else {
+                video.pause();
+                this.textContent = 'Play Video';
+            }
+        });
+
+        
+
         //Event Listeners
       
 
@@ -236,6 +306,9 @@ start_game_button.addEventListener("click", start_game_button_function);
 guess_form.addEventListener("submit", guess_submit);
 
 next_question_button.addEventListener("click", next_question_button_function);
+
+
+submit_score.addEventListener("click", submit_score_button_function);
     </script>
 </body>
 </html>
