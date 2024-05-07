@@ -15,18 +15,18 @@ print("Connected to database")
 # create("account", "username,password,role,score", "'xinyu','xinyu123','user',0")
 
 ############################################################################################
-# select one user through username                                                    #
+# select one user through username                                                         #
 # arguments for select_username() is username                                              #
 # e.g select_username("admin")                                                             # 
 ############################################################################################          
 # select_username("admin")  
 
 ############################################################################################
-# updating the score of a user                                                        #
+# updating the score of a user                                                             #
 # arguments for update() is table_name, column_name, value, condition                      #
 # condition should be in the format of "column_name=value" like "id=1" or "username=xxx"   #
 # statement = "UPDATE {table_name} SET {column_name} = {value} WHERE {condition}"          #
-# e.g update("account", "password", 'admin123', "username=admin")                                                      #
+# e.g update("account", "password", 'admin123', "username=admin")                          #
 # e.g update("account", "score", 200,"id=1")                                               #
 ############################################################################################
 # update("account", "password", "admin124","id=1")  # update the password of the user with id 1

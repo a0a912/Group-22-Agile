@@ -15,7 +15,7 @@ class Word:
         # before the word is removed, we need to make a copy of the list, so that the original list is not modified
         data_copy = data.copy()
         data_copy.remove(self.word)
-        self.incorrect_list = random.choices(data, k=3)
+        self.incorrect_list = random.sample(data_copy, k=3)
         self.correct = self.word
         list_of_word = self.word_example.split(" ")
         for i in list_of_word:
