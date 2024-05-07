@@ -58,7 +58,7 @@ body{
     width: 300px;
     height: 300px;
     border: 4px var(--dark-blue) solid;
-    margin: auto;
+    margin-left: 350px;
     background-color: white;
     border-radius: 10px;
 }
@@ -68,11 +68,11 @@ body{
     color: white;
 }
 
-#Game2 {
+#Game2 {    
     width: 300px;
     height: 300px;
     border: 4px var(--dark-blue) solid;
-    margin: auto; 
+    margin-left: 50px; 
     background-color: white;
     border-radius: 10px;
 }
