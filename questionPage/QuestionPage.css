@@ -1,0 +1,121 @@
+@font-face {
+    font-family: "GabrielSans-bold";
+    src: url('./font/GabrielSans-Trial-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "GabrielSans-normal";
+    src: url('./font/GabrielSans-Trial-Normal.ttf') format('truetype');
+
+}
+@font-face {
+    font-family: "eudox";
+    src: url('./font/EudoxusSans-Bold.ttf') format('truetype');
+}
+header{
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin: 0;
+
+}
+.banner{
+    background-color: #353F98;
+   
+    
+    
+}
+.banner_content{
+    display: absolute;
+    justify-content: center;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 15px;
+    color: #fff;
+    
+}
+.banner_text{
+    text-align: center;
+    font-family: "GabrielSans-bold";
+    font-size: medium;
+    font-weight: bolder;
+
+}
+.score_container{
+   
+    justify-content: center;
+    align-items:none;
+    display: inline-block;
+
+    background-color: #7782DD;
+    
+    
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 30px;
+    margin-left: 30px;
+    padding : 10px;
+    
+
+    
+}
+.score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "GabrielSans-normal";
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+ ;
+
+
+   
+}
+
+#score_text,
+#score_number {
+    margin:0;
+    margin-right: 6px;
+ 
+}
+
+.question_container{
+    margin-top: 50px;
+    text-align: center;
+    font-family: "eudox";
+    display: flex;
+    flex-direction: column;
+}
+#question_form label,input{
+    
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+#question_form input[type="submit"] {
+    background-color: #353F98;
+    color: #fff;
+    border: none;
+    padding: 11px 45px;
+    border-radius: 15px;
+    margin-top: 30px;
+    cursor: pointer;
+    font-family: "eudox";
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+
+}
+  
+#question_form input[type="submit"]:hover {
+    background-color: #5b6bfd;
+}
+
+
+#question_form{
+    margin-top: 43px;
+    
+}
