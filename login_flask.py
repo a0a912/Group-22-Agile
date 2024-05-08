@@ -3,6 +3,12 @@ from flask import Flask, render_template, url_for, request, redirect
 from user_crud_func import auth, sign_up, select_id, select_all
 import sqlite3
 app = Flask(__name__)
+
+#Homepage thing
+@app.route('/homepage')
+def homepage():
+    return render_template("HomePage.html")
+
 # page of login when you open the website 127.0.0.1:8888/
 @app.route('/')
 def home():
