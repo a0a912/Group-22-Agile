@@ -14,14 +14,17 @@
     --dark-blue: #353F98;
 }
 
-@media screen and (min-width: 800px) {
+/* @media screen and(min-width: 800px) {
+
+} */
+
 #Welcome{
     text-align: center;
     font-family: 'dine-round', sans-serif;
     color: white;
     margin: 0px;
     padding: 0px;
-    font-size: 3em;
+    font-size: 7vh;
 }
 
 .banner{
@@ -32,23 +35,28 @@
     height: 20dvh;
     margin: 0px;
     padding: 0px;
-    /* justify-content: center;
-    align-items: center; */
-}
-
-.banner h1{
     justify-content: center;
     align-items: center;
 }
 
 #Profile {
-    justify-content: right;
-    align-items: right;
+    display: flex;
+    position: absolute;
+    right: 5vw;
+    top: 5dvh;
+}
+
+#ProfileButton {
     width: 70px;
     height: 70px;
     border-radius: 50%;
     border: none;
 }
+
+#ProfileButton:hover {
+    border: 2px #5b6bfd solid;
+}
+
 
 body{ 
     font-family: 'dine-round', sans-serif;
@@ -59,12 +67,17 @@ body{
 
 .StudyMode {
     display: grid;
-    grid: auto / repeat(2, 1fr);
+    grid: auto / repeat(4, 1fr);
+    column-gap: 5em;
+    width: 100vw;
+    height: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .StudyMode h2 {
     font-size: 2em;
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 4;
     padding: 0.5em;
     text-align: center;
 }
@@ -72,11 +85,13 @@ body{
 #Game1 {
     width: 300px;
     height: 300px;
-    margin-left: 350px;
+    /* margin-left: 30%; */
     color: white;
     background-color: var(--dark-blue);
     border-radius: 10px;
     border: none;
+    grid-column: 2;
+    grid-row: 2;
 }
 
 #Game1:hover {
@@ -87,7 +102,69 @@ body{
 #Game2 {    
     width: 300px;
     height: 300px;
-    margin-left: 50px; 
+    /* margin-left: 50px;  */
+    color: white;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    border: none;
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#Game2:hover {
+    color: white;
+    background-color: #5b6bfd
+}
+
+#ModeText {
+    margin: 10px;
+}
+/* ------------------------------------- MOBILE ----------------------------------------- */
+@media screen and (max-width: 799px) {
+
+#ProfileButton {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+}
+
+#Welcome{
+    text-align: center;
+    font-family: 'dine-round', sans-serif;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+    font-size: 5vh;
+}
+
+.StudyMode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.StudyMode h2 {
+    font-size: 2em;
+    grid-column: 1 / span 3;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#Game1 {
+    width: 200px;
+    height: 100px;
+    color: white;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    border: none;
+    margin: 0.5em;
+}
+
+#Game2 {    
+    width: 200px;
+    height: 100px;
+    /* margin-left: 50px;  */
     color: white;
     background-color: var(--dark-blue);
     border-radius: 10px;
@@ -99,8 +176,6 @@ body{
     background-color: #5b6bfd
 }
 
-#ModeText {
-    margin: 10px;
 }
 
 
@@ -125,4 +200,3 @@ body{
 #SubmitButton:hover {
     color: white;
     background-color: #5b6bfd */
-}
