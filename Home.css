@@ -12,6 +12,8 @@
 
 :root {
     --dark-blue: #353F98;
+    --dark-grey: rgb(54, 51, 71);
+    --hover-blue: #5b6bfd;
 }
 
 /* @media screen and(min-width: 800px) {
@@ -63,6 +65,32 @@ body{
     background-color: white;
     margin: 0px;
     padding: 0px;
+}
+
+body.dark-mode {
+    background-color:var(--dark-grey);
+    color: white;
+  }
+
+#DarkModeToggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--dark-grey);
+    border: #353F98 2px solid;
+}
+
+#DarkModeToggle:hover {
+    background-color: var(--hover-blue);
+}
+
+#DarkModeToggle.dark-mode {
+    background-color: white;
+}
+
+#DarkModeToggle.dark-mode:hover {
+    background-color: var(--hover-blue);
 }
 
 .StudyMode {
@@ -158,13 +186,12 @@ body{
     background-color: var(--dark-blue);
     border-radius: 10px;
     border: none;
-    margin: 0.5em;
+    margin: 3vh;
 }
 
 #Game2 {    
     width: 200px;
     height: 100px;
-    /* margin-left: 50px;  */
     color: white;
     background-color: var(--dark-blue);
     border-radius: 10px;
