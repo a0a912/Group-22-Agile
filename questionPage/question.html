@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="questionPage.css">
-    <script src="questionPage.js" differ></script>
+    <link rel="stylesheet" href="static/bootstrap/css/QuestionPage.css">
+    <script src="questionPage\QuestionPage.js" differ></script>
 </head>
 <body>
     <header>
@@ -27,7 +27,7 @@
             </div>
     </div>
     <div class = 'question_container'>
-        <h1 id = 'question_text'>"Question goes here"</h1>
+        <h1 id = 'question_text'>{{ question }}</h1>
         <div id = 'choices'>
             <form id = 'question_form'>
                 <input type="radio"  name="choice" value="a" id ='value1'>

@@ -1,6 +1,6 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect
-from user_crud_func import auth, sign_up
+from user_crud_func import auth, sign_up, select_id
 app = Flask(__name__)
 # page of login when you open the website 127.0.0.1:8888/
 @app.route('/')
@@ -34,6 +34,34 @@ def register():
     if result[0]:
         return redirect(url_for('home'))
     return redirect(url_for('register_page'))
+
+# @app.route('/question', methods=['GET'])
+# def question():
+#     """
+#     return render_template("question.html", question=question,word=word, incorrect=incorrect_list)
+#     # in html
+#     <h1 id = 'question_text'>{{ question }}</h1>
+#     {{% for choice in choices %}}
+#     <form id = 'question_form'>
+    
+#     """
+#     return render_template("question.html",question=question)
+
+#make the get to put information in question page
+@app.route('/question', methods=['GET'])
+def get_question():
+    question = select_id('QUESTION_BLANK', 1, 'example')[0]
+    correct = select_id('QUESTION_BLANK', 1, 'correct')[0]
+    return redirect(url_for('load_question', question=question, correct=correct))
+    # return redirect(url_for('question'), question=question,correct,incorrect)
+
+@app.route('/question/load', methods=['POST', 'GET'])
+def load_question():
+    question = request.args.get('question')
+    correct = request.args.get('correct')
+    return render_template("question.html", question=question, correct=correct)
+
+    # return redirect(url_for('question'), question=question,correct,incorrect)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
