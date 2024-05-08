@@ -1,13 +1,22 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 from user_crud_func import auth, sign_up
+import secrets 
+
 app = Flask(__name__)
+app.secret_key = "d4413d05138d1fa03489e233df6aca24"
+
 # page of login when you open the website 127.0.0.1:8888/
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
+    username = session.get('username')
+    return render_template("home.html", username=username)
+
+@app.route('/login', methods=['GET'])
+def login_page():
     return render_template("login.html")
 
-@app.route('/register')
+@app.route('/register', methods=['GET'])
 def register_page():
     return render_template("register.html")
 
@@ -20,8 +29,9 @@ def login():
     result = auth(username, password)
     # print(result)
     if result[0]:
+        session['username'] = username
         # if the user is authenticated then redirect to the home page with the username
-        return render_template('home.html', username=username)
+        return redirect(url_for('home'))
     # if the user is not authenticated then redirect to the login page
     return redirect(url_for('home'))
 
@@ -32,8 +42,34 @@ def register():
     password = request.form.get('password')
     result = sign_up(username, password)
     if result[0]:
-        return redirect(url_for('home'))
+        return redirect(url_for('login_page'))
     return redirect(url_for('register_page'))
+
+@app.route('/auth/logout', methods=['POST'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
+
+@app.route('/quiz', methods=['GET'])
+def quiz():
+    username = session.get('username')
+    return render_template("quiz.html", username=username)
+
+@app.route('/quiz/submit', methods=['POST'])
+def submit():
+    return 
+
+@app.route('/ranking', methods=['GET'])
+def ranking():
+    username = session.get('username')
+    return render_template("ranking.html", username=username)
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    username =session.get('username')
+    return render_template("profile.html", username=username)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
