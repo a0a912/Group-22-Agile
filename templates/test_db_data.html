@@ -15,12 +15,14 @@
     </style>
 </head>
 <body>
+
     
     <h1>Welcome {{ username }}</h1>
     
-
+<!-- A button to toggle between light and dark mode. NOTE: For some reason it takes a few seconds and clicks before it works. No Idea why. -->
+<button type="button" id="light_setting">Light or Dark Mode</button>
     
-    <h2> Main form</h2>
+    <h2> Play Basic Unolingo Game</h2>
 <div id="guess_box" class="guess_box">
     <h3 id="player_score_html"> Player Score: 0</h3>
     <div id="player-lives-container"></div>
@@ -65,6 +67,9 @@
         let next_question_button = document.getElementById("next_question");
         let playerLivesContainer = document.getElementById("player-lives-container");
         let submit_score = document.getElementById("submit_score");
+
+        let light_setting = document.getElementById("light_setting");
+        let body = document.body;
 
 
         //Global Variables
@@ -294,6 +299,28 @@ function submit_score_button_function() {
     console.log("Not done yet")
 }
 
+function light_dark_mode(event) {
+        // Toggles the background color and text color of the body element between light and dark mode.
+        //
+        // Parameters:
+        // - event: The event object representing the click event.
+        //
+        // Returns:
+        // None.  (Edits the DOM directly)
+        if (body.style.backgroundColor === "white") {
+            body.style.backgroundColor = "#2b2d42";
+            body.style.color = "white";
+            //change button color using get element by id
+
+        }
+        else {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+
+        }
+
+    }
+
 document.getElementById('playButton').addEventListener('click', function() {
             var video = document.getElementById('videoPlayer');
             video.style.display = 'block';
@@ -322,6 +349,8 @@ next_question_button.addEventListener("click", next_question_button_function);
 
 
 submit_score.addEventListener("click", submit_score_button_function);
+
+light_setting.addEventListener("click", light_dark_mode);
     </script>
 </body>
 </html>
