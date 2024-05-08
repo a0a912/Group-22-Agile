@@ -47,8 +47,11 @@ print("Connected to database")
 # e.g select_id("account",1)                                                               #
 # the called function above equals to the following SQL statement                          #
 # "SELECT * FROM account WHERE id=1"                                                       #
+# it returns a tuple of the information of the user                                        #
+# it can also be used to get info from other tables                                        #
+# e.g select_id("QUESTION_ACCOUNT",1)                                                      #
+# e.g select_id("QUESTION_BLANK",1,"word")                                                 #
 ############################################################################################
-# select_id("account",1)
 
 ############################################################################################
 # deleting a user from the database                                                        #
