@@ -66,6 +66,7 @@ def delete(table_name, condition):
     condition = f"{condition[0]}='{condition[1]}'"
     statement_delete = f"DELETE FROM {table_name} WHERE {condition}"
     execute(statement_delete)
+    print(f'deleted {condition} from table {table_name} successfully')
 
 def create_account_table():
     # drop everything in the database before adding new tables
