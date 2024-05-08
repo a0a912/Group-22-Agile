@@ -1,6 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session
 from user_crud_func import auth, sign_up, select_all
+import json
 import secrets 
 
 app = Flask(__name__)
@@ -69,6 +70,22 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
+#Test for test_db_data.html
+@app.route('/test_db_data')
+def test_db_data():
+    username = session.get('username')
+    #Get blank questions from database
+    question_blank = select_all("QUESTION_BLANK")
+
+    #Get defination questions from database
+    question_defination = select_all("QUESTION_DEFINITION")
+
+    # Convert the fetched data into JSON strings
+    question_blank_json = json.dumps(question_blank)
+    question_definition_json = json.dumps(question_defination)
+
+    
+    return render_template("test_db_data.html", question_blank=question_blank_json, question_defination=question_definition_json, username=username)
 
 
 
