@@ -1,5 +1,6 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session
+from model import Word, get_question_dict
 from user_crud_func import auth, sign_up, select_all
 import json
 import secrets 
@@ -70,6 +71,7 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
+
 #Test for test_db_data.html
 @app.route('/test_db_data')
 def test_db_data():
@@ -87,6 +89,15 @@ def test_db_data():
     
     return render_template("test_db_data.html", question_blank=question_blank_json, question_defination=question_definition_json, username=username)
 
+
+#Test for test_db_data.html using new method
+@app.route('/test_get_question_dict')
+def test_get_question_dict():
+    question_blank = get_question_dict("QUESTION_BLANK", 1)
+    question_defination = get_question_dict("QUESTION_DEFINITION", 1)
+    username = session.get('username')
+
+    return render_template("test_get_dict.html", question_blank=question_blank, question_defination=question_defination, username=username)
 
 
 if __name__ == "__main__":
