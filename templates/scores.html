@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Top 10 Scores</h1>
+    <!-- Read scores from flask, make a table and for loop through the scores variable to display scores[0], scores[1] in the table --->
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
+        </tr>
+        {% for score in scores %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ score[0] }}</td>
+            <td>{{ score[1] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    
+</body>
+</html>

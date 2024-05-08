@@ -50,6 +50,7 @@ def get_existing_words(path):
 if __name__ == "__main__":
     create_account_table()
     # drop everything in the database before adding new tables
+    drop("QUESTION_ACCOUNT")
     question_definition = "QUESTION_DEFINITION"
     question_blank = "QUESTION_BLANK"
     question_table_list = [question_definition, question_blank]
