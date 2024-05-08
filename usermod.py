@@ -21,7 +21,7 @@ def select(table_name, column_name="*"):
 def select_id(table_name, id, column_name="*"):
     rows = cursor.execute(f"SELECT {column_name} FROM {table_name} WHERE id = {id}")
     result = rows.fetchone()
-    # print(result)
+    print(result)
     return result
 
 def update(table_name, column_name, value, condition):
@@ -30,7 +30,13 @@ def update(table_name, column_name, value, condition):
     # print(statement_update)
     execute(statement_update)
 
-    
+def insert(table_name, column_name:list, value:list):
+    print('insert')
+    statement_insert = f"INSERT INTO {table_name}({column_name}) VALUES {value}"
+    print(statement_insert)
+    execute(statement_insert)
+    print(f'inserted into table {table_name} successfully')
+
 def create(table_name, column_name, value):
     print('create')
     username = value.split(",")[0]
