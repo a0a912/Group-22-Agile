@@ -46,13 +46,13 @@
                             <a href="{{ url_for('login_page') }}">Login</a>
                         </li>
                         {% endif %}
+                        {% if username %}
                         <li class="page">
                             <a href="{{ url_for('quiz') }}">Quiz</a>
                         </li>
                         <li class="page">
                             <a href="{{ url_for('ranking') }}">Ranking</a>
                         </li>
-                        {% if username %}
                         <li class="page">
                             <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
                         </li>
