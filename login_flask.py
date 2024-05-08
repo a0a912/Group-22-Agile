@@ -1,6 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect
-from user_crud_func import auth, sign_up
+from user_crud_func import auth, sign_up, select_id, select_all
+import sqlite3
 app = Flask(__name__)
 # page of login when you open the website 127.0.0.1:8888/
 @app.route('/')
@@ -34,6 +35,14 @@ def register():
     if result[0]:
         return redirect(url_for('home'))
     return redirect(url_for('register_page'))
+
+#Read database.db get scores for everyone and send them to scores.html. Essentially a "leaderboard".
+@app.route('/scores')
+def scores():
+    scores = select_all("account", "username, score")
+    #Sort scores by descending order based on score[1]
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return render_template('scores.html', scores=scores)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
