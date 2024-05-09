@@ -71,9 +71,36 @@
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container-fluid -->
-</nav>
-
-
+    </nav>
+    <style>
+      footer {
+    margin-top: 500px;
+    color: black;
+}
+    </style>
+    <footer>
+      <div class="container"id="maincontent" tabindex="-1">
+          <div class="col-lg-8 col-lg-offset-2">
+            <form action="/profile/update/password" method="POST">
+              <table>
+                <tr>
+                  <th for="username">Username</th>
+                  <th for="password">New Password</th>
+                  <th> Question History</th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <input type="password" name="password" id="password" placeholder="New password" required>
+                    <button type="submit" class="btn btn-primary">Reset</button> 
+                  </td>
+                  <td>1</td>
+              </table>
+              <input type="hidden" name="username" value="{{ username }}">
+            </form>
+        </div>
+      </footer>
+    </body>
   
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -90,6 +117,6 @@
 
   <!-- Bootstrap Core JavaScript -->
   <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
-</body>
+
 
 </html>

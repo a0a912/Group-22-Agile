@@ -113,7 +113,9 @@ def update_score(index, score) -> tuple: # return a tuple, tuple[0] is the boole
     print("the new score is", score)
     update("account", "score", score, f"{col}='{index}'")
     return True, "Score updated"
-    
+ 
+
+
 """
 how to build functions for the following functionalities:
 

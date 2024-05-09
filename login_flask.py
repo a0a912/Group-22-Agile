@@ -1,6 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session
-from user_crud_func import auth, sign_up
+from user_crud_func import auth, sign_up, select_username
+from usermod import execute, select_all, update
 import secrets 
 
 app = Flask(__name__)
@@ -69,7 +70,14 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
-
+@app.route('/profile/update/password', methods=['POST'])
+def update_password():
+    username = session.get('username')
+    password = request.form.get('password')
+    update("account", "password", password, f"username='{username}'")
+    return redirect(url_for('profile')) 
+   
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
