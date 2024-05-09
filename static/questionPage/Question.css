@@ -1,16 +1,16 @@
 @font-face {
     font-family: "GabrielSans-bold";
-    src: url('./font/GabrielSans-Trial-Bold.ttf') format('truetype');
+    src: url('/static/font/GabrielSans-Trial-Bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: "GabrielSans-normal";
-    src: url('./font/GabrielSans-Trial-Normal.ttf') format('truetype');
+    src: url('/static/font/GabrielSans-Trial-Normal.ttf') format('truetype');
 
 }
 @font-face {
     font-family: "eudox";
-    src: url('./font/EudoxusSans-Bold.ttf') format('truetype');
+    src: url('/static/font/EudoxusSans-Bold.ttf') format('truetype');
 }
 header{
     margin: 0;

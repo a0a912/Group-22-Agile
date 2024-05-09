@@ -18,7 +18,7 @@ def select(table_name, column_name="*"):
         print(row[0])
     return result
 
-def select_id(table_name, id, column_name="*"):
+def select_id(table_name:str, id:int, column_name="*") -> tuple:
     rows = cursor.execute(f"SELECT {column_name} FROM {table_name} WHERE id = {id}")
     result = rows.fetchone()
     # print(result)
@@ -30,7 +30,13 @@ def update(table_name, column_name, value, condition):
     # print(statement_update)
     execute(statement_update)
 
-    
+def insert(table_name, column_name:list, value:list):
+    print('insert')
+    statement_insert = f"INSERT INTO {table_name}({column_name}) VALUES {value}"
+    print(statement_insert)
+    execute(statement_insert)
+    print(f'inserted into table {table_name} successfully')
+
 def create(table_name, column_name, value):
     print('create')
     username = value.split(",")[0]
@@ -60,11 +66,11 @@ def delete(table_name, condition):
     condition = f"{condition[0]}='{condition[1]}'"
     statement_delete = f"DELETE FROM {table_name} WHERE {condition}"
     execute(statement_delete)
+    print(f'deleted {condition} from table {table_name} successfully')
 
-if __name__ == "__main__":
-# drop everything in the database before adding new tables
+def create_account_table():
+    # drop everything in the database before adding new tables
     drop("account")
-
     # statement to create a user table
     statement_account = """CREATE TABLE IF NOT EXISTS ACCOUNT
                 (id  INTEGER PRIMARY KEY AUTOINCREMENT,

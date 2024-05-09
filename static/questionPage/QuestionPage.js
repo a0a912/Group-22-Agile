@@ -1,3 +1,5 @@
+// var incorrectData = JSON.parse('{{ incorrect}}');
+// console.log(incorrectData);
 
 
 function correctAnswer() {

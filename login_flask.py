@@ -1,13 +1,23 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect
-from user_crud_func import auth, sign_up, select_id
+from flask import Flask, render_template, url_for, request, redirect, session, jsonify
+from user_crud_func import auth, sign_up, select_all
+import secrets 
+from model import get_question_dict
+import json
 app = Flask(__name__)
+app.secret_key = "d4413d05138d1fa03489e233df6aca24"
+
 # page of login when you open the website 127.0.0.1:8888/
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
+    username = session.get('username')
+    return render_template("home.html", username=username)
+
+@app.route('/login', methods=['GET'])
+def login_page():
     return render_template("login.html")
 
-@app.route('/register')
+@app.route('/register', methods=['GET'])
 def register_page():
     return render_template("register.html")
 
@@ -20,8 +30,9 @@ def login():
     result = auth(username, password)
     # print(result)
     if result[0]:
+        session['username'] = username
         # if the user is authenticated then redirect to the home page with the username
-        return render_template('home.html', username=username)
+        return redirect(url_for('home'))
     # if the user is not authenticated then redirect to the login page
     return redirect(url_for('home'))
 
@@ -32,36 +43,70 @@ def register():
     password = request.form.get('password')
     result = sign_up(username, password)
     if result[0]:
-        return redirect(url_for('home'))
+        return redirect(url_for('login_page'))
     return redirect(url_for('register_page'))
 
-# @app.route('/question', methods=['GET'])
-# def question():
-#     """
-#     return render_template("question.html", question=question,word=word, incorrect=incorrect_list)
-#     # in html
-#     <h1 id = 'question_text'>{{ question }}</h1>
-#     {{% for choice in choices %}}
-#     <form id = 'question_form'>
-    
-#     """
-#     return render_template("question.html",question=question)
+@app.route('/auth/logout', methods=['POST'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
-#make the get to put information in question page
+@app.route('/quiz', methods=['GET'])
+def quiz():
+    username = session.get('username')
+    return render_template("quiz.html", username=username)
+
+@app.route('/quiz/submit', methods=['POST'])
+def submit():
+    return 
+
+@app.route('/ranking', methods=['GET'])
+def ranking():
+    scores = select_all("account", "username, score")
+    return render_template("scores.html", scores=scores)
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    username =session.get('username')
+    return render_template("profile.html", username=username)
+
 @app.route('/question', methods=['GET'])
-def get_question():
-    question = select_id('QUESTION_BLANK', 1, 'example')[0]
-    correct = select_id('QUESTION_BLANK', 1, 'correct')[0]
-    return redirect(url_for('load_question', question=question, correct=correct))
-    # return redirect(url_for('question'), question=question,correct,incorrect)
+def question():
+    # random number from 1-14, cant be 0
+    num = 0 
+    while num == 0:
+ 
+        num = secrets.randbelow(14)
 
-@app.route('/question/load', methods=['POST', 'GET'])
-def load_question():
-    question = request.args.get('question')
-    correct = request.args.get('correct')
-    return render_template("question.html", question=question, correct=correct)
+    #get the questions from the database
+    questions = get_question_dict("QUESTION_BLANK", num)
+    questions = questions['example']
 
-    # return redirect(url_for('question'), question=question,correct,incorrect)
+    incorrect = get_question_dict("QUESTION_BLANK", num)
+    incorrect = incorrect['incorrect_list']
+
+    correct  = get_question_dict("QUESTION_BLANK", num)
+    #correct = correct['correct']
+    print(correct)
+
+    # Parse the JSON string
+    incorrect_list = json.loads(incorrect)
+
+    # Access the elements of the list
+    choice1 = incorrect_list[0]
+    choice2 = incorrect_list[1]
+    choice3 = incorrect_list[2]
+
+
+    # Pass the parsed list to the template
+    incorrect_json = json.dumps(incorrect_list)
+
+    return render_template("question.html", question=questions, choice1=choice1, choice2=choice2, choice3=choice3,  incorrect=incorrect_json)
+
+
+
+
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8888) # 端口8888
+    app.run(debug=True, port=8888) # 端口8888s
