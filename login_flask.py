@@ -70,7 +70,7 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
-@app.route('/question', methods=['GET'])
+@app.route('/question')
 def question():
     # random number from 1-14, cant be 0
     num = 0 
@@ -87,21 +87,67 @@ def question():
 
     correct  = get_question_dict("QUESTION_BLANK", num)
     #correct = correct['correct']
-    print(correct)
+    
+
+
 
     # Parse the JSON string
-    incorrect_list = json.loads(incorrect)
+    # incorrect_list = json.loads(incorrect)
 
-    # Access the elements of the list
-    choice1 = incorrect_list[0]
-    choice2 = incorrect_list[1]
-    choice3 = incorrect_list[2]
+    # # Access the elements of the list
+    # choice1 = incorrect_list[0]
+    # choice2 = incorrect_list[1]
+    # choice3 = incorrect_list[2]
+
+    correct = correct['correct']
+    print(correct)
+    questions_list = []
+    questions_id = []
+    for i in range(10):
+            num = 0
+            while num == 0:
+                num = secrets.randbelow(14)
+                questions_id.append(num)
+                if num in questions_id:
+                    continue 
+
+            question_data = get_question_dict("QUESTION_BLANK", num)
+
+            question_dict = {
+            'question': question_data.get('example'),
+            'incorrect_list': json.loads(question_data.get('incorrect_list'))
+        }
+
+            questions_list.append(question_dict)
+            questions_list_json = json.dumps(questions_list)
 
 
-    # Pass the parsed list to the template
-    incorrect_json = json.dumps(incorrect_list)
+    print(len(questions_list))
+                
 
-    return render_template("question.html", question=questions, choice1=choice1, choice2=choice2, choice3=choice3,  incorrect=incorrect_json)
+
+    questions_list_json = json.dumps(questions_list)
+
+
+    return render_template("question.html", questions_list=questions_list_json)
+
+#make a route to send data to js in question.html
+# @app.route('/test_db_data')
+# def test_db_data():
+#     username = session.get('username')
+#     #Get blank questions from database
+#     question_blank = select_all("QUESTION_BLANK")
+
+#     #Get defination questions from database
+#     question_defination = select_all("QUESTION_DEFINITION")
+
+#     # Convert the fetched data into JSON strings
+#     question_blank_json = json.dumps(question_blank)
+#     question_definition_json = json.dumps(question_defination)
+
+    
+  
+
 
 
 

@@ -1,7 +1,9 @@
-// var incorrectData = JSON.parse('{{ incorrect}}');
-// console.log(incorrectData);
 
 
+var questionList = document.getElementById('to_JS').innerHTML;
+console.log(questionList);
+
+console.log(questionList);
 function correctAnswer() {
     const submitButton = document.querySelector('input[id="submit_button"]');
     const descriptionBox = document.getElementById('respone_box');
@@ -85,6 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
 //         console.error("Element with id 'respone_box' not found");
 //     }
 // }
+
+// get 
+
+
+
+
+
     
 
 
