@@ -1,12 +1,16 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect, session
+from flask import Flask, render_template, url_for, request, redirect, session, session
 from user_crud_func import auth, sign_up, select_all
+from usermod import execute, select_all, update
 import secrets 
 
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 
+app.secret_key = "d4413d05138d1fa03489e233df6aca24"
+
 # page of login when you open the website 127.0.0.1:8888/
+@app.route('/', methods=['GET'])
 @app.route('/', methods=['GET'])
 def home():
     username = session.get('username')
@@ -14,8 +18,14 @@ def home():
 
 @app.route('/login', methods=['GET'])
 def login_page():
+    username = session.get('username')
+    return render_template("home.html", username=username)
+
+@app.route('/login', methods=['GET'])
+def login_page():
     return render_template("login.html")
 
+@app.route('/register', methods=['GET'])
 @app.route('/register', methods=['GET'])
 def register_page():
     return render_template("register.html")
@@ -30,7 +40,9 @@ def login():
     # print(result)
     if result[0]:
         session['username'] = username
+        session['username'] = username
         # if the user is authenticated then redirect to the home page with the username
+        return redirect(url_for('home'))
         return redirect(url_for('home'))
     # if the user is not authenticated then redirect to the login page
     return redirect(url_for('home'))
@@ -42,6 +54,7 @@ def register():
     password = request.form.get('password')
     result = sign_up(username, password)
     if result[0]:
+        return redirect(url_for('login_page'))
         return redirect(url_for('login_page'))
     return redirect(url_for('register_page'))
 
@@ -61,6 +74,7 @@ def submit():
 
 @app.route('/ranking', methods=['GET'])
 def ranking():
+    
     scores = select_all("account", "username, score")
     return render_template("scores.html", scores=scores)
 
@@ -69,8 +83,14 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
-
-
+@app.route('/profile/update/password', methods=['POST'])
+def update_password():
+    username = session.get('username')
+    password = request.form.get('password')
+    update("account", "password", password, f"username='{username}'")
+    return redirect(url_for('profile')) 
+   
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
