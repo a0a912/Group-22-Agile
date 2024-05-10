@@ -112,8 +112,10 @@ function displayQuestion(fullObject) {
     console.log(fullObject);
     const questionElement = document.getElementById('question_text');
     console.log(questionElement);
-    questionElement.innerHTML = fullObject;
-    console.log(fullObject.question);
+    //questionElement.innerHTML = fullObject;
+    //console.log(fullObject.question);
+    question_text = questionElement.innerText;
+    console.log(question_text);
     // questionElement.innerHTML = fullObject.question;
 }
 
