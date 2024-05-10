@@ -120,8 +120,7 @@ def question():
 
             questions_list.append(question_dict)
             questions_list_json = json.dumps(questions_list)
-
-
+            
     print(len(questions_list))
                 
 

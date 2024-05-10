@@ -1,9 +1,24 @@
 
 
-var questionList = document.getElementById('to_JS').innerHTML;
-console.log(questionList);
 
-console.log(questionList);
+
+
+
+function displayQuestion(fullObject) {
+    console.log(fullObject);
+    const questionElement = document.getElementById('question_text');
+    console.log(questionElement);
+    questionElement.innerHTML = fullObject;
+    console.log(fullObject.question);
+    // questionElement.innerHTML = fullObject.question;
+}
+// function displayQuestion() {
+//     const elementHtml = document.getElementById('to_JS').innerHTML;
+//     const questionElement = document.getElementById('');
+//     questionElement.innerHTML = elementHtml;
+// }
+
+
 function correctAnswer() {
     const submitButton = document.querySelector('input[id="submit_button"]');
     const descriptionBox = document.getElementById('respone_box');
@@ -93,8 +108,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+function displayQuestion(fullObject) {
+    console.log(fullObject);
+    const questionElement = document.getElementById('question_text');
+    console.log(questionElement);
+    questionElement.innerHTML = fullObject;
+    console.log(fullObject.question);
+    // questionElement.innerHTML = fullObject.question;
+}
 
-    
+document.addEventListener('DOMContentLoaded', function() {
+    const elementHtml = document.getElementById('to_JS').innerHTML;
+    const elementObject = JSON.parse(elementHtml);
+    console.log(elementObject[3].question);
 
+    displayQuestion(elementObject[3].question);
+});
 
-document.addEventListener('DOMContentLoaded', correctAnswer);
