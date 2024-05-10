@@ -1,6 +1,6 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session
-from user_crud_func import auth, sign_up, select_username
+from user_crud_func import auth, sign_up, select_all
 from usermod import execute, select_all, update
 import secrets 
 
