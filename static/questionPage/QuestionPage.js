@@ -111,10 +111,19 @@ document.addEventListener('DOMContentLoaded', function() {
 function displayQuestion(fullObject) {
     console.log(fullObject);
     const questionElement = document.getElementById('question_text');
+<<<<<<< HEAD
     
     questionElement.innerHTML = fullObject;
     console.log(fullObject);
     
+=======
+    console.log(questionElement);
+    //questionElement.innerHTML = fullObject;
+    //console.log(fullObject.question);
+    question_text = questionElement.innerText;
+    console.log(question_text);
+    // questionElement.innerHTML = fullObject.question;
+>>>>>>> 102c1f4cc3760fb2c63a6b77b460b7dae2e21c4c
 }
 
 document.addEventListener('DOMContentLoaded', function() {
