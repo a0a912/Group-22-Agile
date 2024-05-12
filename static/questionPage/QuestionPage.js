@@ -111,10 +111,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function displayQuestion(fullObject) {
     console.log(fullObject);
     const questionElement = document.getElementById('question_text');
-    console.log(questionElement);
+    
     questionElement.innerHTML = fullObject;
-    console.log(fullObject.question);
-    // questionElement.innerHTML = fullObject.question;
+    console.log(fullObject);
+    
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -123,5 +123,10 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(elementObject[3].question);
 
     displayQuestion(elementObject[3].question);
+
+    correctAnswer()
+
+
+
 });
 
