@@ -68,6 +68,37 @@ def delete(table_name, condition):
     execute(statement_delete)
     print(f'deleted {condition} from table {table_name} successfully')
 
+def insert_secure_question(username, secure_question1,answer1, secure_question2,answer2):
+    statement_insert = f"UPDATE ACCOUNT SET secure_question1 = '{secure_question1}:{answer1}', secure_question2 = '{secure_question2}:{answer2}' WHERE username = '{username}'"
+    execute(statement_insert)
+    print(f'inserted secure questions for {username} successfully')
+
+def show_secure_question(username:str) -> list:
+    result = select_username(username, "secure_question1, secure_question2")
+    print(f"Secure questions for {username} are:")
+    [question_answer1, question_answer2] = result
+    question1 = question_answer1.split(":")[0]
+    question2 = question_answer2.split(":")[0]
+    # answer1 = question_answer1.split(":")[1]
+    # answer2 = question_answer2.split(":")[1]
+    print(f"2 security questions are for USER {username}:")
+    print(f"1. {question1}")
+    print(f"2. {question2}")
+    return [question1, question2]
+
+def check_secure_question(username:str, question:list, answer:list) -> bool:
+    [user_question1, user_question2] = question
+    [user_answer1, user_answer2] = answer
+    [question_answer1, question_answer2] = select_username(username, "secure_question1, secure_question2")
+    [question1,question2] = [question_answer1.split(":")[0], question_answer2.split(":")[0]]
+    [answer1,answer2] = [question_answer1.split(":")[1], question_answer2.split(":")[1]]
+    if user_question1 == question1 and user_question2 == question2 and user_answer1 == answer1 and user_answer2 == answer2:
+        return True
+    else:
+        return False
+  
+
+    
 def create_account_table():
     # drop everything in the database before adding new tables
     drop("account")
@@ -77,7 +108,9 @@ def create_account_table():
                 username  TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
                 role TEXT DEFAULT 'user',
-                score INTEGER DEFAULT 0);"""
+                score INTEGER DEFAULT 0,
+                secure_question1 TEXT,
+                secure_question2 TEXT);"""
     # statement to insert an admin user in default
     statement_admin_insert = """INSERT INTO ACCOUNT(username,password,role,score) 
     VALUES ('admin','admin123','admin',0)"""
