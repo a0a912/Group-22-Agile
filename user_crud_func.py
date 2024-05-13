@@ -113,6 +113,8 @@ print("Connected to database")
 # e.g select_all("account")                                                                #
 # the called function above equals to the following SQL statement                          #
 # "SELECT * FROM account"                                                                  #
+# it returns a list of tuple of all the users in the database                              #
+# e.g [(1, 'admin', 'admin123', 'admin', 0), (2, 'ahmed', 'ahmed123', 'user', 100)]       #
 ############################################################################################
 # select_all("account")
 
@@ -198,6 +200,23 @@ def sign_up(username, password) -> tuple: # return a tuple, tuple[0] is the bool
             return False, "User already exists"
     create("account", "username,password,role,score", f"'{username}','{password}','user',0")
     return True, "User created"
+
+#sign_up_with_questions()
+############################################################################################
+# signing up a new user with secure questions                                              #
+# when reset page is created, developers should use this function to create a new user     #
+# arguments for sign_up_with_questions() is username, password, secure_question1, answer1, secure_question2, answer2 #
+# if the user already exists, return False, "User already exists"                          #
+# if the user does not exist, create the user and return True, "User created with secure questions" #
+# sign_up_with_questions("ahmed", "ahmed123", "What is your favorite color?","red", "What is your favorite food?","pizza") #
+# The called function above equals to the following SQL statement                          #
+# "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
+# "UPDATE ACCOUNT SET secure_question1 = 'What is your favorite color?:red', secure_question2 = 'What is your favorite food?:pizza' WHERE username = 'ahmed'" #
+############################################################################################
+def sign_up_with_questions(username, password, secure_question1, answer1, secure_question2, answer2) -> tuple:
+    if sign_up(username, password)[0]:
+        insert_secure_question(username, secure_question1, answer1, secure_question2, answer2)
+    return True, "User created with secure questions"
 
 # update_score()
 ############################################################################################

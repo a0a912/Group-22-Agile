@@ -1,7 +1,7 @@
 
 # this is a trial file for testing the update_score function
 
-from user_crud_func import update_score, read_question_account, sign_up
+from user_crud_func import update_score, read_question_account, sign_up,sign_up_with_questions, select_all
 from usermod import insert_secure_question, show_secure_question, check_secure_question
 # you can register a new user and update the score, then change the user name or id to test the function
 # update_score("ahmed", 100, ["1","2","3"], ["4","5","6"])
@@ -24,9 +24,10 @@ from usermod import insert_secure_question, show_secure_question, check_secure_q
 # answer2 = "pizza"
 # insert_secure_question(username, secure_question1,answer1, secure_question2,answer2)
 
-show_secure_question("xinyu")
+# show_secure_question("ahmed")
 # print(check_secure_question("xinyu", ["What is your favorite color?","What is your favorite food?"], ["red","pizza"]))
 # print(check_secure_question("xinyu", ["What is your favorite color?","What is your favorite food?"], ["blue","pizza"]))
 # print(check_secure_question("xinyu", ["What is your favorite?","What is your favorite food?"], ["red","pizza"]))
 # print(check_secure_question("xinyu", ["What is your favorite color?","What is your favorite food?"], ["blue","apple"]))
-
+# print(check_secure_question("ahmed", ["What is your favorite color?","What is your favorite food?"], ["red","apple"]))
+sign_up_with_questions("eddie", "eddie123", "What is your favorite color?",'red',"What is your favorite food?","pizza")

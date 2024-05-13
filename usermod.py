@@ -54,11 +54,12 @@ def select_username(username, column_name="*"):
     # print(result)
     return result
 
-def select_all(table_name, column_name="*"):
+def select_all(table_name, column_name="*") -> list:
     rows = cursor.execute(f'SELECT {column_name} FROM {table_name}') 
     result = rows.fetchall()
-    for row in result:
-        print(row)
+    print("The result of select_all()",result)
+    # for row in result:
+    #     print(row)
     return result
 
 def delete(table_name, condition):
@@ -74,29 +75,37 @@ def insert_secure_question(username, secure_question1,answer1, secure_question2,
     print(f'inserted secure questions for {username} successfully')
 
 def show_secure_question(username:str) -> list:
-    result = select_username(username, "secure_question1, secure_question2")
-    print(f"Secure questions for {username} are:")
-    [question_answer1, question_answer2] = result
-    question1 = question_answer1.split(":")[0]
-    question2 = question_answer2.split(":")[0]
-    # answer1 = question_answer1.split(":")[1]
-    # answer2 = question_answer2.split(":")[1]
-    print(f"2 security questions are for USER {username}:")
-    print(f"1. {question1}")
-    print(f"2. {question2}")
-    return [question1, question2]
+    if select_username(username) == None:
+        print(f"User {username} does not exist")
+        return False
+    else:
+        result = select_username(username, "secure_question1, secure_question2")
+        print(f"Secure questions for {username} are:")
+        [question_answer1, question_answer2] = result
+        question1 = question_answer1.split(":")[0]
+        question2 = question_answer2.split(":")[0]
+        # answer1 = question_answer1.split(":")[1]
+        # answer2 = question_answer2.split(":")[1]
+        print(f"2 security questions are for USER {username}:")
+        print(f"1. {question1}")
+        print(f"2. {question2}")
+        return [question1, question2]
 
 def check_secure_question(username:str, question:list, answer:list) -> bool:
-    [user_question1, user_question2] = question
-    [user_answer1, user_answer2] = answer
-    [question_answer1, question_answer2] = select_username(username, "secure_question1, secure_question2")
-    [question1,question2] = [question_answer1.split(":")[0], question_answer2.split(":")[0]]
-    [answer1,answer2] = [question_answer1.split(":")[1], question_answer2.split(":")[1]]
-    if user_question1 == question1 and user_question2 == question2 and user_answer1 == answer1 and user_answer2 == answer2:
-        return True
-    else:
+    if select_username(username) == None:
+        print(f"User {username} does not exist")
         return False
-  
+    else:
+        [user_question1, user_question2] = question
+        [user_answer1, user_answer2] = answer
+        [question_answer1, question_answer2] = select_username(username, "secure_question1, secure_question2")
+        [question1,question2] = [question_answer1.split(":")[0], question_answer2.split(":")[0]]
+        [answer1,answer2] = [question_answer1.split(":")[1], question_answer2.split(":")[1]]
+        if user_question1 == question1 and user_question2 == question2 and user_answer1 == answer1 and user_answer2 == answer2:
+            return True
+        else:
+            return False
+    
 
     
 def create_account_table():
