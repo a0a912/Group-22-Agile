@@ -87,3 +87,4 @@ def create_account_table():
     execute(statement_admin_insert)
     connection.close() # 关闭连接
 
+
