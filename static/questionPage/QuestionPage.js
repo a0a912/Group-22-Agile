@@ -73,16 +73,8 @@ function wrongAnswer() {
         console.error("Element with id 'respone_box' not found");
     }
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const nextQuestionButton = document.getElementById('next_question');
+
     
-    if (nextQuestionButton) {
-        nextQuestionButton.addEventListener('click', function(event) {
-            // Reload the page when the "Next Question" button is clicked
-            location.reload();// reload the page rn, but gonna be next question no reload
-        });
-    }
-});
 // function wrongAnswer() {
 //     const submitButton = document.querySelector('input[type="submit"]');
 //     const descriptionBox = document.getElementById('respone_box');
@@ -103,37 +95,76 @@ document.addEventListener('DOMContentLoaded', function() {
 //     }
 // }
 
-// get 
+// function listen to button id nextquestion
 
-
-
-
-function displayQuestion(fullObject) {
-    console.log(fullObject);
-    const questionElement = document.getElementById('question_text');
-<<<<<<< HEAD
-    
-    questionElement.innerHTML = fullObject;
-    console.log(fullObject);
-    
-=======
-    console.log(questionElement);
-    //questionElement.innerHTML = fullObject;
-    //console.log(fullObject.question);
-    question_text = questionElement.innerText;
-    console.log(question_text);
-    // questionElement.innerHTML = fullObject.question;
->>>>>>> 102c1f4cc3760fb2c63a6b77b460b7dae2e21c4c
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const elementHtml = document.getElementById('to_JS').innerHTML;
-    const elementObject = JSON.parse(elementHtml);
-    console.log(elementObject[3].question);
+// Usage
 
-    displayQuestion(elementObject[3].question);
+
+
+
+
+function displayQuestion(question_list,index) {
+    if (index >= question_list.length) {
+        return alert('No more questions');
+    }
+    let currentQuestion = question_list[index].question;
+    const questionElement = document.getElementById('question_text');
+    
+    questionElement.innerHTML = currentQuestion;
+    
+    
+}
+function displayChoice(incorrect_list,answer) {
+    const choice1 = document.getElementById('choice1');
+    const choice2 = document.getElementById('choice2');
+    const choice3 = document.getElementById('choice3');
+    const choice4 = document.getElementById('choice4');
+
+    all_list = [choice1,choice2,choice3,choice4];
+    all_choice = [incorrect_list[0],incorrect_list[1],incorrect_list[2],answer];
+
+    all_list = shuffleArray(all_list);
+
+    for (let i = 0; i < all_list.length; i++) {
+        all_list[i].innerHTML = all_choice[i];
+    }
+
+
+
+
+}
+// __main__
+document.addEventListener('DOMContentLoaded', function() {
+    // get the data
+    const elementHtml = document.getElementById('to_JS').innerHTML;
+    const full_object = JSON.parse(elementHtml);
+    console.log(full_object);
+
+    let index = 0;
+    const nextQuestionButton = document.getElementById('next_question');
+    nextQuestionButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        
+        displayQuestion(full_object,index);
+        index = index + 1;
+        console.log(full_object[index].incorrect_list);
+        displayChoice(full_object[index].incorrect_list,index,full_object[index].answer);
+
+        
+    })
+    
+    
+
+ 
+    
 
     correctAnswer()
+    
 
 
 

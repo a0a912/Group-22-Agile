@@ -115,12 +115,13 @@ def question():
 
             question_dict = {
             'question': question_data.get('example'),
-            'incorrect_list': json.loads(question_data.get('incorrect_list'))
+            'incorrect_list': json.loads(question_data.get('incorrect_list')),
+            'id': question_data.get('id')
         }
 
             questions_list.append(question_dict)
             questions_list_json = json.dumps(questions_list)
-            
+
     print(len(questions_list))
                 
 
