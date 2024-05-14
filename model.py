@@ -74,12 +74,11 @@ def get_question_dict(table_name, index) -> dict:
     question_dict = {
         "id": question[0],
         "word": question[1],
-        "definition": question[2],
+        "correct": question[2],
         "incorrect_list": question[3],
-        "correct": question[4],
+        "weight": question[4],
         "example": question[5]
     }
     # print(question_dict)
     print("Question dictionary created")
     return question_dict
-        

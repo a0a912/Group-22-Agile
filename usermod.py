@@ -18,10 +18,10 @@ def select(table_name, column_name="*"):
         print(row[0])
     return result
 
-def select_id(table_name, id, column_name="*"):
+def select_id(table_name:str, id:int, column_name="*") -> tuple:
     rows = cursor.execute(f"SELECT {column_name} FROM {table_name} WHERE id = {id}")
     result = rows.fetchone()
-    print(result)
+    # print(result)
     return result
 
 def update(table_name, column_name, value, condition):
@@ -86,4 +86,5 @@ def create_account_table():
     # insert admin user
     execute(statement_admin_insert)
     connection.close() # 关闭连接
+
 

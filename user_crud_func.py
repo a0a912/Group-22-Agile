@@ -6,6 +6,43 @@ connection = sqlite3.connect(database,check_same_thread=False) # create the file
 cursor = connection.cursor() # cursor is used to interact with the database 
 print("Connected to database")
 
+# execute(statement)
+############################################################################################################
+# execute a statement and commit in the database                                                           #
+# the function in the usermod.py file is execute(statement) -> None:                                       #
+# need to "from usermod import execute" before calling the function                                        #
+# take 1 argument: statement                                                                               #
+# e.g. statement= "SELECT * FROM account"                                                                  #
+############################################################################################################
+
+# drop(table_name)
+############################################################################################################
+# drop a table in the database                                                                             #
+# the function in the usermod.py file is drop(table_name) -> None:                                         #
+# need to "from usermod import drop" before calling the function                                           #
+# take 1 argument: table_name                                                                              #
+# e.g. drop("account")                                                                                     #
+############################################################################################################
+
+# select(）
+############################################################################################################
+# select all the rows in the table                                                                         #
+# the function in the usermod.py file is select(table_name, column_name="*") -> tuple:                     #
+# need to "from usermod import select" before calling the function                                         #
+# take 2 arguments: table_name, column_name                                                                #
+# e.g. select("account", "username, score")                                                                #
+# the called function above equals to the following SQL statement                                          #
+# SELECT username, score FROM account                                                                      #
+# the function returns a tuple of the rows selected                                                        #
+# e.g. [('admin', 0), ('ahmed', 100)]                                                                      #
+# e.g select("account") # column_name is optional                                                          #
+# the called function above equals to the following SQL statement                                          #
+# SELECT * FROM account                                                                                    #
+# the function returns a tuple of the rows selected                                                        #
+# e.g. [(1, 'admin', 'admin123', 'admin', 0), (2, 'ahmed', 'ahmed123', 'user', 100)]                       #
+############################################################################################################
+
+# create()
 ############################################################################################
 # adding one new user to the database                                                 #
 # arguments for create() is table_name, column_name, value                                 #                 
@@ -17,6 +54,7 @@ print("Connected to database")
 # pay attention to the single quotes around the values                                     #
 ############################################################################################
 
+# select_username() 
 ############################################################################################
 # select one user through username                                                         #
 # arguments for select_username() is username                                              #
@@ -25,6 +63,7 @@ print("Connected to database")
 # "SELECT * FROM account WHERE username = 'admin'"                                         # 
 ############################################################################################          
 
+# update()
 ############################################################################################
 # updating the score of a user                                                             #
 # arguments for update() is table_name, column_name, value, condition                      #
@@ -38,6 +77,7 @@ print("Connected to database")
 # "UPDATE account SET score = 200 WHERE id=1"                                              #
 ############################################################################################
 
+# select_id()
 ############################################################################################
 # selecting a user through id                                                              #
 # arguments for select_id() is table_name, id, [column]                                    #
@@ -47,9 +87,13 @@ print("Connected to database")
 # e.g select_id("account",1)                                                               #
 # the called function above equals to the following SQL statement                          #
 # "SELECT * FROM account WHERE id=1"                                                       #
+# it returns a tuple of the information of the user                                        #
+# it can also be used to get info from other tables                                        #
+# e.g select_id("QUESTION_ACCOUNT",1)                                                      #
+# e.g select_id("QUESTION_BLANK",1,"word")                                                 #
 ############################################################################################
-# select_id("account",1)
 
+# delete()
 ############################################################################################
 # deleting a user from the database                                                        #
 # arguments for delete() is table_name, condition                                          #
@@ -61,7 +105,8 @@ print("Connected to database")
 # the called function above equals to the following SQL statement                          #
 # "DELETE FROM account WHERE username=xinyu"                                               #
 ############################################################################################
- 
+
+# select_all()
 ############################################################################################
 # selecting all users from the database                                                    #
 # arguments for select_all() is table_name                                                 #
@@ -71,7 +116,7 @@ print("Connected to database")
 ############################################################################################
 # select_all("account")
 
-
+# auth()
 ############################################################################################
 # authorizing a user                                                                       #
 # arguments for auth() is username, password                                               #
@@ -97,6 +142,7 @@ def auth(username, password) -> tuple:
     print(f"User {username} not found")
     return False, "User not found"
 
+# sign_up()
 ############################################################################################
 # signing up a new user                                                                    #
 # arguments for sign_up() is username, password                                            #
@@ -116,6 +162,7 @@ def sign_up(username, password) -> tuple: # return a tuple, tuple[0] is the bool
     create("account", "username,password,role,score", f"'{username}','{password}','user',0")
     return True, "User created"
 
+# update_score()
 ############################################################################################
 # updating the score of a user                                                             #
 # arguments for update_score() is index, score, correct_questions, incorrect_questions     #
