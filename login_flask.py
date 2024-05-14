@@ -46,6 +46,22 @@ def register():
         return redirect(url_for('login_page'))
     return redirect(url_for('register_page'))
 
+@app.route('/auth/forgot', methods=['GET'])
+def forgot():
+    return render_template("forgot.html")
+
+@app.route('/auth/forgot', methods=['POST'])
+def forgot_password():
+    username = request.form.get('username')
+    security_answer1 = request.form.get('security_answer1')
+    security_answer2 = request.form.get('security_answer2')
+    result = select_all("account", f"username='{username}'")
+    if result:
+        if result[0][3] == security_answer1 and result[0][4] == security_answer2:
+            session['username'] = username
+            return redirect(url_for('login_page'))
+    return redirect(url_for('forgot'))
+
 @app.route('/auth/logout', methods=['POST'])
 def logout():
     session.pop('username', None)
@@ -77,7 +93,7 @@ def update_password():
     # security_answer1 = request.form.get('security_answer1')
     # security_answer2 = request.form.get('security_answer2')
     update("account", "password", password, f"username='{username}'")
-    return redirect(url_for('profile')) 
+    return redirect(url_for('login_page')) 
    
     
 
