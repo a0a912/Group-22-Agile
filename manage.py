@@ -67,9 +67,9 @@ if __name__ == "__main__":
         execute(statement_question_table)
 
     # an  list to store the words themselves
-    list_of_words= get_existing_words("data.json")
+    list_of_words= get_existing_words("database/data.json")
     # get the words we have in the json file, this words are not processed, with only the word, and 4 meanings, 1 correct and 3 incorrect
-    with open("data.json","r",encoding="utf-8") as file:
+    with open("database/data.json","r",encoding="utf-8") as file:
         data = json.load(file)
         for word in data:
             word_tuple = get_meaning_phone(word["word"],data)
