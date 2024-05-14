@@ -1,11 +1,10 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect, session
+from flask import Flask, render_template, url_for, request, redirect, session, jsonify
 from model import Word, get_question_dict
 from user_crud_func import auth, sign_up, select_all
-import json
 from usermod import execute, select_all, update
 import secrets 
-
+import json
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 
@@ -79,6 +78,69 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
+@app.route('/question')
+def question():
+    # random number from 1-14, cant be 0
+    num = 0 
+    while num == 0:
+ 
+        num = secrets.randbelow(14)
+
+    #get the questions from the database
+    questions = get_question_dict("QUESTION_BLANK", num)
+    questions = questions['example']
+
+    incorrect = get_question_dict("QUESTION_BLANK", num)
+    incorrect = incorrect['incorrect_list']
+
+    correct  = get_question_dict("QUESTION_BLANK", num)
+    #correct = correct['correct']
+    
+
+
+
+    # Parse the JSON string
+    # incorrect_list = json.loads(incorrect)
+
+    # # Access the elements of the list
+    # choice1 = incorrect_list[0]
+    # choice2 = incorrect_list[1]
+    # choice3 = incorrect_list[2]
+
+    correct = correct['correct']
+    print(correct)
+    questions_list = []
+    questions_id = []
+    for i in range(10):
+            num = 0
+            while num == 0:
+                num = secrets.randbelow(14)
+                questions_id.append(num)
+                if num in questions_id:
+                    continue 
+
+            question_data = get_question_dict("QUESTION_BLANK", num)
+
+            question_dict = {
+            'question': question_data.get('example'),
+            'incorrect_list': json.loads(question_data.get('incorrect_list')),
+            'id': question_data.get('id')
+        }
+
+            questions_list.append(question_dict)
+            questions_list_json = json.dumps(questions_list)
+
+    print(len(questions_list))
+                
+
+
+    questions_list_json = json.dumps(questions_list)
+
+
+    return render_template("question.html", questions_list=questions_list_json)
+
+
+
 #Test for test_db_data.html
 @app.route('/test_db_data')
 def test_db_data():
@@ -92,7 +154,6 @@ def test_db_data():
     # Convert the fetched data into JSON strings
     question_blank_json = json.dumps(question_blank)
     question_definition_json = json.dumps(question_defination)
-
     
     return render_template("test_db_data.html", question_blank=question_blank_json, question_defination=question_definition_json, username=username)
 
@@ -115,4 +176,4 @@ def update_password():
     return redirect(url_for('profile')) 
    
 if __name__ == "__main__":
-    app.run(debug=True, port=8888) # 端口8888
+    app.run(debug=True, port=8888) # 端口8888s
