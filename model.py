@@ -82,4 +82,3 @@ def get_question_dict(table_name, index) -> dict:
     # print(question_dict)
     print("Question dictionary created")
     return question_dict
-        
