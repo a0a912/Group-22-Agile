@@ -81,7 +81,7 @@
     <footer>
       <div class="container"id="maincontent" tabindex="-1">
           <div class="col-lg-8 col-lg-offset-2">
-            <form action="/profile/update/password" method="POST">
+            <form action="/profile/update" method="POST">
               <table>
                 <tr>
                   <th for="username">Username</th>
@@ -91,8 +91,25 @@
                 <tr>
                   <td></td>
                   <td>
-                    <input type="password" name="password" id="password" placeholder="New password" required>
-                    <button type="submit" class="btn btn-primary">Reset</button> 
+                    <!-- <input type="password" name="password" id="password" placeholder="New password" required> -->
+                    <button type="button" class="btn btn-primary" onclick="openPopup()">Change</button>
+                    <div id="popup" style="display: none; position: fixed; width: 300px; height: 200px; background: white; border: 1px solid black; padding: 10px;">
+                      <form id="popupForm">
+                          <div>Security Question 1
+                          <input type="text" name="typed_security_answer1" placeholder="Input 1"><br>
+                          </div>
+                          <div>Security Question 2
+                          <input type="text" name="typed_security_answer2" placeholder="Input 2"><br>
+                          </div>
+                          <div>Type your current password
+                          <input type="text" name="currnent_password" placeholder="Input 3"><br>
+                          </div>
+                          <div>Type your new password
+                          <input type="text" name="new_password" placeholder="Input 4"><br>
+                          </div>
+                          <button type="submit">Submit</button>
+                      </form>
+                  </div>
                   </td>
                   <td>1</td>
               </table>
@@ -118,5 +135,9 @@
   <!-- Bootstrap Core JavaScript -->
   <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
 
-
+  <script>
+    function openPopup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+    </script>
 </html>

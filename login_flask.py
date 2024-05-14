@@ -70,10 +70,12 @@ def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
 
-@app.route('/profile/update/password', methods=['POST'])
+@app.route('/profile/update', methods=['POST'])
 def update_password():
     username = session.get('username')
     password = request.form.get('password')
+    # security_answer1 = request.form.get('security_answer1')
+    # security_answer2 = request.form.get('security_answer2')
     update("account", "password", password, f"username='{username}'")
     return redirect(url_for('profile')) 
    

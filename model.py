@@ -1,6 +1,7 @@
 # file for the model class
 # because we are using sqlite3 to store the data, we don't need id in the json file
-import random
+import random, db, _sqlite3
+from flask_sqlalchemy import Model, Column, Integer, String 
 class Word:
     def __init__(self,word,phonetics,correct,incorrect_list,word_example):
         self.word = word
@@ -26,3 +27,6 @@ class Word:
                 list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
         self.word_example = " ".join(list_of_word)
         
+
+
+
