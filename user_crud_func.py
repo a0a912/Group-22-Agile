@@ -1,4 +1,4 @@
-from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert
+from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question
 import sqlite3
 database = './database/database.db'
 # connect to the database
@@ -113,8 +113,47 @@ print("Connected to database")
 # e.g select_all("account")                                                                #
 # the called function above equals to the following SQL statement                          #
 # "SELECT * FROM account"                                                                  #
+# it returns a list of tuple of all the users in the database                              #
+# e.g [(1, 'admin', 'admin123', 'admin', 0), (2, 'ahmed', 'ahmed123', 'user', 100)]       #
 ############################################################################################
 # select_all("account")
+
+# insert_secure_question
+############################################################################################
+# inserting secure questions and answers for a user,when creating a new user               #
+# arguments for insert_secure_question() is username, secure_question1,answer1, secure_question2,answer2 #
+# need to "from user_crud_func import insert_secure_question" before calling the function  #
+# the secure questions and answers are stored in the ACCOUNT table of the database         #
+# e.g insert_secure_question("ahmed", "What is your favorite color?","red", "What is your favorite food?","pizza") #
+# the called function above equals to the following SQL statement                          #
+# "UPDATE ACCOUNT SET secure_question1 = 'What is your favorite color?:red', secure_question2 = 'What is your favorite food?:pizza' WHERE username = 'ahmed'" #
+# the function returns nothing but print "inserted secure questions for {username} successfully"             #
+############################################################################################
+
+# show_secure_question
+###########################################################################################
+# showing secure questions for a user when the user forgets the password in reset password#
+# arguments for show_secure_question() is username                                        #
+# need to "from user_crud_func import show_secure_question" before calling the function   #
+# the secure questions and answers are stored in the ACCOUNT table of the database        #
+# e.g show_secure_question("ahmed")                                                       #
+# the called function above equals to the following SQL statement                         #
+# "SELECT secure_question1,secure_question2 FROM account WHERE username = 'ahmed'"        #
+# the function returns a list of the secure questions and answers                         #
+# e.g ["What is your favorite color?","What is your favorite food?"]                      #
+###########################################################################################
+
+#check_secure_question
+###########################################################################################
+# checking the secure questions and answers for a user when the user resets the password  #
+# arguments for check_secure_question() is username, secure_questions, answers            #
+# secure_questions is list of of 2 questions and answers is lists of 2 answers            #
+# need to "from user_crud_func import check_secure_question" before calling the function  #
+# e.g check_secure_question("ahmed", ["What is your favorite color?","What is your favorite food?"], ["red","pizza"]) #
+# the called function above equals to the following SQL statement                         #
+# "SELECT secure_question1,secure_question2 FROM account WHERE username = 'ahmed'"        #
+# the function returns True if the answers are correct, False otherwise                   #
+###########################################################################################
 
 # auth()
 ############################################################################################
@@ -161,6 +200,23 @@ def sign_up(username, password) -> tuple: # return a tuple, tuple[0] is the bool
             return False, "User already exists"
     create("account", "username,password,role,score", f"'{username}','{password}','user',0")
     return True, "User created"
+
+#sign_up_with_questions()
+############################################################################################
+# signing up a new user with secure questions                                              #
+# when reset page is created, developers should use this function to create a new user     #
+# arguments for sign_up_with_questions() is username, password, secure_question1, answer1, secure_question2, answer2 #
+# if the user already exists, return False, "User already exists"                          #
+# if the user does not exist, create the user and return True, "User created with secure questions" #
+# sign_up_with_questions("ahmed", "ahmed123", "What is your favorite color?","red", "What is your favorite food?","pizza") #
+# The called function above equals to the following SQL statement                          #
+# "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
+# "UPDATE ACCOUNT SET secure_question1 = 'What is your favorite color?:red', secure_question2 = 'What is your favorite food?:pizza' WHERE username = 'ahmed'" #
+############################################################################################
+def sign_up_with_questions(username, password, secure_question1, answer1, secure_question2, answer2) -> tuple:
+    if sign_up(username, password)[0]:
+        insert_secure_question(username, secure_question1, answer1, secure_question2, answer2)
+    return True, "User created with secure questions"
 
 # update_score()
 ############################################################################################
