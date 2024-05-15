@@ -123,10 +123,15 @@ function displayChoice(incorrect_list,answer) {
 
 
 }
+oof_sound = new Audio('/static/assets/oof.mp3');
+murloc_sound = new Audio('/static/assets/murloc.mp3');
+murloc_sound.preload = 'auto';
+oof_sound.preload = 'auto';
 
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
     // get the data
+
     let point = 0;
     const score = document.getElementById('score_number');
     const elementHtml = document.getElementById('to_JS').innerHTML;
@@ -147,15 +152,19 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Selected value: ", selectedOption.value);
 
             if (selectedOption.value === full_object[index - 1].correct) {
+                murloc_sound.play();
                 console.log("Correct answer");
                 point += 1;
                 score.innerHTML = point;
                 
+                
                 description(true);
 
             } else {
+                oof_sound.play();
                 console.log("Wrong answer");
                 description(false);
+                
             }
         } else {
             console.log("No option selected");
