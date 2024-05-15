@@ -123,6 +123,17 @@ function displayChoice(incorrect_list,answer) {
 
 
 }
+function endGame() {
+    //
+
+
+
+
+
+
+
+
+}
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
 murloc_sound.preload = 'auto';
