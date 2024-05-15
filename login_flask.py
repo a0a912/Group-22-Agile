@@ -2,7 +2,7 @@
 from flask import Flask, render_template, url_for, request, redirect, session, jsonify
 from model import Word, get_question_dict
 from user_crud_func import auth, sign_up, select_all
-from usermod import execute, select_all, update
+from usermod import execute, select_all, update, check_secure_question
 import secrets 
 import json
 app = Flask(__name__)
@@ -23,6 +23,10 @@ def login_page():
 @app.route('/register', methods=['GET'])
 def register_page():
     return render_template("register2.html")
+
+@app.route('/forgot', methods=['GET'])
+def forgot_page():
+    return render_template("forgot.html")
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
@@ -50,6 +54,17 @@ def register():
         return redirect(url_for('login_page'))
         
     return redirect(url_for('register_page'))
+
+@app.route('/auth/forgot', methods=['POST'])
+def forgot():
+    username = request.form.get('username')
+    check_secure_question("ahmed", ["What is your favorite color?","What is your favorite food?"], ["red","pizza"])
+    # the called function above equals to the following SQL statement                         #
+    # "SELECT secure_question1,secure_question2 FROM account WHERE username = 'ahmed'" 
+    check_secure_question("username",["secure_question1","secure_question2"],["answer1","answer2"])
+    
+    return redirect(url_for('login_page'))
+
 
 @app.route('/auth/logout', methods=['POST'])
 def logout():
