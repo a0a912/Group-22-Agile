@@ -52,6 +52,7 @@
     </video>
 
     <audio id="oof-sound" src="static/assets/oof.mp3"></audio>
+    <audio id="murloc-sound" src="static/assets/murloc.mp3"></audio>
 
     <script>
         //DOM Variables
@@ -107,6 +108,8 @@ question_blank = JSON.parse(question_blank);
         let player_score_counter = 0;
 
         let user_name = "ahmed";
+
+        let audio;
 
         //Functions
         function random_number_generator(number) {
@@ -225,6 +228,8 @@ question_blank = JSON.parse(question_blank);
             //Increase player score
             player_score_counter++;
             player_score.innerHTML = `Score: ${player_score_counter}`
+            audio = document.getElementById('murloc-sound');
+            audio.play();
         } else {
             //Display wrong
             log.innerHTML = `Wrong. The correct answer was ${current_question_answer}`;
@@ -236,7 +241,7 @@ question_blank = JSON.parse(question_blank);
             mistakes++;
             lives--;
             displayPlayerLives(lives, mistakes);
-            let audio = document.getElementById('oof-sound');
+            audio = document.getElementById('oof-sound');
             audio.play();
 
             //Check if they have run out of lives
