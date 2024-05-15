@@ -181,12 +181,14 @@ function displayChoice(incorrect_list,answer) {
     all_value = [input1,input2,input3,input4];
     console.log(answer);
 
-    all_list = shuffleArray(all_list);
+    all_choice = shuffleArray(all_choice);
+    console.log(all_list);
 
     for (let i = 0; i < all_list.length; i++) {
         all_list[i].innerHTML = all_choice[i];
         all_value[i].value = all_choice[i];
     }
+    console.log(all_list);
 
 
 
@@ -211,6 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
         index = index + 1;
         
         displayChoice(full_object[index].incorrect_list,full_object[index].correct);
+        console.log(full_object[index].correct);
+        checkAnswer(full_object[index].correct);
+
 
 
         // reset form
