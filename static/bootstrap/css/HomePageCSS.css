@@ -52,9 +52,16 @@ li{
 li ul {
     display: inline;
 }
+
 li a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+li a:hover {
+    color: var(--hover-blue);
 }
 
 .NavBar {
@@ -68,74 +75,6 @@ li a {
     display: flex;
     justify-items:  right;
 }
-
-
-
-/* #mainNav {
-    background-color: var(--dark-blue);
-    font-family: 'dine-round', sans-serif;
-    color: white;
-}
-
-#mainNav li {
-        background-color: var(--dark-blue);
-        font-family: 'dine-round', sans-serif;
-        color: white; 
-}
-.navbar-collapse {
-    display: flex;
-    justify-content: right;
-    color: white;
-    font-family: 'dine-round', sans-serif;
-}
-
-.navbarMobile {
-    font-family: 'dine-round', sans-serif;
-} */
-
-#NavButtons {
-    display: flex;
-    position: absolute;
-    justify-self: center;
-    right: 5vw;
-    top: 5dvh;
-}
-
-#ProfileButton {
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-    border: none;
-    font-family: 'dine-round', sans-serif;
-    font-weight: bold;
-    
-}
-
-#ProfileButton:hover {
-    color: #5b6bfd;
-}
-
-#RankingButton {
-    width: 50px;
-    height: 50px;
-    margin-right: 3vw;
-    background-color: transparent;
-    border: none;
-    font-family: 'dine-round', sans-serif;
-    font-weight: bold;
-}
-
-#RankingButton a {
-font-family: 'dine-round', sans-serif;
-    color: white;
-    font-style: bold;
-}
-
-#RankingButton:hover {
-    color: #5b6bfd;
-}
-
-
 
 body{ 
     font-family: 'dine-round', sans-serif;
@@ -197,6 +136,7 @@ body.dark-mode {
     border: none;
     grid-column: 2;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game1:hover {
@@ -214,6 +154,7 @@ body.dark-mode {
     border: none;
     grid-column: 3;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game2:hover {
@@ -226,14 +167,6 @@ body.dark-mode {
 }
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 799px) {
-
-    #RankingButton {
-        width: 50px;
-        height: 50px;
-        margin-right: 3vw;
-        background-color: transparent;
-        border: none;
-    } 
 
 .banner{
     display: flex;
@@ -311,3 +244,28 @@ body.dark-mode {
 #SubmitButton:hover {
     color: white;
     background-color: #5b6bfd */
+
+
+
+
+/* #mainNav {
+    background-color: var(--dark-blue);
+    font-family: 'dine-round', sans-serif;
+    color: white;
+}
+
+#mainNav li {
+        background-color: var(--dark-blue);
+        font-family: 'dine-round', sans-serif;
+        color: white; 
+}
+.navbar-collapse {
+    display: flex;
+    justify-content: right;
+    color: white;
+    font-family: 'dine-round', sans-serif;
+}
+
+.navbarMobile {
+    font-family: 'dine-round', sans-serif;
+} */

@@ -41,15 +41,38 @@
 
             {% endif %}
             
-
-            
-            
         </div>
-        
-
     </header>  
+<button class = "dark-mode" id = "DarkModeToggle"></button>
+<div class = "StudyMode">
+    <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
+    <button id = "Game1">Basic Vocabulary</button>
+    <button id = "Game2">GRE Vocabulary</button>
+    <!-- <div id="SubmitButtonDiv">
+        <button id = "SubmitButton">Submit</button>
+    </div> -->
+    <!-- link to test_db_data.html -->
+    <a href="{{ url_for('test_db_data') }}">Test DB Data</a>
+    
+</div>
 
-    <!--   <header>
+ <!-- jQuery -->
+ <script src="static\bootstrap\vendor\jquery\jquery.min.js"></script>
+
+ <!-- Bootstrap Core JavaScript -->
+ <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
+
+ <!-- script to make buttons go to a link when clicked-->
+ <script>
+    document.getElementById("Game1").addEventListener("click", function() {
+        window.location.href = "{{ url_for('question') }}";
+    });
+    
+</script>
+</body>
+</html>
+
+   <!--   <header>
         <div class = "banner">
             
             {% if username %}
@@ -128,33 +151,3 @@
         <!-- </div> -->
         <!-- /.container-fluid -->
     <!-- </nav> -->
-
-
-<div class = "StudyMode">
-    <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
-    <button id = "Game1">Basic Vocabulary</button>
-    <button id = "Game2">GRE Vocabulary</button>
-    <!-- <div id="SubmitButtonDiv">
-        <button id = "SubmitButton">Submit</button>
-    </div> -->
-    <!-- link to test_db_data.html -->
-    <a href="{{ url_for('test_db_data') }}">Test DB Data</a>
-    
-</div>
-<button class = "dark-mode" id = "DarkModeToggle"></button>
-
- <!-- jQuery -->
- <script src="static\bootstrap\vendor\jquery\jquery.min.js"></script>
-
- <!-- Bootstrap Core JavaScript -->
- <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
-
- <!-- script to make buttons go to a link when clicked-->
- <script>
-    document.getElementById("Game1").addEventListener("click", function() {
-        window.location.href = "{{ url_for('question') }}";
-    });
-    
-</script>
-</body>
-</html>
