@@ -175,5 +175,9 @@ def update_password():
     update("account", "password", password, f"username='{username}'")
     return redirect(url_for('profile')) 
    
+@app.route("/registerq", methods=['GET'])
+def registerq():
+    return render_template("registerq.html")
+
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888s
