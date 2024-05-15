@@ -22,7 +22,7 @@ def login_page():
 
 @app.route('/register', methods=['GET'])
 def register_page():
-    return render_template("register.html")
+    return render_template("register2.html")
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
