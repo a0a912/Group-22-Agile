@@ -22,11 +22,34 @@
 
     <header>
         <div class = "banner">
-            <h1 id = "Welcome">Welcome ...</h1>
+            <!-- Check if user is loged in -->
+            {% if username %}
+            <h1 id = "Welcome">Welcome {{username}}!</h1>
             <div id = "NavButtons">
                 <button id="RankingButton">Ranking</button>
                 <button id = "ProfileButton">Profile</button>
+                <li class="page">
+                    <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                        <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                    </form>
+                </li>
+                
             </div>
+            {% else %}
+            <h1 id = "Welcome">Please Sign-up or Login</h1>
+            <li class="page">
+                <a href="{{ url_for('register_page') }}">Sign-up</a>
+            </li>
+            <li class="page">
+                <a href="{{ url_for('login_page') }}">Login</a>
+            </li>
+
+            {% endif %}
+
+
+
+            
+            
         </div>
         
 
