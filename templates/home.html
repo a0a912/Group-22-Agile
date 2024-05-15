@@ -74,8 +74,8 @@
 
 <div class = "StudyMode">
     <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
-    <button id = "Game1">Game Mode 1</button>
-    <button id = "Game2">Game Mode 2</button>
+    <button id = "Game1">Basic Vocabulary</button>
+    <button id = "Game2">GRE Vocabulary</button>
     <!-- <div id="SubmitButtonDiv">
         <button id = "SubmitButton">Submit</button>
     </div> -->
@@ -90,6 +90,13 @@
 
  <!-- Bootstrap Core JavaScript -->
  <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
+
+ <!-- script to make buttons go to a link when clicked-->
+ <script>
+    document.getElementById("Game1").addEventListener("click", function() {
+        window.location.href = "{{ url_for('question') }}";
+    });
     
+</script>
 </body>
 </html>
