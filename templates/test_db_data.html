@@ -51,6 +51,8 @@
         Your browser does not support the video tag.
     </video>
 
+    <audio id="oof-sound" src="static/assets/oof.mp3"></audio>
+
     <script>
         //DOM Variables
         let guess_box = document.getElementById("guess_box");
@@ -234,6 +236,8 @@ question_blank = JSON.parse(question_blank);
             mistakes++;
             lives--;
             displayPlayerLives(lives, mistakes);
+            let audio = document.getElementById('oof-sound');
+            audio.play();
 
             //Check if they have run out of lives
             if (lives === 0) {
