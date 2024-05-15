@@ -126,10 +126,11 @@ if __name__ == "__main__":
             Word.choose_word(word_blank,list_of_words)
             word_blank_dictionary = word_blank.__dict__
             statement= f"""INSERT INTO {question_blank}
-                        (word, correct, incorrect, example) 
+                        (word, correct, incorrect, phonetics_url,example) 
                         VALUES ('{word_blank_dictionary['word']}', 
                             '{word_blank_dictionary['correct']}', 
-                            '{json.dumps(word_blank_dictionary['incorrect_list'])}', 
+                            '{json.dumps(word_blank_dictionary['incorrect_list'])}',
+                            '{word_for_question_dictionary['phonetics']}',  
                             "{word_blank_dictionary['word_example']}")"""
             execute(statement)
     # create an associative table for the question_account
