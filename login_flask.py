@@ -124,7 +124,8 @@ def question():
             question_dict = {
             'question': question_data.get('example'),
             'incorrect_list': json.loads(question_data.get('incorrect_list')),
-            'id': question_data.get('id')
+            'id': question_data.get('id'),
+            'correct': question_data.get('correct')
         }
 
             questions_list.append(question_dict)
