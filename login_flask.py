@@ -1,8 +1,9 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, jsonify
 from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all
-from usermod import execute, select_all, update, check_secure_question
+from user_crud_func import auth, sign_up, select_all, sign_up_with_questions
+from usermod import execute, select_all, update, check_secure_question 
+from manage import return_all_secure_question
 import secrets 
 import json
 app = Flask(__name__)
@@ -47,9 +48,16 @@ def login():
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
 @app.route('/auth/register', methods=['POST'])
 def register():
+    return_all_secure_question()
     username = request.form.get('username')
     password = request.form.get('password')
-    result = sign_up(username, password)
+    secure_question1 = request.form.get('secure_question1')
+    secure_question2 = request.form.get('secure_question2')
+    if secure_question1 == secure_question2:
+        return False
+    answer1 = request.form.get('answer1')
+    answer2 = request.form.get('answer2')
+    result = sign_up_with_questions(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         return redirect(url_for('login_page'))
         
