@@ -8,11 +8,20 @@
 <body>
     <form action="" method="POST"></form>
     <input type="text" name="username" placeholder="username">
-    <select name="question1" id="question1"></select>
+    <input type="password" name="password" placeholder="password">
+    <select name="question1" id="question1">
+    {% for question in list_of_secure_questions %}
+    <option value="{{ question[1] }}">{{ question[1] }}</option>
+    {% endfor %}
+    </select>
     <input type="text" name="answer1" placeholder="answer for secure question1">
-    <select name="question2" id="question2"></select>
+    <select name="question2" id="question2">
+    {% for question in list_of_secure_questions %}
+    <option value="{{ question[1] }}">{{ question[1] }}</option>
+    {% endfor %}
+    </select>
     <input type="text" name="answer2" placeholder="answer for secure question2">
-    <button type="submit"></button>
+    <button type="submit">Submit</button>
 
 </body>
 </html>
