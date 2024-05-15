@@ -1,8 +1,8 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, jsonify
 from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all, sign_up_with_questions
-from usermod import execute, select_all, update, check_secure_question 
+from user_crud_func import auth, sign_up, select_all
+from usermod import execute, select_all, update, check_secure_question
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -200,7 +200,9 @@ def update_password():
    
 @app.route("/registerq", methods=['GET'])
 def registerq():
-    return render_template("registerq.html")
+    list_of_secure_questions = return_all_secure_question()
+    print(list_of_secure_questions)
+    return render_template("registerq.html", list_of_secure_questions=list_of_secure_questions)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888s
