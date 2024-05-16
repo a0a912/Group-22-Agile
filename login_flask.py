@@ -199,36 +199,6 @@ def update_password():
     return redirect(url_for('profile')) 
 
 ############################################################################################################
-# this is a prototype for the register page                                                               #
-# in /registerq, the user will be asked to choose the secure questions and enter answers                  #
-# then the user will be directed to /auth/registerq, where the data will be sent to database              #
-# after implementing, we have to delete the prototype content here                                        #
-# and delete related registerq.html file                                                                  #
-# current problems:                                                                                        #
-# 1. no way to check whether the password is secure                                                        #
-# 2. no way to check whether the answers are empty                                                       #
-# 3. no way to make sure the user choose different questions each time                                     #
-
-@app.route("/registerq", methods=['GET'])
-def registerq():
-    list_of_secure_questions = return_all_secure_question()
-    print(list_of_secure_questions)
-    return render_template("registerq.html", list_of_secure_questions=list_of_secure_questions)
-@app.route("/auth/registerq", methods=['POST'])
-def registerq_auth():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    secure_question1 = request.form.get('question1')
-    secure_question2 = request.form.get('question2')
-    answer1 = request.form.get('answer1')
-    answer2 = request.form.get('answer2')
-    result = sign_up_with_questions(username, password, secure_question1, answer1, secure_question2, answer2)
-    if result[0]:
-        return redirect(url_for('login_page'))
-    return redirect(url_for('registerq'))
-############################################################################################################
-
-############################################################################################################
 # this is a prototype for the forget password page                                                         #
 # in /forgetq, the user will be asked to enter the username                                                #
 # in /forgetp, the user will be asked to enter the answers to the secure questions                         #

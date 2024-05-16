@@ -9,7 +9,7 @@
     <h1>This is a prototype page, after implementing, we should delete this page</h1>
     <form action="auth/registerq" method="POST">
     <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
+    <input type="password" name="password" placeholder="password" required="required" minlength="5">
     <select name="question1" id="question1">
     {% for question in list_of_secure_questions %}
     <option value="{{ question[1] }}">{{ question[1] }}</option>
