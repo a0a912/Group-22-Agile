@@ -38,6 +38,7 @@ function description(result) {
         next_questionButton.style.border = '2px solid green'; 
         answer.innerText = 'correct';
         description.innerText = "  let's go";
+        murloc_sound.play();
     }
     else {
         // descriptionBox.style.color = 'white';
@@ -46,6 +47,7 @@ function description(result) {
         descriptionBox.style.color = 'red';
         next_questionButton.style.border = '2px solid red'; 
         answer.innerHTML = 'wrong';
+        oof_sound.play();
     }
     descriptionBox.style.display = 'block';
     
@@ -123,15 +125,54 @@ function displayChoice(incorrect_list,answer) {
 
 
 }
+const next_questionButton = document.getElementById('next_question'); 
 function endGame() {
-    //
+    
+    const banner = document.getElementsByClassName('banner')[0];
+    const submitButton = document.querySelector('input[id="submit_button"]');
+    const descriptionBox = document.getElementById('respone_box');
+    const score_box = document.getElementsByClassName('score_container')[0];
+    const correct_wrong = document.getElementById('answer');
+    const next_questionButton = document.getElementById('next_question');
+    const description_text = document.getElementById('description');
+    const question_text = document.getElementById('question_text');
+    const form = document.getElementById("question_form");
+    const duckey = document.createElement("img");
+    duckey.src = '/static/questionPage/duck-reverse.gif'
+    const choices_form = document.getElementById('choices');
+    const respone = document.createElement('h2');
+    const respone_des = document.createElement('h3');
+
+
+    respone.id = 'respone_end';
+    respone.innerHTML = 'Do it again!';
+    duckey.id = 'ducky';
+    choices_form.appendChild(duckey);
+    choices_form.appendChild(respone);
+    choices_form.appendChild(respone_des);
+    respone_des.innerHTML ="You're a failure in every sense of the word.";
+    form.style.display = 'none';
+    question_text.style.display = 'none';
+    description_text.style.display = 'none';
+    next_questionButton.style.backgroundColor = 'rgb(88,204,2)';
+    next_questionButton.style.border = '2px solid rgb(88,204,2)';
+    next_questionButton.value = 'continue';
+    next_questionButton.style.color = 'white';
+
+    correct_wrong.innerHTML = 'lesson review';
+    correct_wrong.style.color = 'rgb(229, 229, 229)';
+    score_box.style.display = 'none';
+    descriptionBox.style.display = 'block';
+    descriptionBox.style.backgroundColor = 'transparent';
+    descriptionBox.style.borderTop = 'rgb(229, 229, 229) 1px solid';
+    banner.style.display = 'none';
+    submitButton.style.display = 'none';
 
 
 
 
 
-
-
+    
 
 }
 oof_sound = new Audio('/static/assets/oof.mp3');
@@ -163,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Selected value: ", selectedOption.value);
 
             if (selectedOption.value === full_object[index - 1].correct) {
-                murloc_sound.play();
+                
                 console.log("Correct answer");
                 point += 1;
                 score.innerHTML = point;
@@ -172,13 +213,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 description(true);
 
             } else {
-                oof_sound.play();
+                
                 console.log("Wrong answer");
                 description(false);
                 
+                
             }
         } else {
-            console.log("No option selected");
+            description(false);
         }
     });
 
@@ -209,7 +251,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("question_form").reset();
             resetAnswer();
         } else {
-            alert('No more questions');
+            endGame();
+            
         }
     });
 });
