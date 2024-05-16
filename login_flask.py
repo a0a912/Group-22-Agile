@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, jsonify
 from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all
+from user_crud_func import auth, sign_up, select_all,sign_up_with_questions, show_secure_question,update
 from usermod import execute, select_all, update, check_secure_question
 from manage import return_all_secure_question
 import secrets 
@@ -204,5 +204,55 @@ def registerq():
     print(list_of_secure_questions)
     return render_template("registerq.html", list_of_secure_questions=list_of_secure_questions)
 
+############################################################################################################
+# this is a prototype for the forget password page                                                         #
+# in /forgetq, the user will be asked to enter the username                                                #
+# in /forgetp, the user will be asked to enter the answers to the secure questions                         #
+# if correct, user will be directed to /resetq, here the user will be asked to enter the new password      #
+# if the password is entered, the user will be directed to /auth/resetq, where the password will be updated#
+# after implementing, we have to delete the prototype content here                                         #
+# and delete related resetq.html and forgetq.html files                                                    #
+# current problems:                                                                                        #
+# 1. if no user exists, no notice about wrong usernames                                                    #
+# 2. if the answers are wrong, no notice about wrong answers                                               #
+# 3. no way to check whether the password is secure                                                        #
+# 4. no way to check whether the password is the same as the previous one                                  #
+@app.route("/forgetq", methods=['GET'])
+def forgetq():
+    return render_template("forgetq.html")
+# get the secure questions for the user, and send it to the resetq page
+@app.route("/forgetp", methods=['POST'])
+def forgetp():
+    username = request.form.get('username')
+    print(username)
+    questions = show_secure_question(username)
+    if not questions:
+        return redirect(url_for('forgetq'))
+    # return questions
+    else:
+        return render_template("resetq.html",username=username,questions=questions)
+# to the reset password page, receive answers here and send it to the resetp route
+@app.route("/resetq", methods=['GET'])
+def resetq():
+    username = request.form.get('username')
+    return render_template("resetq.html",username=username)
+
+@app.route("/auth/resetq", methods=['POST'])
+def resetp():
+    username = request.form.get('username')
+    questions = show_secure_question(username)
+    answer1 = request.form.get('answer1')
+    answer2 = request.form.get('answer2')
+    answers = [answer1,answer2]
+    print(answers)
+    # print(list_of_secure_questions)
+    if check_secure_question(username, questions, answers):
+        change_password = request.form.get('password')
+        update("account", "password", change_password, f"username='{username}'")
+        return redirect(url_for("home"))
+    else:
+        return redirect(url_for('forgetq'))
+
+############################################################################################################
 if __name__ == "__main__":
-    app.run(debug=True, port=8888) # 端口8888s
+    app.run(debug=True, port=8888) # 端口8888
