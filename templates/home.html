@@ -19,18 +19,53 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 </head>
 <body class = "dark-mode">
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-        <div class="container">
+
+    <header>
+        <div class = "banner">
+            <!-- Check if user is loged in -->
+            {% if username %}
+            <h1 id = "Welcome">Welcome {{username}}!</h1>
+            <div id = "NavButtons">
+                <button id="RankingButton">Ranking</button>
+                <button id = "ProfileButton">Profile</button>
+                <li class="page">
+                    <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                        <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                    </form>
+                </li>
+                
+            </div>
+            {% else %}
+            <h1 id = "Welcome">Please Sign-up or Login</h1>
+            <li class="page">
+                <a href="{{ url_for('register_page') }}">Sign-up</a>
+            </li>
+            <li class="page">
+                <a href="{{ url_for('login_page') }}">Login</a>
+            </li>
+
+            {% endif %}
+
+
+
+            
+            
+        </div>
+        
+
+    </header>  
+    <!-- <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container"> -->
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="NavBarMobile">
+            <!-- <div class="NavBarMobile">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="{{ url_for('home') }}">Unolingo</a>
-            </div>
+            </div> -->
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!-- <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {% if not username %}
                     <li class="page">
@@ -57,25 +92,17 @@
                     </li>
                     {% endif %}
                 </ul>
-            </div>
+            </div> -->
             <!-- /.navbar-collapse -->
-        </div>
+        <!-- </div> -->
         <!-- /.container-fluid -->
-    </nav>
-<!-- <header>
-    <div class = "banner">
-        <h1 id = "Welcome">Welcome ...</h1>
-    </div>
-    <div id = "Profile">
-        <button id = "ProfileButton"></button>
-    </div>
-</header>   -->
+    <!-- </nav> -->
 
 
 <div class = "StudyMode">
     <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
-    <button id = "Game1">Game Mode 1</button>
-    <button id = "Game2">Game Mode 2</button>
+    <button id = "Game1">Basic Vocabulary</button>
+    <button id = "Game2">GRE Vocabulary</button>
     <!-- <div id="SubmitButtonDiv">
         <button id = "SubmitButton">Submit</button>
     </div> -->
@@ -90,6 +117,13 @@
 
  <!-- Bootstrap Core JavaScript -->
  <script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
+
+ <!-- script to make buttons go to a link when clicked-->
+ <script>
+    document.getElementById("Game1").addEventListener("click", function() {
+        window.location.href = "{{ url_for('question') }}";
+    });
     
+</script>
 </body>
 </html>

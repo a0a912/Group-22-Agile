@@ -30,9 +30,6 @@ def register_page():
 def forgot_page():
     return render_template("forgot.html")
 
-@app.route('/quiz', methods=['GET'])
-def quiz():
-    return render_template("quiz.html")
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
@@ -174,7 +171,8 @@ def question():
             question_dict = {
             'question': question_data.get('example'),
             'incorrect_list': json.loads(question_data.get('incorrect_list')),
-            'id': question_data.get('id')
+            'id': question_data.get('id'),
+            'correct': question_data.get('correct')
         }
 
             questions_list.append(question_dict)

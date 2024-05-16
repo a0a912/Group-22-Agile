@@ -96,7 +96,8 @@ div#choices input,label{
     font-weight: lighter;
 }
 
-#question_form input[type="submit"] {
+input[type="submit"] {
+    display: inline-block;
     background-color: #353F98;
     color: #fff;
     border: none;
@@ -107,6 +108,8 @@ div#choices input,label{
     font-family: "eudox";
     font-size: 20px;
     transition: background-color 0.3s ease;
+    text-align: center;
+    align-items: center;
 
 }
   
