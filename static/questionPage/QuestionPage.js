@@ -142,8 +142,12 @@ function endGame() {
     const choices_form = document.getElementById('choices');
     const respone = document.createElement('h2');
     const respone_des = document.createElement('h3');
+    const nextQuestionButton = document.getElementById('next_question');
+    nextQuestionButton.addEventListener('click', function(event) {
+        window.location.href = '/';
+    })
 
-
+    
     respone.id = 'respone_end';
     respone.innerHTML = 'Do it again!';
     duckey.id = 'ducky';
@@ -252,6 +256,8 @@ document.addEventListener('DOMContentLoaded', function() {
             resetAnswer();
         } else {
             endGame();
+            // window.location.href = '/';
+
             
         }
     });

@@ -111,7 +111,7 @@ def question():
     print(correct)
     questions_list = []
     questions_id = []
-    for i in range(10):
+    for i in range(1):
             num = 0
             while num == 0:
                 num = secrets.randbelow(14)
