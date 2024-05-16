@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="static/login.css">
     <title>Reset</title>
 </head>
 <body>
@@ -13,25 +13,39 @@
     </div>
     <div class="container">
         <div class="logo">
-            <img src="unolingo-owl.png" alt="Logo">
+            <img src="static/trilingo_blue_owl.png" alt="Logo">
         </div>
-        <form class="register-form">
-            <h2>Create your account</h2>
-            <input type="text" placeholder="Username" class="input-field">
+        <form class="reset-form">
+            <h2>Forgot your password?</h2>
+            <form action="{{ url_for('get_secure_questions') }}" method="post">
+                <input type="text" name="username" placeholder="Username">
+                <button type="submit" value="Submit">Submit</button>
+            </form>
             <br>
             <input type="password" placeholder="Type New Password" class="input-field">
             <br>
-            <P>Security Question: </P>
-            <input type="answer1" placeholder="Confirm Password" class="input-field">
+            {% for question in questions %}
+            <p>Security Question1: {{ question1 }}</p>
+            <input type="text" placeholder="Confirm answer1" class="input-field">
+            {% endfor %}
+            <P>Security Question1: </P>
             <br>
-            <P>Security Question: </P>
-            <br>
-            <input type="answer2" placeholder="Confirm Password" class="input-field">
+            {% for question in questions %}
+                <p>Security Question2: {{ question2 }}</p>
+                <input type="text" placeholder="Confirm answer2" class="input-field">
+            {% endfor %}
             <br>
             <button type="submit" class="register-button">Sign Up</button>
             <div class="login-link">
                 <p>Already have an account? <a href="{{ url_for('login_page') }}">Login</a></p>
             </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
         </form>
     </div>
 </body>

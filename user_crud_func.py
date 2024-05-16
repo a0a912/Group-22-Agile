@@ -1,4 +1,4 @@
-from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question
+from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question 
 import sqlite3
 database = './database/database.db'
 # connect to the database
@@ -191,14 +191,15 @@ def auth(username, password) -> tuple:
 # The called function above equals to the following SQL statement                          #
 # "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
 ############################################################################################
-def sign_up(username, password) -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
+def sign_up(username, password, secure_question1, answer1, secure_question2, answer2) -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
     users = select_all("account", "username")
     # print(users)
     for user in users:
         if user[0] == username:
             print(f"User {username} already exists")
             return False, "User already exists"
-    create("account", "username,password,role,score", f"'{username}','{password}','user',0")
+    
+    create("account", "username,password,role,score,secure_question1,secure_question2", f"'{username}','{password}','user',0,'{secure_question1}:{answer1}', '{secure_question2}:{answer2}'") 
     return True, "User created"
 
 #sign_up_with_questions()

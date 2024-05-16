@@ -106,7 +106,6 @@ def check_secure_question(username:str, question:list, answer:list) -> bool:
         else:
             return False
     
-
     
 def create_account_table():
     # drop everything in the database before adding new tables

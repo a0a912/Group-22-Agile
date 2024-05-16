@@ -61,9 +61,7 @@
                     <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
                 </li>
                 <li class="page">
-                    <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
-                        <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                    </form>
+                    <a href="{{ url_for('logout') }}">Logout</a>
                 </li>
                 {% endif %}
               </ul>
