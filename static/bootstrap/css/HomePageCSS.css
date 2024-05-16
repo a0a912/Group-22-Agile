@@ -29,6 +29,8 @@
     font-size: 7vh;
 }
 
+
+
 .banner{
     position : relative;
     background-color: var(--dark-blue);
@@ -63,23 +65,48 @@
     font-family: 'dine-round', sans-serif;
 } */
 
-#Profile {
+#NavButtons {
     display: flex;
     position: absolute;
+    justify-self: center;
     right: 5vw;
     top: 5dvh;
 }
 
 #ProfileButton {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
     border: none;
+    font-family: 'dine-round', sans-serif;
+    font-weight: bold;
+    
 }
 
 #ProfileButton:hover {
-    border: 2px #5b6bfd solid;
+    color: #5b6bfd;
 }
+
+#RankingButton {
+    width: 50px;
+    height: 50px;
+    margin-right: 3vw;
+    background-color: transparent;
+    border: none;
+    font-family: 'dine-round', sans-serif;
+    font-weight: bold;
+}
+
+#RankingButton a {
+font-family: 'dine-round', sans-serif;
+    color: white;
+    font-style: bold;
+}
+
+#RankingButton:hover {
+    color: #5b6bfd;
+}
+
 
 
 body{ 
@@ -172,11 +199,17 @@ body.dark-mode {
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 799px) {
 
-#ProfileButton {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
+    #RankingButton {
+        width: 50px;
+        height: 50px;
+        margin-right: 3vw;
+        background-color: transparent;
+        border: none;
+    } 
+
+.banner #Welcome {
+    display: flex;
+    justify-content: left;
 }
 
 #Welcome{
@@ -185,7 +218,7 @@ body.dark-mode {
     color: white;
     margin: 0px;
     padding: 0px;
-    font-size: 5vh;
+    font-size: 3vh;
 }
 
 .StudyMode {
