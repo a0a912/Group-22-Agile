@@ -125,8 +125,9 @@ function displayChoice(incorrect_list,answer) {
 
 
 }
+
 const next_questionButton = document.getElementById('next_question'); 
-function endGame() {
+function endGame(win) {
     
     const banner = document.getElementsByClassName('banner')[0];
     const submitButton = document.querySelector('input[id="submit_button"]');
@@ -143,18 +144,34 @@ function endGame() {
     const respone = document.createElement('h2');
     const respone_des = document.createElement('h3');
     const nextQuestionButton = document.getElementById('next_question');
+    const ducky_win = document.createElement("img");
+    /////////////////////////////////////////////////
+    ducky_win.src = '/static/questionPage/duck_win.gif'
+
+
     nextQuestionButton.addEventListener('click', function(event) {
         window.location.href = '/';
     })
+    respone.id = 'respone_end';
+    
+    duckey.id = 'ducky';
+    ducky_win.id ='ducky'
+    if (win == true) {
+        respone.innerHTML = 'lets go!';
+        choices_form.appendChild(ducky_win);
+        respone_des.innerHTML ="You did it!";
+
+        
+    } else {
+        respone.innerHTML =  'Do it again!';
+        choices_form.appendChild(duckey);
+        respone_des.innerHTML ="You're a failure in every sense of the word.";
+    }
 
     
-    respone.id = 'respone_end';
-    respone.innerHTML = 'Do it again!';
-    duckey.id = 'ducky';
-    choices_form.appendChild(duckey);
     choices_form.appendChild(respone);
     choices_form.appendChild(respone_des);
-    respone_des.innerHTML ="You're a failure in every sense of the word.";
+    
     form.style.display = 'none';
     question_text.style.display = 'none';
     description_text.style.display = 'none';
@@ -187,17 +204,19 @@ oof_sound.preload = 'auto';
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
     // get the data
-
+    const respone_box = document.getElementById('respone_box');
     let point = 0;
     const score = document.getElementById('score_number');
     const elementHtml = document.getElementById('to_JS').innerHTML;
     const full_object = JSON.parse(elementHtml);
     console.log(full_object);
+    const number_of_question = full_object.length;
     
-
+    respone_box.style.display = 'none';
     let index = 0;
     const nextQuestionButton = document.getElementById('next_question');
     const form = document.getElementById("question_form");
+    
 
     // Attach the form submit event listener once
     form.addEventListener("submit", function(event) {
@@ -255,7 +274,13 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("question_form").reset();
             resetAnswer();
         } else {
-            endGame();
+            if (point < number_of_question / 2) {
+                console.log("You lose");
+                endGame(false);
+            } else {
+                console.log('you win');
+                endGame(true);
+            }
             // window.location.href = '/';
 
             
