@@ -126,41 +126,54 @@ body.dark-mode {
     text-align: center;
 }
 
-#Game1 {
+
+.GameModeButton {
     width: 300px;
-    height: 300px;
+    height: 100px;
     /* margin-left: 30%; */
     color: white;
     background-color: var(--dark-blue);
     border-radius: 10px;
     border: none;
-    grid-column: 2;
-    grid-row: 2;
     font-size: 1.5em;
+    margin: 0.5em;
 }
 
-#Game1:hover {
+.GameModeButton:hover {
     color: white;
     background-color: #5b6bfd
+}
+
+#Game1 {
+    grid-column: 2;
+    grid-row: 2;
 }
 
 #Game2 {    
-    width: 300px;
-    height: 300px;
-    /* margin-left: 50px;  */
-    color: white;
-    background-color: var(--dark-blue);
-    border-radius: 10px;
-    border: none;
     grid-column: 3;
     grid-row: 2;
-    font-size: 1.5em;
 }
 
-#Game2:hover {
-    color: white;
-    background-color: #5b6bfd
+#Game3 {    
+    grid-column: 2;
+    grid-row: 3;
 }
+
+#Game4 {    
+    grid-column: 3;
+    grid-row: 3;
+}
+
+#Game5 {    
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#Game6 {    
+    grid-column: 3;
+    grid-row: 4;
+}
+
 
 #ModeText {
     margin: 10px;
@@ -197,75 +210,17 @@ body.dark-mode {
 }
 
 #Game1 {
+    margin-top: 3vh;
+}
+
+.GameModeButton {    
     width: 200px;
     height: 100px;
     color: white;
     background-color: var(--dark-blue);
     border-radius: 10px;
     border: none;
-    margin: 3vh;
-}
-
-#Game2 {    
-    width: 200px;
-    height: 100px;
-    color: white;
-    background-color: var(--dark-blue);
-    border-radius: 10px;
-    border: none;
-}
-
-#Game2:hover {
-    color: white;
-    background-color: #5b6bfd
 }
 
 }
 
-
-/* 
-#SubmitButton {
-    width: 200px;
-    height: 50px;
-    font-family: 'dine-round';
-    font: 20px;
-    color: white;
-    background-color: var(--dark-blue);
-    border: none;
-    border-radius: 15px;
-}
-
-#SubmitButtonDiv {
-    margin: auto;
-    grid-column: 1/span 2;
-    padding: 2em;   
-}
-
-#SubmitButton:hover {
-    color: white;
-    background-color: #5b6bfd */
-
-
-
-
-/* #mainNav {
-    background-color: var(--dark-blue);
-    font-family: 'dine-round', sans-serif;
-    color: white;
-}
-
-#mainNav li {
-        background-color: var(--dark-blue);
-        font-family: 'dine-round', sans-serif;
-        color: white; 
-}
-.navbar-collapse {
-    display: flex;
-    justify-content: right;
-    color: white;
-    font-family: 'dine-round', sans-serif;
-}
-
-.navbarMobile {
-    font-family: 'dine-round', sans-serif;
-} */
