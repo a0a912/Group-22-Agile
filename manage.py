@@ -73,9 +73,11 @@ def create_secure_question_table():
 ############################################################################################################
 def return_all_secure_question()->list:
     rows = cursor.execute(f'SELECT * FROM SECURE_QUESTION') 
+    list_of_words= [row[1]for row in rows.fetchall()]
+    print("Return_all_secure_question()",list_of_words)
     result = rows.fetchall()
-    print("Return_all_secure_question()",result)
-    return result
+    # print("Return_all_secure_question()",result)
+    return list_of_words
 
 if __name__ == "__main__":
     create_secure_question_table()

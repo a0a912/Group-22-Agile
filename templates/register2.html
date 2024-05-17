@@ -88,7 +88,7 @@
             <label for="secure_question1">Security Question 1</label>
             <select id="secure_question1" name="secure_question1" class="form-control">
                 {% for secure_question in list_of_secure_questions %}
-                <option value="{{ secure_question[1] }}">{{ secure_question[1] }}</option>
+                <option value="{{ secure_question }}">{{ secure_question }}</option>
                 {% endfor %}
             </select>
             <input type="text" id="answer1" name="answer1" class="form-control" placeholder="Enter Answer 1" />
@@ -97,7 +97,7 @@
             <label for="secure_question2">Security Question 2</label>
             <select id="secure_question2" name="secure_question2" class="form-control">
                   {% for secure_question in list_of_secure_questions %}
-                  <option value="{{ secure_question[1] }}">{{ secure_question[1] }}</option>
+                  <option value="{{ secure_question }}">{{ secure_question }}</option>
                   {% endfor %}
             </select>
             <input type="text" id="answer2" name="answer2" class="form-control" placeholder="Enter Answer 2" />  
