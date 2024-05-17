@@ -1,24 +1,31 @@
-import unittest
+import pytest
 from unittest import mock
 from usermod import execute, select, select_id, update, insert, create, select_username, select_all, delete
 import usermod
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
+@pytest.fixture
+def mock_cursor():
+    with mock.patch('usermod.cursor') as mock_cursor:
+        yield mock_cursor
+
+@pytest.fixture
+def mock_connection():
+    with mock.patch('usermod.connection') as mock_connection:
+        yield mock_connection
+
 def test_execute(mock_connection, mock_cursor):
     statement = "CREATE TABLE test (id INTEGER)"
     execute(statement)
     mock_cursor.execute.assert_called_once_with(statement)
     mock_connection.commit.assert_called_once()
 
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
+
 def test_drop(mock_connection, mock_cursor):
     table_name = "test"
     usermod.drop(table_name)
     mock_cursor.execute.assert_called_once_with(f"DROP TABLE IF EXISTS {table_name.upper()}")
     mock_connection.commit.assert_called_once()
 
-@mock.patch('usermod.cursor')
+
 def test_select(mock_cursor):
     table_name = "test"
     column_name = "*"
@@ -32,7 +39,7 @@ def test_select(mock_cursor):
     mock_cursor.execute.assert_called_once_with(f"SELECT {column_name} FROM {table_name}")
     assert result == expected_result
 
-@mock.patch('usermod.cursor')
+
 def test_select_id(mock_cursor):
         table_name = "test"
         id = 1
@@ -46,8 +53,7 @@ def test_select_id(mock_cursor):
         assert result == expected_result
 
 
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
+
 def test_update(mock_connection, mock_cursor):
     table_name = "test"
     column_name = "name"
@@ -57,8 +63,7 @@ def test_update(mock_connection, mock_cursor):
     mock_cursor.execute.assert_called_once_with(f"UPDATE {table_name} SET {column_name} = '{value}' WHERE {condition}")
     mock_connection.commit.assert_called_once()
 
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
+
 def test_insert(mock_connection, mock_cursor):
     table_name = "test"
     column_name = ["id", "name"]
@@ -67,8 +72,7 @@ def test_insert(mock_connection, mock_cursor):
     mock_cursor.execute.assert_called_once_with(f"INSERT INTO {table_name}({column_name}) VALUES {value}")
     mock_connection.commit.assert_called_once()
 
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
+
 def test_create(mock_connection, mock_cursor):
     table_name = "users"
     column_name = "id, name"
@@ -110,12 +114,6 @@ def test_delete(mock_cursor):
     usermod.delete(table_name, condition)
     mock_cursor.execute.assert_called_once_with(f"DELETE FROM {table_name} WHERE {real_condition}")
 
-# def insert_secure_question(username, secure_question1,answer1, secure_question2,answer2):
-#     statement_insert = f"UPDATE ACCOUNT SET secure_question1 = '{secure_question1}:{answer1}', secure_question2 = '{secure_question2}:{answer2}' WHERE username = '{username}'"
-#     execute(statement_insert)
-#     print(f'inserted secure questions for {username} successfully')
-@mock.patch('usermod.cursor')
-@mock.patch('usermod.connection')
 def test_insert_secure_question(mock_connection, mock_cursor):
     username = "xinyu"
     secure_question1 = "What is your favorite color?"
