@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash
-from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update
+from model import Word, get_question_dict,get_random_questions
+from user_crud_func import auth, sign_up, select_all,show_secure_question,update
 from usermod import execute, select_all, update, check_secure_question
 from manage import return_all_secure_question
 import secrets 
@@ -148,64 +148,64 @@ def update_password():
 
 @app.route('/question')
 def question():
-    # random number from 1-14, cant be 0
-    num = 0 
-    while num == 0:
+    # # random number from 1-14, cant be 0
+    # num = 0 
+    # while num == 0:
  
-        num = secrets.randbelow(14)
+    #     num = secrets.randbelow(14)
 
-    #get the questions from the database
-    questions = get_question_dict("QUESTION_BLANK", num)
-    questions = questions['example']
+    # #get the questions from the database
+    # questions = get_question_dict("QUESTION_BLANK", num)
+    # questions = questions['example']
 
-    incorrect = get_question_dict("QUESTION_BLANK", num)
-    incorrect = incorrect['incorrect_list']
+    # incorrect = get_question_dict("QUESTION_BLANK", num)
+    # incorrect = incorrect['incorrect_list']
 
-    correct  = get_question_dict("QUESTION_BLANK", num)
-    #correct = correct['correct']
+    # correct  = get_question_dict("QUESTION_BLANK", num)
+    # #correct = correct['correct']
     
 
-    # Parse the JSON string
-    # incorrect_list = json.loads(incorrect)
+    # # Parse the JSON string
+    # # incorrect_list = json.loads(incorrect)
 
-    # # Access the elements of the list
-    # choice1 = incorrect_list[0]
-    # choice2 = incorrect_list[1]
-    # choice3 = incorrect_list[2]
+    # # # Access the elements of the list
+    # # choice1 = incorrect_list[0]
+    # # choice2 = incorrect_list[1]
+    # # choice3 = incorrect_list[2]
 
-    correct = correct['correct']
-    print(correct)
-    questions_list = []
-    questions_id = []
-    #determine how many question
-    for i in range(5):
-            num = 0
-            while num == 0:
-                #range of id put it here:
-                num = secrets.randbelow(14)
-                questions_id.append(num)
-                if num in questions_id:
-                    continue 
+    # correct = correct['correct']
+    # print(correct)
+    # questions_list = []
+    # questions_id = []
+    # #determine how many question
+    # for i in range(5):
+    #         num = 0
+    #         while num == 0:
+    #             #range of id put it here:
+    #             num = secrets.randbelow(14)
+    #             questions_id.append(num)
+    #             if num in questions_id:
+    #                 continue 
 
-            question_data = get_question_dict("QUESTION_BLANK", num)
+    #         question_data = get_question_dict("QUESTION_BLANK", num)
 
-            question_dict = {
-            'question': question_data.get('example'),
-            'incorrect_list': json.loads(question_data.get('incorrect_list')),
-            'id': question_data.get('id'),
-            'correct': question_data.get('correct')
-        }
+    #         question_dict = {
+    #         'question': question_data.get('example'),
+    #         'incorrect_list': json.loads(question_data.get('incorrect_list')),
+    #         'id': question_data.get('id'),
+    #         'correct': question_data.get('correct')
+    #     }
 
-            questions_list.append(question_dict)
-            questions_list_json = json.dumps(questions_list)
+    #         questions_list.append(question_dict)
+    #         questions_list_json = json.dumps(questions_list)
 
-    print(question_dict)
+    # print(question_dict)
                 
 
 
-    questions_list_json = json.dumps(questions_list)
+    # questions_list_json = json.dumps(questions_list)
 
-
+    questions_list_json = get_random_questions(5, 14,'QUESTION_BLANK')
     return render_template("question.html", questions_list=questions_list_json)
 
 
