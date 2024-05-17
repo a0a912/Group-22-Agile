@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='questionPage/Question.CSS') }}">
-    
+    <style>
+        #videoPlayer {
+            display: none;
+        }
+    </style>
     <p style="display: none;" id="to_JS"></p>
     <script>
 
@@ -34,6 +38,7 @@
         </div>
         <h1></h1>
     </header>
+    <button type="button" id="light_setting">Light or Dark Mode</button>
 
     
 
@@ -79,7 +84,53 @@
     
 
 
+    <button id="playButton">Play Video</button>
+    <video id="videoPlayer" controls>
+        <source src="{{ url_for('static', filename='assets/video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     
-    
+    <script>
+        let light_setting = document.getElementById("light_setting");
+        let body = document.body;
+        function light_dark_mode(event) {
+        // Toggles the background color and text color of the body element between light and dark mode.
+        //
+        // Parameters:
+        // - event: The event object representing the click event.
+        //
+        // Returns:
+        // None.  (Edits the DOM directly)
+        if (body.style.backgroundColor === "white") {
+            body.style.backgroundColor = "#2b2d42";
+            body.style.color = "white";
+            //change button color using get element by id
+
+        }
+        else {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+
+        }
+
+    }
+
+document.getElementById('playButton').addEventListener('click', function() {
+            var video = document.getElementById('videoPlayer');
+            video.style.display = 'block';
+            if (video.paused) {
+                video.play();
+                this.textContent = 'Pause Video';
+            } else {
+                video.pause();
+                this.textContent = 'Play Video';
+            }
+        });
+
+        light_setting.addEventListener("click", light_dark_mode);
+
+        
+
+    </script>
 </body>
 </html>
