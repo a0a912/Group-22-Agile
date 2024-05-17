@@ -11,9 +11,10 @@ def test_login_failure(client):
     # User didn't contain capital letter for the first letter
     data = {"username": "testuser", "password": "test!1" }
 
-    # Make 5 POST requests to the login route with incorrect answers
+    # Make 5 POST requests to the login route with incorrect answers (5 attempts)
     for _ in range(5):
         response = client.post("/auth/login", data=data)
+        assert response.status_code == 302
 
     # Check that the flashed message is correct
     # This allows the test to access session data, which is where Flask stores data between requests.

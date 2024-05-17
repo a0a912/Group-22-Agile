@@ -8,25 +8,32 @@ def client():
         yield client
 
 def test_register(client):
-    # Replace with your actual registration data
-    data = {"username": "testuser123", "password": "Test!1", "secure_question1": "What is your favorite color?", "answer1": "Blue", "secure_question2": "What is your favorite food?", "answer2": "Pizza"}
-    response = client.post("/auth/register", data=data)  # Corrected route
+    # Register a new user as a test user
+    data = {
+        "username": "testuser1212", 
+        "password": "Test!1", 
+        "secure_question1": "What is your favorite color?", 
+        "answer1": "Blue", "secure_question2": 
+        "What is your favorite food?", 
+        "answer2": "Pizza"
+        }
+    response = client.post("/auth/register", data=data)  
     assert response.status_code == 302
     
 
 def test_login(client):
-    # Replace with your actual login data
-    data = {"username": "testuser123", "password": "Test!1"}
-    response = client.post("/auth/login", data=data)  # Corrected route
+    # Login with the test user
+    data = {"username": "testuser1212", "password": "Test!1"}
+    response = client.post("/auth/login", data=data) 
     assert response.status_code == 302
    
     
 def test_change_password(client):
-    # Log in first
-    login_data = {"username": "testuser123", "password": "Test!1"}
-    client.post("/auth/login", data=login_data)  # Assuming your login route is '/auth/login'
+    # Login with the test user
+    login_data = {"username": "testuser1212", "password": "Test!1"}
+    client.post("/auth/login", data=login_data)  
 
-    # Then change password
+    # Change password for the test user in the profile page
     new_password_data = {"password": "Test!1", "new_password": "Newtestpass!1"}
     response = client.post("/profile/update/password", data=new_password_data)
     assert response.status_code == 302  
