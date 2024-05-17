@@ -26,8 +26,17 @@
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
             <div id = "NavButtons">
-                <button id="RankingButton">Ranking</button>
-                <button id = "ProfileButton">Profile</button>
+                <!--REMOVE THIS-->
+                <!-- <button id="RankingButton">Ranking</button>
+                <button id = "ProfileButton">Profile</button> -->
+                <!--USE THIS-->
+                <li class="page">
+                    <a href="{{ url_for('ranking') }}">Ranking</a>
+                </li>
+                <li class="page">
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                </li>
+                <!---->
                 <li class="page">
                     <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
                         <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
@@ -43,6 +52,9 @@
             <li class="page">
                 <a href="{{ url_for('login_page') }}">Login</a>
             </li>
+            
+
+            
 
             {% endif %}
 
