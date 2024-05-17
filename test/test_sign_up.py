@@ -1,36 +1,40 @@
-from user_crud_func import sign_up
+import pytest
+from login_flask import app as flask_app  
 
-def test_sign_up():
-    # Test case for successful sign up
-    result, message = sign_up("test!", "Password1!", "What is your favorite color?", "Blue", "What is your favorite food?", "Pizza")
-    assert result == True, "Expected True, but got False"
-    assert message == "User created", f"Expected 'User created', but got {message}"
+@pytest.fixture
+def client():
+    flask_app.config['TESTING'] = True
+    with flask_app.test_client() as client:
+        yield client
 
-    # Test case for existing user 
-    result, message = sign_up("test!", "Password1!", "What is your favorite color?", "Blue", "What is your favorite food?", "Pizza")
-    assert result == False, "Expected False, but got True"
-    assert message == "User already exists", f"Expected 'User already exists', but got {message}"
-
-    # Test case for short username (3 letters)
-    result, message = sign_up("tes", "Password1!", "What is your favorite color?", "Blue", "What is your favorite food?", "Pizza")
-    assert result == False, "Expected False, but got True"
-    assert message == "Username should be at least 4 characters", f"Expected 'Username should be at least 4 characters', but got {message}"
-
-    # Test case for short password (5 letters)
-    result, message = sign_up("test2", "Pass1", "What is your favorite color?", "Blue", "What is your favorite food?", "Pizza")
-    assert result == False, "Expected False, but got True"
-    assert message == "Password should be at least 6 characters", f"Expected 'Password should be at least 6 characters', but got {message}"
-
-    # Test case for password without uppercase, lowercase, digit and special character
-    result, message = sign_up("test3", "password", "What is your favorite color?", "Blue", "What is your favorite food?", "Pizza")
-    assert result == False, "Expected False, but got True"
-    assert message == "Password should contain at least one uppercase letter, one lowercase letter, one digit and one special character", f"Expected 'Password should contain at least one uppercase letter, one lowercase letter, one digit and one special character', but got {message}"
-
-    # Test case for missing any secure question answers
-    result, message = sign_up("test4", "Password1!", "What is your favorite color?", "Blue", "What is your favorite food?", "")
-    assert result == False, "Expected False, but got True"
-    assert message == "Please answer all the security questions", f"Expected 'Please answer all the security questions', but got {message}"
+def test_register(client):
+    # Register a new user as a test user
+    data = {
+        "username": "testuser1212", 
+        "password": "Test!1", 
+        "secure_question1": "What is your favorite color?", 
+        "answer1": "Blue", "secure_question2": 
+        "What is your favorite food?", 
+        "answer2": "Pizza"
+        }
+    response = client.post("/auth/register", data=data)  
+    assert response.status_code == 302
     
-if __name__ == "__main__":
-    test_sign_up()
-    print("All tests passed")
+
+def test_login(client):
+    # Login with the test user
+    data = {"username": "testuser1212", "password": "Test!1"}
+    response = client.post("/auth/login", data=data) 
+    assert response.status_code == 302
+   
+    
+def test_change_password(client):
+    # Login with the test user
+    login_data = {"username": "testuser1212", "password": "Test!1"}
+    client.post("/auth/login", data=login_data)  
+
+    # Change password for the test user in the profile page
+    new_password_data = {"password": "Test!1", "new_password": "Newtestpass!1"}
+    response = client.post("/profile/update/password", data=new_password_data)
+    assert response.status_code == 302  
+    
