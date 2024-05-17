@@ -96,7 +96,7 @@ div#choices input,label{
     font-weight: lighter;
 }
 
-input[type="submit"] {
+#question_form  input[type="submit"] {
     display: inline-block;
     background-color: #353F98;
     color: #fff;
@@ -153,23 +153,24 @@ input[type="submit"] {
     position: relative;
 }
 #next_question {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    position: fixed;
-    bottom: 20px; /* Adjust the value as needed */
-    right: 20px; /* Adjust the value as needed */
+   
+    justify-content: center;
+
+    display:inline-block ;
+
     font-family: 'eudox';
     background-color: transparent;
     color: #fff;
     border: 2px solid #fff;
-    padding: 10px 20px;
-    text-align: right;
+    width: 180px;
+    margin: 0px;
     text-decoration: none;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
+    grid-column: 5;
+    padding: 10px 0 10px 0 ;
   }
 #next_question:hover{
     box-shadow:  3px 3px 6px rgba(0, 0, 0, 0.3);
@@ -194,10 +195,10 @@ input[type="submit"] {
         display: inline;
         
     }
-    /* #next_question{ 
+
  
        
-    } */
+
 }
 #ducky{
 
@@ -210,4 +211,65 @@ input[type="submit"] {
 }
 #respone_end{
     color: #F7D308;
+}
+#score_correct_outter{
+    /* flex:1; */
+    height: 50px;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+    background-color: #95f44c;
+    margin: 0px;
+
+    border-radius: 10px;
+    display: flex;
+    margin-right: 8px;
+
+}
+#score_correct_inner{
+    width: 50px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+#score_incorrect_outter{
+    /* flex: 1; */
+    height: 50px;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    margin: 0px;
+    border-radius: 10px;
+    display: flex;
+    margin-right: 8px;
+
+}
+#score_incorrect_inner{
+    width: 50px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+#score_div{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+#winstreakImg{
+    width: 400px;
+    height: auto;
+    margin-top: 80px;
+
+    align-items: center;
+    justify-content: center;
+
+}
+#winstreak{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    
+ 
+
 }
