@@ -173,9 +173,11 @@ def question():
     print(correct)
     questions_list = []
     questions_id = []
-    for i in range(10):
+    #determine how many question
+    for i in range(5):
             num = 0
             while num == 0:
+                #range of id put it here:
                 num = secrets.randbelow(14)
                 questions_id.append(num)
                 if num in questions_id:
@@ -193,7 +195,7 @@ def question():
             questions_list.append(question_dict)
             questions_list_json = json.dumps(questions_list)
 
-    print(len(questions_list))
+    print(question_dict)
                 
 
 

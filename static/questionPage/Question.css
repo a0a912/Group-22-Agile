@@ -127,7 +127,7 @@ input[type="submit"] {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 0;
+    padding: 22px;
     background-color: none;
     color: white;
     position: fixed;
@@ -198,4 +198,16 @@ input[type="submit"] {
  
        
     } */
+}
+#ducky{
+
+    width: 250px;
+    height: auto;
+    margin-top: 80px;
+
+
+
+}
+#respone_end{
+    color: #F7D308;
 }

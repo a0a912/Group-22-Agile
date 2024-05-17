@@ -77,7 +77,9 @@ def get_question_dict(table_name, index) -> dict:
         "correct": question[2],
         "incorrect_list": question[3],
         "weight": question[4],
-        "example": question[5]
+        "phonetics": question[5],
+        "example": question[6]
+        
     }
     # print(question_dict)
     print("Question dictionary created")

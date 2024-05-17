@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="static\bootstrap\css\HomePageCSS.css">
     <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="static\bootstrap\vendor\bootstrap\css\bootstrap.min.css" rel="stylesheet">
-
-    <!-- Theme CSS -->
-    <link href="static\bootstrap\css\freelancer.min.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="static\bootstrap\vendor\font-awesome\css\font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -25,92 +19,25 @@
             <!-- Check if user is loged in -->
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
-            <div id = "NavButtons">
-                <!--REMOVE THIS-->
-                <!-- <button id="RankingButton">Ranking</button>
-                <button id = "ProfileButton">Profile</button> -->
-                <!--USE THIS-->
-                <li class="page">
-                    <a href="{{ url_for('ranking') }}">Ranking</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('profile') }}">Profile</a>
-                </li>
-                <!---->
-                <li class="page">
-                    <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
-                        <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                    </form>
-                </li>
-                
-            </div>
+            <li class = NavBar>
+                <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
+                <ul><a href="{{ url_for('profile') }}">Profile </a></ul>
+                <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                    <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                </form> </ul>
+            </li>
             {% else %}
             <h1 id = "Welcome">Please Sign-up or Login</h1>
-            <li class="page">
-                <a href="{{ url_for('register_page') }}">Sign-up</a>
+            <li >
+                <ul> <a href="{{ url_for('register_page') }}">Sign-up</a> </ul>
+                <ul> <a href="{{ url_for('login_page') }}">Login</a> </ul>
             </li>
-            <li class="page">
-                <a href="{{ url_for('login_page') }}">Login</a>
-            </li>
-            
-
-            
-
             {% endif %}
-
-
-
-            
             
         </div>
-        
-
     </header>  
-    <!-- <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-        <div class="container"> -->
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <!-- <div class="NavBarMobile">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('home') }}">Unolingo</a>
-            </div> -->
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <!-- <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    {% if not username %}
-                    <li class="page">
-                        <a href="{{ url_for('register_page') }}">Sign-up</a>
-                    </li>
-                    <li class="page">
-                        <a href="{{ url_for('login_page') }}">Login</a>
-                    </li>
-                    {% endif %}
-                    {% if username %}
-                    <li class="page">
-                        
-                    </li>
-                    <li class="page">
-                        <a href="{{ url_for('ranking') }}">Ranking</a>
-                    </li>
-                    <li class="page">
-                        <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
-                    </li>
-                    <li class="page">
-                        <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
-                            <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                        </form>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div> -->
-            <!-- /.navbar-collapse -->
-        <!-- </div> -->
-        <!-- /.container-fluid -->
-    <!-- </nav> -->
-
-
+<button class = "dark-mode" id = "DarkModeToggle"></button>
 <div class = "StudyMode">
     <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
     <button id = "Game1">Basic Vocabulary</button>
@@ -122,7 +49,6 @@
     <a href="{{ url_for('test_db_data') }}">Test DB Data</a>
     
 </div>
-<button class = "dark-mode" id = "DarkModeToggle"></button>
 
  <!-- jQuery -->
  <script src="static\bootstrap\vendor\jquery\jquery.min.js"></script>

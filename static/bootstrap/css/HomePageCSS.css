@@ -20,22 +20,12 @@
 
 } */
 
-#Welcome{
-    text-align: center;
-    font-family: 'dine-round', sans-serif;
-    color: white;
-    margin: 0px;
-    padding: 0px;
-    font-size: 7vh;
-}
-
-
-
 .banner{
     position : relative;
     background-color: var(--dark-blue);
-    display: flex;
-    width: 100dvw;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    width: 100%;
     height: 20dvh;
     margin: 0px;
     padding: 0px;
@@ -43,71 +33,48 @@
     align-items: center;
 }
 
-/* #mainNav {
-    background-color: var(--dark-blue);
+#Welcome{
+    text-align: center;
     font-family: 'dine-round', sans-serif;
     color: white;
+    margin: 0px;
+    padding: 0px;
+    font-size: 7vh;
+    grid-column: 2;
 }
 
-#mainNav li {
-        background-color: var(--dark-blue);
-        font-family: 'dine-round', sans-serif;
-        color: white; 
+li{
+    display: inline;
+    list-style: none;
+    text-decoration: none;
 }
-.navbar-collapse {
-    display: flex;
-    justify-content: right;
+
+li ul {
+    display: inline;
+}
+
+li a {
     color: white;
-    font-family: 'dine-round', sans-serif;
-}
-
-.navbarMobile {
-    font-family: 'dine-round', sans-serif;
-} */
-
-#NavButtons {
-    display: flex;
-    position: absolute;
-    justify-self: center;
-    right: 5vw;
-    top: 5dvh;
-}
-
-#ProfileButton {
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-    border: none;
-    font-family: 'dine-round', sans-serif;
+    text-decoration: none;
     font-weight: bold;
-    
+    font-size: 1em;
 }
 
-#ProfileButton:hover {
-    color: #5b6bfd;
+li a:hover {
+    color: var(--hover-blue);
 }
 
-#RankingButton {
-    width: 50px;
-    height: 50px;
-    margin-right: 3vw;
-    background-color: transparent;
-    border: none;
-    font-family: 'dine-round', sans-serif;
-    font-weight: bold;
+.NavBar {
+    display: flex;
+    grid-column: 3;
+    justify-self: end;
+    margin-right: 5vw;
 }
 
-#RankingButton a {
-font-family: 'dine-round', sans-serif;
-    color: white;
-    font-style: bold;
+.NavBar li{
+    display: flex;
+    justify-items:  right;
 }
-
-#RankingButton:hover {
-    color: #5b6bfd;
-}
-
-
 
 body{ 
     font-family: 'dine-round', sans-serif;
@@ -169,6 +136,7 @@ body.dark-mode {
     border: none;
     grid-column: 2;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game1:hover {
@@ -186,6 +154,7 @@ body.dark-mode {
     border: none;
     grid-column: 3;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game2:hover {
@@ -199,18 +168,11 @@ body.dark-mode {
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 799px) {
 
-    #RankingButton {
-        width: 50px;
-        height: 50px;
-        margin-right: 3vw;
-        background-color: transparent;
-        border: none;
-    } 
-
-.banner #Welcome {
+.banner{
     display: flex;
-    justify-content: left;
+    flex-direction: column;
 }
+
 
 #Welcome{
     text-align: center;
@@ -218,7 +180,7 @@ body.dark-mode {
     color: white;
     margin: 0px;
     padding: 0px;
-    font-size: 3vh;
+    font-size: 7vh;
 }
 
 .StudyMode {
@@ -282,3 +244,28 @@ body.dark-mode {
 #SubmitButton:hover {
     color: white;
     background-color: #5b6bfd */
+
+
+
+
+/* #mainNav {
+    background-color: var(--dark-blue);
+    font-family: 'dine-round', sans-serif;
+    color: white;
+}
+
+#mainNav li {
+        background-color: var(--dark-blue);
+        font-family: 'dine-round', sans-serif;
+        color: white; 
+}
+.navbar-collapse {
+    display: flex;
+    justify-content: right;
+    color: white;
+    font-family: 'dine-round', sans-serif;
+}
+
+.navbarMobile {
+    font-family: 'dine-round', sans-serif;
+} */
