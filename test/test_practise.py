@@ -42,19 +42,48 @@ def client():
             yield client
 
 def test_homepage(client):
+    """
+    This test checks the functionality of the homepage.
+
+    The test performs the following steps:
+        1. Sends a GET request to the '/' endpoint, which is the homepage.
+        2. Verifies that the response status code is 200, indicating a successful request.
+    """
+
+    # Send a GET request to the '/' endpoint.
     response = client.get('/')
+
+    # Verify that the response status code is 200.
+    # This indicates that the request was successful.
     assert response.status_code == 200
 
 def test_user_logged_in(client):
     """
     This test checks if the user is logged in by setting a username in the session
     and then verifying that the username is accessible on the homepage.
+
+    The test performs the following steps:
+        1. Set the username 'testuser' in the session using the 'username' key.
+        2. Send a GET request to the '/' endpoint, which is the homepage.
+        3. Verify that the response status code is 200, indicating a successful request.
+        4. Check if the response data contains the bytes 'testuser', which indicates that the username is displayed on the homepage.
     """
+
+    # Set the username 'testuser' in the session using the 'username' key.
+    # This simulates a successful login by setting the user's authentication status to true.
     with client.session_transaction() as session:
         session['username'] = 'testuser'
 
+    # Send a GET request to the '/' endpoint, which is the homepage.
+    # This checks if the user is logged in by verifying that the username is displayed on the homepage.
     response = client.get('/')
+
+    # Verify that the response status code is 200, indicating a successful request.
+    # This confirms that the user is logged in and the homepage is accessible.
     assert response.status_code == 200
+
+    # Check if the response data contains the bytes 'testuser', which indicates that the username is displayed on the homepage.
+    # This confirms that the user is logged in and the username is correctly displayed.
     assert b'testuser' in response.data
 
 
