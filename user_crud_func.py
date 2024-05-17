@@ -187,7 +187,7 @@ def auth(username, password) -> tuple:
 # arguments for sign_up() is username, password                                            #
 # if the user already exists, return False, "User already exists"                          #
 # if the user does not exist, create the user and return True, "User created"              #
-# sign_up("ahmed", "ahmed123")                                                             #
+# sign_up("eddie12", "p@ssword1", "What is your favorite color?", "red", "What is your favorite food?", "pizza")                                                           #
 # The called function above equals to the following SQL statement                          #
 # "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
 ############################################################################################
@@ -209,7 +209,6 @@ def sign_up(username, password, secure_question1, answer1, secure_question2, ans
     
     create("account", "username,password,role,score,secure_question1,secure_question2", f"'{username}','{password}','user',0,'{secure_question1}:{answer1}', '{secure_question2}:{answer2}'") 
     return True, "User created"
-
 
 # update_score()
 ############################################################################################

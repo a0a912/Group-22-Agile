@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all,sign_up_with_questions, show_secure_question,update
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update
 from usermod import execute, select_all, update, check_secure_question
 from manage import return_all_secure_question
 import secrets 
@@ -24,7 +24,7 @@ def login_page():
 @app.route('/register', methods=['GET'])
 def register_page():
     list_of_secure_questions = return_all_secure_question()
-    return render_template("register2.html", list_of_secure_questions=list_of_secure_questions)
+    return render_template("register.html", list_of_secure_questions=list_of_secure_questions)
 
 @app.route('/forgot', methods=['GET'])
 def forgot_page():
@@ -38,28 +38,31 @@ def login():
     password = request.form.get('password')
     # print(username, password)
     result = auth(username, password)
-    # print(result)
+    
+
     if result[0]:
         session['username'] = username
         # if the user is authenticated then redirect to the home page with the username
         return redirect(url_for('home'))
-    session['fail_count'] = session.get('fail_count', 0) + 1
-    
-    # if the user tried 5 times then redirect to the login page with a message
-    if 3 <= session.get('fail_count') < 5:
-        attempts = session.get('fail_count')
-        message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-        flash(message)
-    if session.get('fail_count') == 5:
-        message = "You tried 5 attempts. Please try again later."
-        flash(message)
-    return redirect(url_for('login_page'))
-    
+    else:
+        # if the user is not authenticated then redirect to the login page with a message
+        session['fail_count'] = session.get('fail_count', 0) + 1
+        # if the user tried 5 times then redirect to the login page with a message
+        if 3 <= session.get('fail_count') < 5:
+            attempts = session.get('fail_count')
+            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+            flash(message)
+            
+        if session.get('fail_count') == 5:
+            message = "You tried 5 attempts. Please try again later."
+            flash(message)
+            
+        return redirect(url_for('login_page'))
 
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
 @app.route('/auth/register', methods=['POST'])
 def register():
-    list_of_secure_questions = return_all_secure_question()
+    
     username = request.form.get('username')
     password = request.form.get('password')
     secure_question1 = request.form.get('secure_question1')
@@ -75,10 +78,8 @@ def register():
     result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         return redirect(url_for('login_page'))
-        
-    return redirect(url_for('login_page'), list_of_secure_questions=list_of_secure_questions)
 
-
+# making a post request to the server to check the username and password 
 @app.route('/auth/forgot', methods=['POST'])
 def forgot():
     list_of_secure_questions = return_all_secure_question()
@@ -102,13 +103,15 @@ def forgot():
             message = "You tried 5 attempts. Please try again later."
         return message
 
+# making a post request to the server to get secure questions
 @app.route('/get_secure_questions', methods=['POST'])
 def get_secure_questions():
     username = request.form.get('username')
     secure_questions = show_secure_question(username)
     return redirect(url_for('forgot_page'), secure_questions=secure_questions)
 
-@app.route('/logout', methods=['GET'])
+# logout route to remove the username from the session
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
@@ -116,16 +119,32 @@ def logout():
 
 @app.route('/ranking', methods=['GET'])
 def ranking():
-    
     scores = select_all("account", "username, score")
     #Sort the scores in descending order
     scores.sort(key=lambda x: x[1], reverse=True)
     return render_template("scores.html", scores=scores)
 
+# profile route to show the profile of the user
 @app.route('/profile', methods=['GET'])
 def profile():
     username =session.get('username')
     return render_template("profile.html", username=username)
+
+# update the password of the user in the profile page
+@app.route('/profile/update/password', methods=['POST'])
+def update_password():
+    username = session.get('username')
+    password = request.form.get('password')
+    new_password = request.form.get('new_password')
+    # check if the current password is correct
+    current_password = select_all("account", "password", f"username='{username}'")
+    if password == current_password:
+        update("account", "password", new_password, f"username='{username}'")
+    else:
+        # if the current password is incorrect, then redirect to the profile page with a message
+        flash("The current password is incorrect")
+
+    return redirect(url_for('profile')) 
 
 @app.route('/question')
 def question():
@@ -216,12 +235,6 @@ def test_get_question_dict():
     return render_template("test_get_dict.html", question_blank=question_blank, question_defination=question_defination, username=username)
 
 
-@app.route('/profile/update/password', methods=['POST'])
-def update_password():
-    username = session.get('username')
-    password = request.form.get('password')
-    update("account", "password", password, f"username='{username}'")
-    return redirect(url_for('profile')) 
 
 ############################################################################################################
 # this is a prototype for the forget password page                                                         #
