@@ -1,4 +1,4 @@
-from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question
+from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question 
 import sqlite3
 database = './database/database.db'
 # connect to the database
@@ -187,36 +187,28 @@ def auth(username, password) -> tuple:
 # arguments for sign_up() is username, password                                            #
 # if the user already exists, return False, "User already exists"                          #
 # if the user does not exist, create the user and return True, "User created"              #
-# sign_up("ahmed", "ahmed123")                                                             #
+# sign_up("eddie12", "p@ssword1", "What is your favorite color?", "red", "What is your favorite food?", "pizza")                                                           #
 # The called function above equals to the following SQL statement                          #
 # "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
 ############################################################################################
-def sign_up(username, password) -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
+def sign_up(username, password, secure_question1, answer1, secure_question2, answer2) -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
     users = select_all("account", "username")
     # print(users)
     for user in users:
         if user[0] == username:
             print(f"User {username} already exists")
             return False, "User already exists"
-    create("account", "username,password,role,score", f"'{username}','{password}','user',0")
+    if len(username) < 4:
+        return False, "Username should be at least 4 characters"
+    if len(password) < 6:
+        return False, "Password should be at least 6 characters"
+    if password.isalpha() or password.isdigit() or password.islower() or password.isupper():
+        return False, "Password should contain at least one uppercase letter, one lowercase letter, one digit and one special character"
+    if answer1 == "" or answer2 == "":
+        return False, "Answers should not be empty"
+    
+    create("account", "username,password,role,score,secure_question1,secure_question2", f"'{username}','{password}','user',0,'{secure_question1}:{answer1}', '{secure_question2}:{answer2}'") 
     return True, "User created"
-
-#sign_up_with_questions()
-############################################################################################
-# signing up a new user with secure questions                                              #
-# when reset page is created, developers should use this function to create a new user     #
-# arguments for sign_up_with_questions() is username, password, secure_question1, answer1, secure_question2, answer2 #
-# if the user already exists, return False, "User already exists"                          #
-# if the user does not exist, create the user and return True, "User created with secure questions" #
-# sign_up_with_questions("ahmed", "ahmed123", "What is your favorite color?","red", "What is your favorite food?","pizza") #
-# The called function above equals to the following SQL statement                          #
-# "INSERT INTO ACCOUNT(username,password,role,score) VALUES ('ahmed','ahmed123','user',0)" #
-# "UPDATE ACCOUNT SET secure_question1 = 'What is your favorite color?:red', secure_question2 = 'What is your favorite food?:pizza' WHERE username = 'ahmed'" #
-############################################################################################
-def sign_up_with_questions(username, password, secure_question1, answer1, secure_question2, answer2) -> tuple:
-    if sign_up(username, password)[0]:
-        insert_secure_question(username, secure_question1, answer1, secure_question2, answer2)
-    return True, "User created with secure questions"
 
 # update_score()
 ############################################################################################

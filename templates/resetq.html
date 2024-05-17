@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>This is a prototype page for reset page, after implement the reset page it should be deleted</h1>
+    <form action="auth/resetq" method="POST">
+        <p>user: {{ username }}</p>
+        <input type="hidden" name="username" value="{{ username }}">
+        <p>{{ questions[0] }}</p>
+        <input type="text" name="answer1" placeholder="answer for secure question1">
+        <p>{{ questions[1] }}</p>
+        <input type="text" name="answer2" placeholder="answer for secure question2">
+        <p>new password</p>
+        <input type="password" name="password" placeholder="password">
+        <p>confirm new password</p>
+        <input type="password" name="password" placeholder="password">
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

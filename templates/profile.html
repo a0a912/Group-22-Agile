@@ -52,7 +52,7 @@
                 {% endif %}
                 {% if username %}
                 <li class="page">
-                    <a href="{{ url_for('quiz') }}">Quiz</a>
+                    <a href="{{ url_for('question') }}">Quiz</a>
                 </li>
                 <li class="page">
                     <a href="{{ url_for('ranking') }}">Ranking</a>
@@ -61,9 +61,7 @@
                     <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
                 </li>
                 <li class="page">
-                    <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
-                        <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                    </form>
+                    <a href="{{ url_for('logout') }}">Logout</a>
                 </li>
                 {% endif %}
               </ul>
@@ -85,13 +83,17 @@
               <table>
                 <tr>
                   <th for="username">Username</th>
-                  <th for="password">New Password</th>
+                  <th for="current_password">Current Password</th>
+                  <th for="new_password">New Password</th>
                   <th> Question History</th>
                 </tr>
                 <tr>
                   <td></td>
                   <td>
-                    <input type="password" name="password" id="password" placeholder="New password" required>
+                    <input type="password" name="current_password" id="current_password" placeholder="Current password" required>
+                  </td>
+                  <td>
+                    <input type="password" name="new_password" id="new_password" placeholder="New password" required>
                     <button type="submit" class="btn btn-primary">Reset</button> 
                   </td>
                   <td>1</td>

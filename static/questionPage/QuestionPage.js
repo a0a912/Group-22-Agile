@@ -1,22 +1,6 @@
 
 
 
-
-
-
-function displayQuestion(fullObject) {
-    console.log(fullObject);
-    const questionElement = document.getElementById('question_text');
-    console.log(questionElement);
-    questionElement.innerHTML = fullObject;
-    console.log(fullObject.question);
-    // questionElement.innerHTML = fullObject.question;
-}
-// function displayQuestion() {
-//     const elementHtml = document.getElementById('to_JS').innerHTML;
-//     const questionElement = document.getElementById('');
-//     questionElement.innerHTML = elementHtml;
-// }
 function resetAnswer() {
     const submitButton = document.querySelector('input[id="submit_button"]');
     const descriptionBox = document.getElementById('respone_box');
@@ -50,9 +34,11 @@ function description(result) {
     if (result == true) {
         descriptionBox.style.backgroundColor = '#D7FFB8';
         next_questionButton.style.color = 'green';
+        descriptionBox.style.color = 'green';
         next_questionButton.style.border = '2px solid green'; 
         answer.innerText = 'correct';
         description.innerText = "  let's go";
+        murloc_sound.play();
     }
     else {
         // descriptionBox.style.color = 'white';
@@ -61,6 +47,7 @@ function description(result) {
         descriptionBox.style.color = 'red';
         next_questionButton.style.border = '2px solid red'; 
         answer.innerHTML = 'wrong';
+        oof_sound.play();
     }
     descriptionBox.style.display = 'block';
     
@@ -68,53 +55,7 @@ function description(result) {
     submitButton.style.display = 'none';
 
 }
-function wrongAnswer() {
-    const submitButton = document.querySelector('input[id="submit_button"]');
-    const descriptionBox = document.getElementById('respone_box');
-    const next_questionButton = document.getElementById('next_question');
 
-
-    if (descriptionBox) {
-        // Hide the description box initially
-        descriptionBox.style.display = 'none';
-
-        // Add an event listener to the submit button
-        submitButton.addEventListener('click', function(event) {
-            // Prevent the form from submittings
-            event.preventDefault();
-            descriptionBox.style.display = 'block';
-            descriptionBox.style.color = 'red';
-            
-            submitButton.style.display = 'none';
-
-        });
-    } else {
-        console.error("Element with id 'respone_box' not found");
-    }
-}
-
-    
-// function wrongAnswer() {
-//     const submitButton = document.querySelector('input[type="submit"]');
-//     const descriptionBox = document.getElementById('respone_box');
-
-//     if (descriptionBox) {
-//         // Hide the description box initially
-//         descriptionBox.style.display = 'none';
-
-//         // Add an event listener to the submit button
-//         submitButton.addEventListener('click', function(event) {
-//             // Prevent the form from submitting
-//             event.preventDefault();
-//             descriptionBox.style.display = 'block';
-//             descriptionBox.style.backgroundColor = 'red';
-//         });
-//     } else {
-//         console.error("Element with id 'respone_box' not found");
-//     }
-// }
-
-// function listen to button id nextquestion
 
 function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
@@ -154,17 +95,7 @@ function checkAnswer(correct) {
 
 
 
-function displayQuestion(question_list,index) {
-    if (index >= question_list.length) {
-        return alert('No more questions');
-    }
-    let currentQuestion = question_list[index].question;
-    const questionElement = document.getElementById('question_text');
-    
-    questionElement.innerHTML = currentQuestion;
-    
-    
-}
+
 function displayChoice(incorrect_list,answer) {
     const choice1 = document.getElementById('choice1');
     const choice2 = document.getElementById('choice2');
@@ -181,7 +112,8 @@ function displayChoice(incorrect_list,answer) {
     all_value = [input1,input2,input3,input4];
     console.log(answer);
 
-    all_list = shuffleArray(all_list);
+    all_choice = shuffleArray(all_choice);
+    
 
     for (let i = 0; i < all_list.length; i++) {
         all_list[i].innerHTML = all_choice[i];
@@ -191,43 +123,171 @@ function displayChoice(incorrect_list,answer) {
 
 
 
+
 }
+
+const next_questionButton = document.getElementById('next_question'); 
+function endGame(win) {
+    
+    const banner = document.getElementsByClassName('banner')[0];
+    const submitButton = document.querySelector('input[id="submit_button"]');
+    const descriptionBox = document.getElementById('respone_box');
+    const score_box = document.getElementsByClassName('score_container')[0];
+    const correct_wrong = document.getElementById('answer');
+    const next_questionButton = document.getElementById('next_question');
+    const description_text = document.getElementById('description');
+    const question_text = document.getElementById('question_text');
+    const form = document.getElementById("question_form");
+    const duckey = document.createElement("img");
+    duckey.src = '/static/questionPage/duck-reverse.gif'
+    const choices_form = document.getElementById('choices');
+    const respone = document.createElement('h2');
+    const respone_des = document.createElement('h3');
+    const nextQuestionButton = document.getElementById('next_question');
+    const ducky_win = document.createElement("img");
+    /////////////////////////////////////////////////
+    ducky_win.src = '/static/questionPage/duck_win.gif'
+
+
+    nextQuestionButton.addEventListener('click', function(event) {
+        window.location.href = '/';
+    })
+    respone.id = 'respone_end';
+    
+    duckey.id = 'ducky';
+    ducky_win.id ='ducky'
+    if (win == true) {
+        respone.innerHTML = 'lets go!';
+        choices_form.appendChild(ducky_win);
+        respone_des.innerHTML ="You did it!";
+
+        
+    } else {
+        respone.innerHTML =  'Do it again!';
+        choices_form.appendChild(duckey);
+        respone_des.innerHTML ="You're a failure in every sense of the word.";
+    }
+
+    
+    choices_form.appendChild(respone);
+    choices_form.appendChild(respone_des);
+    
+    form.style.display = 'none';
+    question_text.style.display = 'none';
+    description_text.style.display = 'none';
+    next_questionButton.style.backgroundColor = 'rgb(88,204,2)';
+    next_questionButton.style.border = '2px solid rgb(88,204,2)';
+    next_questionButton.value = 'continue';
+    next_questionButton.style.color = 'white';
+
+    correct_wrong.innerHTML = 'lesson review';
+    correct_wrong.style.color = 'rgb(229, 229, 229)';
+    score_box.style.display = 'none';
+    descriptionBox.style.display = 'block';
+    descriptionBox.style.backgroundColor = 'transparent';
+    descriptionBox.style.borderTop = 'rgb(229, 229, 229) 1px solid';
+    banner.style.display = 'none';
+    submitButton.style.display = 'none';
+
+
+
+
+
+    
+
+}
+oof_sound = new Audio('/static/assets/oof.mp3');
+murloc_sound = new Audio('/static/assets/murloc.mp3');
+murloc_sound.preload = 'auto';
+oof_sound.preload = 'auto';
+
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
     // get the data
+    const respone_box = document.getElementById('respone_box');
+    let point = 0;
+    const score = document.getElementById('score_number');
     const elementHtml = document.getElementById('to_JS').innerHTML;
     const full_object = JSON.parse(elementHtml);
     console.log(full_object);
-
+    const number_of_question = full_object.length;
+    
+    respone_box.style.display = 'none';
     let index = 0;
     const nextQuestionButton = document.getElementById('next_question');
-    checkAnswer();
-    // when next question button is clicked
+    const form = document.getElementById("question_form");
+    
+
+    // Attach the form submit event listener once
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        var selectedOption = document.querySelector('input[name="choice"]:checked');
+        if (selectedOption) {
+            console.log("Selected value: ", selectedOption.value);
+
+            if (selectedOption.value === full_object[index - 1].correct) {
+                
+                console.log("Correct answer");
+                point += 1;
+                score.innerHTML = point;
+                
+                
+                description(true);
+
+            } else {
+                
+                console.log("Wrong answer");
+                description(false);
+                
+                
+            }
+        } else {
+            description(false);
+        }
+    });
+
+    // Function to display the current question
+    function displayQuestion(question_list, index) {
+        if (index >= question_list.length) {
+            return alert('No more questions');
+        }
+        let currentQuestion = question_list[index].question;
+        const questionElement = document.getElementById('question_text');
+        questionElement.innerHTML = currentQuestion;
+    }
+
+
+
+    // Initialize the first question
+    displayQuestion(full_object, index);
+    displayChoice(full_object[index].incorrect_list, full_object[index].correct);
+    index++;
+
+    // Event listener for next question button
     nextQuestionButton.addEventListener('click', function(event) {
         event.preventDefault();
-        
-        
-        displayQuestion(full_object,index);
-        index = index + 1;
-        
-        displayChoice(full_object[index].incorrect_list,full_object[index].correct);
+        if (index < full_object.length) {
+            displayQuestion(full_object, index);
+            displayChoice(full_object[index].incorrect_list, full_object[index].correct);
+            index++;
+            document.getElementById("question_form").reset();
+            resetAnswer();
+        } else {
+            if (point < number_of_question / 2) {
+                console.log("You lose");
+                endGame(false);
+            } else {
+                console.log('you win');
+                endGame(true);
+            }
+            // window.location.href = '/';
 
-
-        // reset form
-        document.getElementById("question_form").reset();
-        resetAnswer();
-        
-    })
-    
-    
-
- 
-    
-
-    //correctAnswer()
-    
-
-
-
+            
+        }
+    });
 });
+
+
+
 
