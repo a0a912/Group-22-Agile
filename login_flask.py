@@ -30,6 +30,9 @@ def register_page():
 def forgot_page():
     return render_template("forgot.html")
 
+@app.route("/forgot", methods=['GET'])
+def forgot():
+    return render_template("forgot.html")
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
@@ -39,7 +42,6 @@ def login():
     # print(username, password)
     result = auth(username, password)
     
-
     if result[0]:
         session['username'] = username
         # if the user is authenticated then redirect to the home page with the username
@@ -68,38 +70,10 @@ def register():
     secure_question2 = request.form.get('secure_question2')
     answer1 = request.form.get('answer1')
     answer2 = request.form.get('answer2')
-
-    # if the two questions are same, then redirect to the register page with an error message
-    # if secure_question1 == secure_question2:
-    #     flash('The two security questions must be different.', 'error')
-    #     return redirect(url_for('register_page'))
     
     result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         return redirect(url_for('login_page'))
-
-# # making a post request to the server to check the username and password 
-# @app.route('/auth/forgot', methods=['POST'])
-# def forgot():
-#     username = request.form.get('username')
-#     secure_question1 = request.form.get('secure_question1')
-#     secure_question2 = request.form.get('secure_question2')
-#     answer1 = request.form.get('answer1')
-#     answer2 = request.form.get('answer2')
-#     new_password = request.form.get('new_password')
-
-#     # if the two answers in database and the input answers matches, then update the password
-#     if check_secure_question(username, [secure_question1, secure_question2], [answer1, answer2]):
-#         update("account","password", new_password, f"username='{username}'")
-#         return redirect(url_for('login_page'))
-#     else:
-#         session['fail_count'] = session.get('fail_count', 0) + 1
-#         if 3 <= session.get('fail_count') < 5:
-#             attempts = session.get('fail_count')
-#             message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-#         if session.get('fail_count') == 5:
-#             message = "You tried 5 attempts. Please try again later."
-#         return message
 
 # making a post request to the server to get secure questions
 @app.route('/get_secure_questions', methods=['POST'])
@@ -247,9 +221,6 @@ def test_get_question_dict():
 # 2. if the answers are wrong, no notice about wrong answers                                               #
 # 3. no way to check whether the password is secure                                                        #
 # 4. no way to check whether the password is the same as the previous one                                  #
-@app.route("/forgot", methods=['GET'])
-def forgot():
-    return render_template("forgot.html")
 
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/auth/forgot", methods=['POST'])
