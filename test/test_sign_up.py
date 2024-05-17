@@ -10,7 +10,7 @@ def client():
 def test_register(client):
     # Register a new user as a test user
     data = {
-        "username": "testuser1212", 
+        "username": "testuser12", 
         "password": "Test!1", 
         "secure_question1": "What is your favorite color?", 
         "answer1": "Blue", "secure_question2": 
@@ -23,14 +23,14 @@ def test_register(client):
 
 def test_login(client):
     # Login with the test user
-    data = {"username": "testuser1212", "password": "Test!1"}
+    data = {"username": "testuser12", "password": "Test!1"}
     response = client.post("/auth/login", data=data) 
     assert response.status_code == 302
    
     
 def test_change_password(client):
     # Login with the test user
-    login_data = {"username": "testuser1212", "password": "Test!1"}
+    login_data = {"username": "testuser12", "password": "Test!1"}
     client.post("/auth/login", data=login_data)  
 
     # Change password for the test user in the profile page

@@ -74,6 +74,8 @@ def register():
     result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         return redirect(url_for('login_page'))
+    else:
+        return redirect(url_for('register_page'))
 
 # making a post request to the server to get secure questions
 @app.route('/get_secure_questions', methods=['POST'])

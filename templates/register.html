@@ -78,11 +78,12 @@
         <form action="/auth/register" method="POST">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="username" id="username" name="username" class="form-control" placeholder="Enter Username" />
+            <input type="username" id="username" name="username" class="form-control" required minlength="4" placeholder="Enter Username" />
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+            <input type="password" id="password" name="password" class="form-control" required minlength="6" required pattern="[a-z][A-Z][0-9]" placeholder="Enter Password" />
+            <small id="passwordHelp" class="form-text text-muted">Must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</small>
           </div>
           <div class="form-group">
             <label for="secure_question1">Security Question 1</label>
@@ -91,7 +92,7 @@
                 <option value="{{ secure_question[1] }}">{{ secure_question[1] }}</option>
                 {% endfor %}
             </select>
-            <input type="text" id="answer1" name="answer1" class="form-control" placeholder="Enter Answer 1" />
+            <input type="text" id="answer1" name="answer1" class="form-control" required placeholder="Enter Answer 1" />
           </div>
           <div class="form-group">
             <label for="secure_question2">Security Question 2</label>
@@ -100,7 +101,7 @@
                   <option value="{{ secure_question[1] }}">{{ secure_question[1] }}</option>
                   {% endfor %}
             </select>
-            <input type="text" id="answer2" name="answer2" class="form-control" placeholder="Enter Answer 2" />  
+            <input type="text" id="answer2" name="answer2" class="form-control" required placeholder="Enter Answer 2" />  
           </div>
           <button type="submit" class="btn btn-primary btn-block">Sign-up</button>
         </form>

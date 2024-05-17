@@ -202,13 +202,26 @@ def sign_up(username, password, secure_question1, answer1, secure_question2, ans
         return False, "Username should be at least 4 characters"
     if len(password) < 6:
         return False, "Password should be at least 6 characters"
-    if password.isalpha() or password.isdigit() or password.islower() or password.isupper():
+    if not check_password(password):
         return False, "Password should contain at least one uppercase letter, one lowercase letter, one digit and one special character"
     if answer1 == "" or answer2 == "":
         return False, "Answers should not be empty"
     
     create("account", "username,password,role,score,secure_question1,secure_question2", f"'{username}','{password}','user',0,'{secure_question1}:{answer1}', '{secure_question2}:{answer2}'") 
     return True, "User created"
+
+def check_password(password):
+    if len(password) < 6:
+        return False
+    if not any(char.isdigit() for char in password):
+        return False
+    if not any(char.isupper() for char in password):
+        return False
+    if not any(char.islower() for char in password):
+        return False
+    if not any(char in "!@#$%^&*()-+" for char in password):
+        return False
+    return True
 
 # update_score()
 ############################################################################################
