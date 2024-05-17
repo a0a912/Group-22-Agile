@@ -49,7 +49,8 @@ function description(result) {
         answer.innerHTML = 'wrong';
         oof_sound.play();
     }
-    descriptionBox.style.display = 'block';
+    descriptionBox.style.display = 'grid';
+    descriptionBox.style.gridTemplateColumns = 'repeat(5, 1fr)';
     
     
     submitButton.style.display = 'none';
@@ -183,7 +184,8 @@ function endGame(win) {
     correct_wrong.innerHTML = 'lesson review';
     correct_wrong.style.color = 'rgb(229, 229, 229)';
     score_box.style.display = 'none';
-    descriptionBox.style.display = 'block';
+    descriptionBox.style.display = 'grid';
+    descriptionBox.style.gridTemplateColumns = 'repeat(5, 1fr)';
     descriptionBox.style.backgroundColor = 'transparent';
     descriptionBox.style.borderTop = 'rgb(229, 229, 229) 1px solid';
     banner.style.display = 'none';
