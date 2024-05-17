@@ -36,3 +36,6 @@ from manage import return_all_secure_question
 
 # 
 # return_all_secure_question()
+
+sign_up_with_questions("eddie", "eddie123", "What is your favorite color?",'red',"What is your favorite food?","pizza")
+check_secure_question("eddie", ["What is your favorite color?","What is your favorite food?"], ["red","pizza"])

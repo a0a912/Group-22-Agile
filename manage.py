@@ -94,6 +94,7 @@ if __name__ == "__main__":
                     correct TEXT NOT NULL,
                     incorrect TEXT NOT NULL,
                     weight INTEGER DEFAULT 1,
+                    phonetics_url TEXT,
                     example TEXT);"""
         execute(statement_question_table)
 
@@ -110,10 +111,11 @@ if __name__ == "__main__":
             word_for_question_dictionary = word_for_question.__dict__
             # append the dictionary into table question_definition of database
             statement= f"""INSERT INTO {question_definition}
-                        (word, correct, incorrect, example) 
+                        (word, correct, incorrect,phonetics_url, example) 
                         VALUES ('{word_for_question_dictionary['word']}', 
                             '{word_for_question_dictionary['correct']}', 
-                            '{json.dumps(word_for_question_dictionary['incorrect_list'])}', 
+                            '{json.dumps(word_for_question_dictionary['incorrect_list'])}',
+                            '{word_for_question_dictionary['phonetics']}', 
                             "{word_for_question_dictionary['word_example']}")"""
             execute(statement)
 
@@ -124,10 +126,11 @@ if __name__ == "__main__":
             Word.choose_word(word_blank,list_of_words)
             word_blank_dictionary = word_blank.__dict__
             statement= f"""INSERT INTO {question_blank}
-                        (word, correct, incorrect, example) 
+                        (word, correct, incorrect, phonetics_url,example) 
                         VALUES ('{word_blank_dictionary['word']}', 
                             '{word_blank_dictionary['correct']}', 
-                            '{json.dumps(word_blank_dictionary['incorrect_list'])}', 
+                            '{json.dumps(word_blank_dictionary['incorrect_list'])}',
+                            '{word_for_question_dictionary['phonetics']}',  
                             "{word_blank_dictionary['word_example']}")"""
             execute(statement)
     # create an associative table for the question_account

@@ -20,20 +20,12 @@
 
 } */
 
-#Welcome{
-    text-align: center;
-    font-family: 'dine-round', sans-serif;
-    color: white;
-    margin: 0px;
-    padding: 0px;
-    font-size: 7vh;
-}
-
 .banner{
     position : relative;
     background-color: var(--dark-blue);
-    display: flex;
-    width: 100dvw;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    width: 100%;
     height: 20dvh;
     margin: 0px;
     padding: 0px;
@@ -41,46 +33,48 @@
     align-items: center;
 }
 
-/* #mainNav {
-    background-color: var(--dark-blue);
+#Welcome{
+    text-align: center;
     font-family: 'dine-round', sans-serif;
     color: white;
+    margin: 0px;
+    padding: 0px;
+    font-size: 7vh;
+    grid-column: 2;
 }
 
-#mainNav li {
-        background-color: var(--dark-blue);
-        font-family: 'dine-round', sans-serif;
-        color: white; 
+li{
+    display: inline;
+    list-style: none;
+    text-decoration: none;
 }
-.navbar-collapse {
-    display: flex;
-    justify-content: right;
+
+li ul {
+    display: inline;
+}
+
+li a {
     color: white;
-    font-family: 'dine-round', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
 }
 
-.navbarMobile {
-    font-family: 'dine-round', sans-serif;
-} */
+li a:hover {
+    color: var(--hover-blue);
+}
 
-#Profile {
+.NavBar {
     display: flex;
-    position: absolute;
-    right: 5vw;
-    top: 5dvh;
+    grid-column: 3;
+    justify-self: end;
+    margin-right: 5vw;
 }
 
-#ProfileButton {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: none;
+.NavBar li{
+    display: flex;
+    justify-items:  right;
 }
-
-#ProfileButton:hover {
-    border: 2px #5b6bfd solid;
-}
-
 
 body{ 
     font-family: 'dine-round', sans-serif;
@@ -142,6 +136,7 @@ body.dark-mode {
     border: none;
     grid-column: 2;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game1:hover {
@@ -159,6 +154,7 @@ body.dark-mode {
     border: none;
     grid-column: 3;
     grid-row: 2;
+    font-size: 1.5em;
 }
 
 #Game2:hover {
@@ -172,12 +168,11 @@ body.dark-mode {
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 799px) {
 
-#ProfileButton {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
+.banner{
+    display: flex;
+    flex-direction: column;
 }
+
 
 #Welcome{
     text-align: center;
@@ -185,7 +180,7 @@ body.dark-mode {
     color: white;
     margin: 0px;
     padding: 0px;
-    font-size: 5vh;
+    font-size: 7vh;
 }
 
 .StudyMode {
@@ -249,3 +244,28 @@ body.dark-mode {
 #SubmitButton:hover {
     color: white;
     background-color: #5b6bfd */
+
+
+
+
+/* #mainNav {
+    background-color: var(--dark-blue);
+    font-family: 'dine-round', sans-serif;
+    color: white;
+}
+
+#mainNav li {
+        background-color: var(--dark-blue);
+        font-family: 'dine-round', sans-serif;
+        color: white; 
+}
+.navbar-collapse {
+    display: flex;
+    justify-content: right;
+    color: white;
+    font-family: 'dine-round', sans-serif;
+}
+
+.navbarMobile {
+    font-family: 'dine-round', sans-serif;
+} */

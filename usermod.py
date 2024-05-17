@@ -28,7 +28,8 @@ def update(table_name, column_name, value, condition):
     value = f"'{value}'"
     statement_update = f"UPDATE {table_name} SET {column_name} = {value} WHERE {condition}"
     # print(statement_update)
-    execute(statement_update)
+    cursor.execute(statement_update)
+    connection.commit()
 
 def insert(table_name, column_name:list, value:list):
     print('insert')
@@ -53,6 +54,15 @@ def select_username(username, column_name="*"):
     result = rows.fetchone()
     # print(result)
     return result
+
+def select_password(username):
+    rows = cursor.execute("SELECT password FROM account WHERE username = :username", {"username": username})
+    result = rows.fetchone()
+    if result is not None:
+        return result[0]
+    else:
+        return None
+    
 
 def select_all(table_name, column_name="*") -> list:
     rows = cursor.execute(f'SELECT {column_name} FROM {table_name}') 
@@ -106,7 +116,6 @@ def check_secure_question(username:str, question:list, answer:list) -> bool:
         else:
             return False
     
-
     
 def create_account_table():
     # drop everything in the database before adding new tables
