@@ -23,6 +23,48 @@ function resetAnswer() {
     submitButton.style.alignItems = 'center';
     
 }
+// Global variable to store original display values
+
+function winstreak() {
+    
+    const container = document.getElementById('winstreak');
+    const choices = document.getElementById('choices');
+    const score_box = document.getElementsByClassName('score_container')[0];
+    const question_text = document.getElementById('question_text');
+    const banner_text = document.getElementsByClassName('banner_text_h1')[0];
+    const banner = document.getElementsByClassName('banner')[0];
+    const defaultContent = banner_text.innerHTML; // Store default text content
+
+    banner_text.innerHTML = '3 in a Row!';
+    banner_text.style.fontFamily = 'Bebas Neue';
+    banner.style.backgroundColor = '#ee5b12';
+    question_text.style.display = 'none';
+    choices.style.display = 'none';
+    score_box.style.display = 'none';
+    container.style.display = 'flex';
+    container.innerHTML += '<img id="winstreakImg" src="/static/questionPage/duck-winstreak.gif">'; 
+
+    setTimeout(function() {
+        question_text.style.display = '';
+        choices.style.display = '';
+        score_box.style.display = '';
+        container.style.display = 'none';
+        container.innerHTML = '';
+        banner_text.innerHTML = defaultContent; // Reset text content
+        banner.style.backgroundColor = ''; // Reset background color
+        banner_text.style.fontFamily = ''; // Reset font family
+    }, 3000); // 3 seconds delay (3000 milliseconds)
+}
+
+// Usage
+
+
+// To unhide all elements, call unhideAll()
+// unhideAll();
+
+
+
+
 
 function description(result) {
     const submitButton = document.querySelector('input[id="submit_button"]');
@@ -128,7 +170,7 @@ function displayChoice(incorrect_list,answer) {
 }
 
 const next_questionButton = document.getElementById('next_question'); 
-function endGame(win) {
+function endGame(win,score,number_of_question) {
     
     const banner = document.getElementsByClassName('banner')[0];
     const submitButton = document.querySelector('input[id="submit_button"]');
@@ -140,12 +182,18 @@ function endGame(win) {
     const question_text = document.getElementById('question_text');
     const form = document.getElementById("question_form");
     const duckey = document.createElement("img");
-    duckey.src = '/static/questionPage/duck-reverse.gif'
+    duckey.src = '/static/questionPage/angry-duck.gif'
     const choices_form = document.getElementById('choices');
     const respone = document.createElement('h2');
     const respone_des = document.createElement('h3');
     const nextQuestionButton = document.getElementById('next_question');
     const ducky_win = document.createElement("img");
+    const score_outerdiv = document.createElement('div');
+    const score_innerdiv = document.createElement('div');
+    const score_outerdiv_incorrect = document.createElement('div');
+    const score_innerdiv_incorrect = document.createElement('div');
+
+    const score_div = document.createElement('div');
     /////////////////////////////////////////////////
     ducky_win.src = '/static/questionPage/duck_win.gif'
 
@@ -153,6 +201,20 @@ function endGame(win) {
     nextQuestionButton.addEventListener('click', function(event) {
         window.location.href = '/';
     })
+
+ 
+    score_outerdiv_incorrect.id = 'score_incorrect_outter'
+    score_innerdiv_incorrect.id = 'score_incorrect_inner'
+
+    score_outerdiv.id = 'score_correct_outter'
+    score_innerdiv.id = 'score_correct_inner'
+    score_innerdiv.innerHTML = score;
+    score_innerdiv_incorrect.innerHTML = number_of_question - score;
+
+
+
+
+
     respone.id = 'respone_end';
     
     duckey.id = 'ducky';
@@ -168,17 +230,26 @@ function endGame(win) {
         choices_form.appendChild(duckey);
         respone_des.innerHTML ="You're a failure in every sense of the word.";
     }
+    score_div.id = 'score_div';
 
     
+  
     choices_form.appendChild(respone);
     choices_form.appendChild(respone_des);
+    choices_form.appendChild(score_div);
+    choices_form.appendChild(score_outerdiv);
+    score_outerdiv.appendChild(score_innerdiv);
+    choices_form.appendChild(score_outerdiv_incorrect);
+    score_outerdiv_incorrect.appendChild(score_innerdiv_incorrect);
+    score_div.appendChild(score_outerdiv);
+    score_div.appendChild(score_outerdiv_incorrect);
     
     form.style.display = 'none';
     question_text.style.display = 'none';
     description_text.style.display = 'none';
     next_questionButton.style.backgroundColor = 'rgb(88,204,2)';
     next_questionButton.style.border = '2px solid rgb(88,204,2)';
-    next_questionButton.value = 'continue';
+    next_questionButton.value = 'Home';
     next_questionButton.style.color = 'white';
 
     correct_wrong.innerHTML = 'lesson review';
@@ -198,6 +269,14 @@ function endGame(win) {
     
 
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function run() {
+    console.log('Start');
+    await sleep(3000); // Sleep for 2 seconds
+    console.log('End');
+}
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
 murloc_sound.preload = 'auto';
@@ -205,6 +284,8 @@ oof_sound.preload = 'auto';
 
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
+    const winS = document.getElementById('winstreak');
+    winS.style.display = 'none';
     // get the data
     const respone_box = document.getElementById('respone_box');
     let point = 0;
@@ -213,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const full_object = JSON.parse(elementHtml);
     console.log(full_object);
     const number_of_question = full_object.length;
-    
+    let win_streak = 0;
     respone_box.style.display = 'none';
     let index = 0;
     const nextQuestionButton = document.getElementById('next_question');
@@ -233,12 +314,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("Correct answer");
                 point += 1;
                 score.innerHTML = point;
-                
+                win_streak += 1;
                 
                 description(true);
 
             } else {
-                
+                win_streak = 0;
                 console.log("Wrong answer");
                 description(false);
                 
@@ -265,11 +346,17 @@ document.addEventListener('DOMContentLoaded', function() {
     displayQuestion(full_object, index);
     displayChoice(full_object[index].incorrect_list, full_object[index].correct);
     index++;
-
+    
     // Event listener for next question button
     nextQuestionButton.addEventListener('click', function(event) {
         event.preventDefault();
         if (index < full_object.length) {
+            console.log(win_streak);
+            if (win_streak === 3) {
+                
+                winstreak();
+              
+            }
             displayQuestion(full_object, index);
             displayChoice(full_object[index].incorrect_list, full_object[index].correct);
             index++;
@@ -278,10 +365,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             if (point < number_of_question / 2) {
                 console.log("You lose");
-                endGame(false);
+                endGame(false,point,number_of_question);
             } else {
                 console.log('you win');
-                endGame(true);
+                endGame(true, point,number_of_question);
             }
             // window.location.href = '/';
 
