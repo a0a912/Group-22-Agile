@@ -84,3 +84,30 @@ def get_question_dict(table_name, index) -> dict:
     # print(question_dict)
     print("Question dictionary created")
     return question_dict
+#################################################################################################
+import secrets
+import json
+
+def generate_question_list(IDrange,number_of_questions,table_name):
+    questions_list = []
+    questions_id = []
+
+    while len(questions_list) < number_of_questions:
+        num = 0
+        while num == 0 or num in questions_id:
+            num = secrets.randbelow(IDrange) + 1
+
+        questions_id.append(num)
+        question_data = get_question_dict(table_name, num)
+
+        question_dict = {
+            'question': question_data.get('example'),
+            'incorrect_list': json.loads(question_data.get('incorrect_list')),
+            'id': question_data.get('id'),
+            'correct': question_data.get('correct')
+        }
+
+        questions_list.append(question_dict)
+
+    questions_list_json = json.dumps(questions_list)
+    return questions_list_json
