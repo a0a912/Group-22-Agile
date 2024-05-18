@@ -247,14 +247,14 @@ def update_score(index, score,correct_questions:list=None,incorrect_questions:li
         try:
             old_score = select_id("account", account_id, "score")[0]
         except:
-            print(f"User {index} not found")
+            print(f"User ID {index} not found")
             return False, "User not found"
     else:
         try:
             old_score = select_username(index, "score")[0]
             account_id = select_username(index, "id")[0]
         except:
-            print(f"User {index} not found")
+            print(f"User Name {index} not found")
             return False, "User not found"
     score += old_score
     print("the old score is", old_score)
