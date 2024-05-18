@@ -124,8 +124,8 @@ def question():
 
     return render_template("question.html", questions_list=questions_list_json)
 
-@app.route('/defination')
-def defination():
+@app.route('/definition')
+def definition():
     questions_list_json = generate_question_list(14,5,"QUESTION_DEFINITION")
 
     return render_template("question.html", questions_list=questions_list_json)
