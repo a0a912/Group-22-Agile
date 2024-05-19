@@ -277,11 +277,46 @@ async function run() {
     await sleep(3000); // Sleep for 2 seconds
     console.log('End');
 }
+function Send(incorrect_questions, correct_questions, score) {
+
+    // convert the string into a list of integers
+    incorrect_questions.forEach((item, index) => {
+        incorrect_questions[index] = parseInt(item);
+    });
+    correct_questions.forEach((item, index) => {
+        correct_questions[index] = parseInt(item);
+    });
+    console.log(score);
+    console.log(correct_questions);
+    console.log(incorrect_questions);
+    // send the data to the server
+    fetch('/question/update_score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            score: score,
+            correct_questions: correct_questions,
+            incorrect_questions: incorrect_questions,
+            }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Result submitted successfully!');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
 murloc_sound.preload = 'auto';
 oof_sound.preload = 'auto';
 
+let correct_answer =[];
+let incorrect_answer =[];
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
     const winS = document.getElementById('winstreak');
@@ -315,18 +350,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 point += 1;
                 score.innerHTML = point;
                 win_streak += 1;
-                
+                correct_answer.push(full_object[index - 1].id);
                 description(true);
 
             } else {
                 win_streak = 0;
                 console.log("Wrong answer");
+                incorrect_answer.push(full_object[index - 1].id);
                 description(false);
                 
                 
             }
         } else {
             description(false);
+            incorrect_answer.push(full_object[index - 1].id);
         }
     });
 
@@ -370,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('you win');
                 endGame(true, point,number_of_question);
             }
-            // window.location.href = '/';
+            Send(incorrect_answer, correct_answer, point);
 
             
         }

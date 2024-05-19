@@ -1,9 +1,10 @@
 
 # this is a trial file for testing the update_score function
 
-# from user_crud_func import update_score, read_question_account, sign_up,sign_up_with_questions, select_all
+# from user_crud_func import update_score, read_question_account, sign_up, select_all
 # from usermod import insert_secure_question, show_secure_question, check_secure_question
 # from manage import return_all_secure_question
+# sign_up("eddie", "Eddie123@", "What is your favorite color?",'red',"What is your favorite food?","pizza")
 # you can register a new user and update the score, then change the user name or id to test the function
 # update_score("ahmed", 100, ["1","2","3"], ["4","5","6"])
 # update_score(2, 100, ["1","2","3"], ["4","5","6"])
