@@ -1,5 +1,5 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect, session, flash
+from flask import Flask, render_template, url_for, request, redirect, session, flash, jsonify
 from model import Word, get_question_dict
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score
 from usermod import execute, select_all, update, check_secure_question, select_password
@@ -270,7 +270,8 @@ def update_score_page():
     correct_questions = data.get('correct_questions')
     incorrect_questions = data.get('incorrect_questions')
     update_score(username,score,correct_questions,incorrect_questions)
-    return redirect(url_for('home'))
+    return jsonify({'message': 'Score updated successfully'}), 200
+    #return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
