@@ -264,12 +264,12 @@ def test_question():
 # when we click on submit button after answering all quesions in the question page
 @app.route("/question/update_score", methods=['POST'])
 def update_score_page():
+    username = session.get('username')
     data = request.get_json()
-    user_id = int(data.get('user_id'))
     score = data.get('score')
     correct_questions = data.get('correct_questions')
     incorrect_questions = data.get('incorrect_questions')
-    update_score(user_id,score,correct_questions,incorrect_questions)
+    update_score(username,score,correct_questions,incorrect_questions)
     return redirect(url_for('home'))
 
 
