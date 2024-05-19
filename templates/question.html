@@ -28,7 +28,11 @@
         <div class = 'banner'>
             <div class = 'banner_content'>
                 <div class="banner_text">
-                    <h1 class="banner_text_h1">choose the word that best completes the sentence</h1>
+                    {% if "__" in questions_list %}
+                        <h1 class="banner_text_h1">Choose the Word that Best Completes the Sentence</h1>
+                    {% else %}
+                        <h1 class="banner_text_h1">Choose Correct Definition for the Word</h1>
+                    {% endif %}
                 </div>
                 
         </div>

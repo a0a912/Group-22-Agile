@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
-from flask import Flask, render_template, url_for, request, redirect, session, flash
-from model import Word, get_question_dict
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update
+from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
+from model import Word, get_question_dict,generate_question_list
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score
 from usermod import execute, select_all, update, check_secure_question, select_password
 from manage import return_all_secure_question
 import secrets 
@@ -120,68 +120,15 @@ def update_password():
 
 @app.route('/question')
 def question():
-    # random number from 1-14, cant be 0
-    num = 0 
-    while num == 0:
- 
-        num = secrets.randbelow(14)
-
-    #get the questions from the database
-    questions = get_question_dict("QUESTION_BLANK", num)
-    questions = questions['example']
-
-    incorrect = get_question_dict("QUESTION_BLANK", num)
-    incorrect = incorrect['incorrect_list']
-
-    correct  = get_question_dict("QUESTION_BLANK", num)
-    #correct = correct['correct']
-    
-
-    # Parse the JSON string
-    # incorrect_list = json.loads(incorrect)
-
-    # # Access the elements of the list
-    # choice1 = incorrect_list[0]
-    # choice2 = incorrect_list[1]
-    # choice3 = incorrect_list[2]
-
-    correct = correct['correct']
-    print(correct)
-    questions_list = []
-    questions_id = []
-    #determine how many question
-    for i in range(5):
-            num = 0
-            while num == 0:
-                #range of id put it here:
-                num = secrets.randbelow(14)
-                questions_id.append(num)
-                if num in questions_id:
-                    continue 
-
-            question_data = get_question_dict("QUESTION_BLANK", num)
-
-            question_dict = {
-            'question': question_data.get('example'),
-            'incorrect_list': json.loads(question_data.get('incorrect_list')),
-            'id': question_data.get('id'),
-            'correct': question_data.get('correct')
-        }
-
-            questions_list.append(question_dict)
-            questions_list_json = json.dumps(questions_list)
-
-    print(question_dict)
-                
-
-
-    questions_list_json = json.dumps(questions_list)
-
+    questions_list_json = generate_question_list(14,5,"QUESTION_BLANK")
 
     return render_template("question.html", questions_list=questions_list_json)
 
+@app.route('/definition')
+def definition():
+    questions_list_json = generate_question_list(14,5,"QUESTION_DEFINITION")
 
-
+    return render_template("question.html", questions_list=questions_list_json)
 #Test for test_db_data.html
 @app.route('/test_db_data')
 def test_db_data():
@@ -208,21 +155,6 @@ def test_get_question_dict():
 
     return render_template("test_get_dict.html", question_blank=question_blank, question_defination=question_defination, username=username)
 
-
-
-############################################################################################################
-# this is a prototype for the forget password page                                                         #
-# in /forgetq, the user will be asked to enter the username                                                #
-# in /forgetp, the user will be asked to enter the answers to the secure questions                         #
-# if correct, user will be directed to /resetq, here the user will be asked to enter the new password      #
-# if the password is entered, the user will be directed to /auth/resetq, where the password will be updated#
-# after implementing, we have to delete the prototype content here                                         #
-# and delete related resetq.html and forgetq.html files                                                    #
-# current problems:                                                                                        #
-# 1. if no user exists, no notice about wrong usernames                                                    #
-# 2. if the answers are wrong, no notice about wrong answers                                               #
-# 3. no way to check whether the password is secure                                                        #
-# 4. no way to check whether the password is the same as the previous one                                  #
 
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/auth/forgot", methods=['POST'])
@@ -266,8 +198,27 @@ def answer_questions():
         if session.get('fail_count') == 5:
             message = "You tried 5 attempts. Please try again later."
         return redirect(url_for('forgot_questions'), message) 
-        
-
 ############################################################################################################
+# a simple testing route 
+# route is /test_question
+# click on submit button to update the score
+# this is a prototype for the question page, when we done implementing the question page, we will remove this route
+# and the test_question.html
+############################################################################################################
+@app.route('/test_question', methods=['GET'])
+def test_question():
+    return render_template("test_question.html")
+# when we click on submit button after answering all quesions in the question page
+@app.route("/question/update_score", methods=['POST'])
+def update_score_page():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+    update_score(username,score,correct_questions,incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=8888) # 端口8888
