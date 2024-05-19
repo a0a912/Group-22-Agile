@@ -304,7 +304,7 @@ function Send(incorrect_questions, correct_questions, score) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        alert('Result submitted successfully!');
+        //alert('Result submitted successfully!');
     })
     .catch((error) => {
         console.error('Error:', error);

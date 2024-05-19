@@ -36,6 +36,7 @@
             const correct_questions_id = document.getElementById('correct_questions_id').innerHTML;
             const incorrect_questions_id = document.getElementById('incorrect_questions_id').innerHTML;
             // split the string into a list
+            console.log(typeof(correct_questions_id));
             const correct_questions = correct_questions_id.split(',');
             const incorrect_questions = incorrect_questions_id.split(',');
             // convert the string into a list of integers
@@ -45,7 +46,8 @@
             correct_questions.forEach((item, index) => {
                 correct_questions[index] = parseInt(item);
             });
-            console.log(score);
+            console.log(typeof(correct_questions));
+            console.log(typeof(score));
             console.log(correct_questions);
             console.log(incorrect_questions);
             // send the data to the server
@@ -55,7 +57,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
-                    user_id: user_id,
+                    //user_id: user_id,
                     score: score,
                     correct_questions: correct_questions,
                     incorrect_questions: incorrect_questions,
