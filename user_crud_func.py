@@ -1,4 +1,5 @@
 from usermod import execute, drop, select, update, create, select_username, select_id,select_all, delete,insert,insert_secure_question, show_secure_question,check_secure_question 
+from werkzeug.security import check_password_hash
 import sqlite3
 database = './database/database.db'
 # connect to the database
@@ -172,12 +173,14 @@ def auth(username, password) -> tuple:
     result = rows.fetchall()
     print(result)
     for row in result:
+        print(f"Checking username: {row[0]}, stored hash: {row[1]}")
         if row[0] == username and row[1] == password:
             print(f"User {row[0]} authenticated")
             return True, "Authenticated"
-        elif row[0] == username and row[1] != password:
+        elif row[0] == username:
             print(f"User {row[0]} Password incorrect")
             return False, "Password incorrect"
+    
     print(f"User {username} not found")
     return False, "User not found"
 
@@ -219,7 +222,7 @@ def check_password(password):
         return False
     if not any(char.islower() for char in password):
         return False
-    if not any(char in "!@#$%^&*()-+" for char in password):
+    if not any(char in "!=/@#$%^&*()-+" for char in password):
         return False
     return True
 
