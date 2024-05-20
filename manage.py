@@ -27,8 +27,8 @@ def get_meaning_phone(word,data):
         # get the phonetics
         if word_original_json["phonetics"][0]["audio"] != "":
             word_phonetics = word_original_json["phonetics"][0]["audio"]
-        elif word_original_json["phonetics"][1]["audio"] != "":
-            word_phonetics = word_original_json["phonetics"][1]["audio"]
+        # elif word_original_json["phonetics"][1]["audio"] != "":
+        #     word_phonetics = word_original_json["phonetics"][1]["audio"]
         else:
             word_phonetics = ""
             print("No audio available")
@@ -77,6 +77,11 @@ def return_all_secure_question()->list:
     print("Return_all_secure_question()",result)
     return result
 
+# change weight of the word
+def change_weight_for_table(table_name:str,weight:int,word:str="*"):
+    statement = f"""UPDATE {table_name} SET weight = {weight} WHERE word = '{word}'"""
+    execute(statement)
+
 if __name__ == "__main__":
     create_secure_question_table()
     create_account_table()
@@ -86,6 +91,11 @@ if __name__ == "__main__":
     question_blank = "QUESTION_BLANK"
     question_table_list = [question_definition, question_blank]
     [drop(table) for table in question_table_list]
+    drop("GRE_QUESTION")
+    question_GRE_definition, question_GRE_blank = "GRE_DEFINITION", "GRE_BLANK"
+    question_GRE_table_list = [question_GRE_definition, question_GRE_blank]
+    [drop(table) for table in question_GRE_table_list]
+
     # create a table for the question_defintion
     for table in question_table_list:
         statement_question_table = f"""CREATE TABLE IF NOT EXISTS {table}
@@ -143,4 +153,75 @@ if __name__ == "__main__":
                     FOREIGN KEY(correct_questions) REFERENCES {question_definition}(id),
                     FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
     execute(statement_question_account)
+    print("Tables created for 2 types of questions of ordinary works, and the associative table for question_account")
+    print("Database created")
+
+    # create a table for the GRE question
+    for table in question_GRE_table_list:
+        statement_question_table = f"""CREATE TABLE IF NOT EXISTS {table}
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    word  TEXT NOT NULL UNIQUE,
+                    correct TEXT NOT NULL,
+                    incorrect TEXT NOT NULL,
+                    weight INTEGER DEFAULT 1,
+                    phonetics_url TEXT,
+                    example TEXT);"""
+        execute(statement_question_table)
+
+    # an  list to store the words themselves
+    list_of_words= get_existing_words("database/gre_words.json")
+    # get the words we have in the json file, this words are not processed, with only the word, and 4 meanings, 1 correct and 3 incorrect
+    with open("database/gre_words.json","r",encoding="utf-8") as file:
+        data = json.load(file)
+        for word in data:
+            word_tuple = get_meaning_phone(word["word"],data)
+            # we need to replace "'s" with "`" because of the sql syntax
+            new_list_without_quote = []
+            for i in word_tuple[3]:
+                if "'s" in i:
+                    new_list_without_quote.append(i.replace("'s","`s"))
+                else:
+                    new_list_without_quote.append(i)
+            # make it into an object
+            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],new_list_without_quote,word_tuple[4])
+            # make it into a dictionary for json
+            word_for_question_dictionary = word_for_question.__dict__
+            # append the dictionary into table question_GRE_definition of database
+            statement= f"""INSERT INTO {question_GRE_definition}
+                        (word, correct, incorrect,phonetics_url, example) 
+                        VALUES ('{word_for_question_dictionary['word']}', 
+                            '{word_for_question_dictionary['correct']}', 
+                            '{json.dumps(word_for_question_dictionary['incorrect_list'])}',
+                            '{word_for_question_dictionary['phonetics']}', 
+                            "{word_for_question_dictionary['word_example']}")"""
+            execute(statement)
+            change_weight_for_table(question_GRE_definition,5,word_for_question_dictionary['word'])
+
+            # second type of question, fill in the blank
+            # make a sentence with the word picked out, and replace the word with blank
+            word_blank = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4])
+            # randomly choose 3 words from the list of words to be the incorrect answers
+            Word.choose_word(word_blank,list_of_words)
+            word_blank_dictionary = word_blank.__dict__
+            statement= f"""INSERT INTO {question_GRE_blank}
+                        (word, correct, incorrect, phonetics_url,example) 
+                        VALUES ('{word_blank_dictionary['word']}', 
+                            '{word_blank_dictionary['correct']}', 
+                            '{json.dumps(word_blank_dictionary['incorrect_list'])}',
+                            '{word_for_question_dictionary['phonetics']}',  
+                            "{word_blank_dictionary['word_example']}")"""
+            execute(statement)
+            change_weight_for_table(question_GRE_blank,5,word_blank_dictionary['word'])
+    # create an associative table for the question_account
+    statement_question_account = f"""CREATE TABLE IF NOT EXISTS QUESTION_GRE_ACCOUNT
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_GRE_definition}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_definition}(id));"""
+    execute(statement_question_account)
+    
+    print("Tables created for 2 types of questions of GRE words, and the associative table for question_GRE_account")
     print("Database created")
