@@ -7,19 +7,16 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="shortcut icon" type="image/x-icon" href="static\secure-icon.png" />
   <!-- Styles -->
-  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" /> -->
   <!-- Icons CDN -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/761d42c757.js" crossorigin="anonymous"></script>
   <title>Unolingo Auth</title>
 
-  <!-- Bootstrap Core CSS -->
-  <link href="static/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Theme CSS -->
-  <link href="static/bootstrap/css/freelancer.min.css" rel="stylesheet">
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="static\bootstrap\css\profile.css">
 
   <!-- Custom Fonts -->
   <link href="static/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -28,54 +25,28 @@
 </head>
 
 <body>
-  <!-- Navigation -->
-  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="{{ url_for('home') }}">Unolingo</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                {% if not username %}
-                <li class="page">
-                    <a href="{{ url_for('register_page') }}">Sign-up</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('login_page') }}">Login</a>
-                </li>
-                {% endif %}
-                {% if username %}
-                <li class="page">
-                    <a href="{{ url_for('question') }}">Quiz</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('ranking') }}">Ranking</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('logout') }}">Logout</a>
-                </li>
-                {% endif %}
-              </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+  <header>
+    <div class = "banner">
+        <!-- Check if user is loged in -->
+        {% if username %}
+        <h1 id = "Welcome">Update Your Profile</h1>
+        <li class = NavBar>
+            <ul> <a href="{{ url_for('home') }}">Home </a></ul>
+            <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
+            <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+            </form> </ul>
+        </li>
+        {% else %}
+        <h1 id = "Welcome">Please Sign-up or Login</h1>
+        <li class = NavBar>
+            <ul> <a href="{{ url_for('register_page') }}">Sign-up</a> </ul>
+            <ul> <a href="{{ url_for('login_page') }}">Login</a> </ul>
+        </li>
+        {% endif %}
+        
     </div>
-    <!-- /.container-fluid -->
-    </nav>
-    <style>
-      footer {
-    margin-top: 500px;
-    color: black;
-}
-    </style>
+</header>  
     <footer>
       <div class="container"id="maincontent" tabindex="-1">
           <div class="col-lg-8 col-lg-offset-2">
@@ -83,14 +54,14 @@
               <table>
                 <tr>
                   <th for="username">Username</th>
-                  <th for="password">Current Password</th>
+                  <th for="password" class = "CurrentPassword">Current Password</th>
                   <th for="new_password">New Password</th>
                   <th> Question History</th>
                 </tr>
                 <tr>
                   <td></td>
-                  <td>
-                    <input type="password" name="password" id="password" placeholder="Current password" required>
+                  <td class = "CurrentPassword">
+                    <input type="password"  name="password" id="password" placeholder="Current password" required>
                   </td>
                   <td>
                     <input type="password" name="new_password" id="new_password" placeholder="New password" required>
