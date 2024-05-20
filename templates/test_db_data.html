@@ -21,6 +21,9 @@
     
 <!-- A button to toggle between light and dark mode. NOTE: For some reason it takes a few seconds and clicks before it works. No Idea why. -->
 <button type="button" id="light_setting">Light or Dark Mode</button>
+
+<!-- Mute Button -->
+<button type="button" id="mute_setting">Mute</button>
     
     <h2> Play Basic Unolingo Game</h2>
 <div id="guess_box" class="guess_box">
@@ -74,10 +77,13 @@
         let light_setting = document.getElementById("light_setting");
         let body = document.body;
 
+        let mute_setting = document.getElementById("mute_setting");
+
 
         //Global Variables
         let lives = 5;
         let mistakes = 0;
+        let mute = false;
 
        // Get the data from the db files that we created in flask that we are passing up to the html
        //It complains about it being an error but it works
@@ -229,7 +235,9 @@ question_blank = JSON.parse(question_blank);
             player_score_counter++;
             player_score.innerHTML = `Score: ${player_score_counter}`
             audio = document.getElementById('murloc-sound');
-            audio.play();
+            if (mute === false) {
+                audio.play();
+            }
         } else {
             //Display wrong
             log.innerHTML = `Wrong. The correct answer was ${current_question_answer}`;
@@ -242,7 +250,11 @@ question_blank = JSON.parse(question_blank);
             lives--;
             displayPlayerLives(lives, mistakes);
             audio = document.getElementById('oof-sound');
-            audio.play();
+            //check if mute is false
+            if (mute === false) {
+                audio.play();
+            }
+
 
             //Check if they have run out of lives
             if (lives === 0) {
@@ -360,6 +372,19 @@ next_question_button.addEventListener("click", next_question_button_function);
 submit_score.addEventListener("click", submit_score_button_function);
 
 light_setting.addEventListener("click", light_dark_mode);
+
+//Event Listener and Function to turn mute true and false
+mute_setting.addEventListener("click", function() {
+    if (mute === false) {
+        mute = true;
+        videoPlayer.muted = true;
+        mute_setting.textContent = "Unmute";
+    } else {
+        mute = false;
+        videoPlayer.muted = false;
+        mute_setting.textContent = "Mute";
+    }
+});
     </script>
 </body>
 </html>
