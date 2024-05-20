@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Card Game</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        .card {
+            width: 100px;
+            height: 150px;
+            border: 1px solid black;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 1%;
+            cursor: pointer;
+        }
+        .fire {
+            background-color: red;
+            text-align: center;
+        }
+        .water {
+            background-color: blue;
+            color: white;
+        }
+        .snow {
+            background-color: green;
+            color: white;
+        }
+        #player_hand {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        #computer_hand {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .player_card_html:hover {
+            border: 10px dashed deepskyblue;
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        .computer_card_html:hover {
+            border: 10px dashed palegreen;
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        #player_html_selected {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+            border: 10px solid deepskyblue;
+        }
+
+        .player_card_html.selected {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+            border: 10px solid purple;
+        }
+
+        #game_area {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h2>Game</h2>
+<div id="game_area">
+
+    <div id="player_area">
+        <div id="player_ui">
+            <p>Player</p>
+            <p>Snow Cards: <span id="player_snow_card_score">0</span> </p>
+            <p>Fire Cards: <span id="player_fire_card_score">0</span></p>
+            <p>Water Cards: <span id="player_water_card_score">0</span></p>
+        </div>
+        <div id="player_hand"></div>
+    </div>
+    <div id="computer_area">
+        <div id="computer_ui">
+            <p>Computer</p>
+            <p>Snow Cards: <span id="computer_snow_card_score">0</span> </p>
+            <p>Fire Cards: <span id="computer_fire_card_score">0</span></p>
+            <p>Water Cards: <span id="computer_water_card_score">0</span></p>
+        </div>
+        <div id="computer_hand"></div>
+        <button id="play_card_button">Play Card</button></button>
+        <button id="next_round_button"> Next Round</button>
+    </div>
+</div>
+<button id="start_game_button">Start Game</button>
+<script>
+    // DOM Variables:
+    let player_snow_card_score = document.getElementById('player_snow_card_score')
+    let player_fire_card_score = document.getElementById('player_fire_card_score')
+    let player_water_card_score = document.getElementById('player_water_card_score')
+    let computer_snow_card_score = document.getElementById('computer_snow_card_score')
+    let computer_fire_card_score = document.getElementById('computer_fire_card_score')
+    let computer_water_card_score = document.getElementById('computer_water_card_score')
+    let player_hand_div = document.getElementById('player_hand')
+    let computer_hand_div = document.getElementById('computer_hand')
+    let game_area = document.getElementById('game_area')
+    let player_area = document.getElementById('player_area')
+    let computer_area = document.getElementById('computer_area')
+    let start_game_button = document.getElementById('start_game_button')
+    let play_card_button = document.getElementById('play_card_button');
+
+
+    // Global Variables:
+    let deck = []
+    let player_hand = []
+    let computer_hand = []
+
+    // Function to generate cards
+    function create_deck() {
+        for (let i = 1; i <= 10; i++) {
+            deck.push({number: i, type: 'snow'})
+            deck.push({number: i, type: 'fire'})
+            deck.push({number: i, type: 'water'})
+        }
+    }
+
+    // Function to shuffle deck
+    function shuffleDeck() {
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+    }
+
+    // Function to randomly add 10 cards with random numbers and type (fire, water, snow) to deck
+    function add_10_random_extra_cards() {
+        for (let i = 0; i < 10; i++) {
+            let type_number = Math.floor(Math.random() * 3)
+            if (type_number == 0) {
+                deck.push({number: Math.floor(Math.random() * 10) + 1, type: 'snow'})
+            } else if (type_number == 1) {
+                deck.push({number: Math.floor(Math.random() * 10) + 1, type: 'fire'})
+            } else {
+                deck.push({number: Math.floor(Math.random() * 10) + 1, type: 'water'})
+            }
+        }
+    }
+
+    // Draw 5 cards from deck
+    function draw_five_cards() {
+        for (let i = 0; i < 5; i++) {
+            player_hand.push(deck.pop())
+            computer_hand.push(deck.pop())
+        }
+    }
+
+    // Function to read the player hand and computer hand and display the cards in the player and computer hand divs
+    function display_player_hand() {
+        player_hand_div.innerHTML = ''; // Clear existing content
+        for (let i = 0; i < player_hand.length; i++) {
+            let symbol;
+            if (player_hand[i].type == 'snow') {
+                symbol = "❄️";
+            } else if (player_hand[i].type == 'fire') {
+                symbol = "🔥";
+            } else {
+                symbol = "💧";
+            }
+            let card = document.createElement('div');
+            card.className = `card player_card_html ${player_hand[i].type}`;
+            card.id = `p${i}`;
+            card.innerHTML = `${player_hand[i].number}${symbol}`;
+            card.addEventListener('click', () => select_card(card));
+            player_hand_div.appendChild(card);
+        }
+    }
+
+   function select_card(card) {
+        // Remove the selection from any previously selected card
+        let selected_card = document.querySelector('.player_card_html.selected');
+        play_card_button.disabled = false;
+        if (selected_card) {
+            selected_card.classList.remove('selected');
+        }
+        // Add the selection to the clicked card
+        card.classList.add('selected');
+    }
+
+    function display_computer_hand() {
+        computer_hand_div.innerHTML = ''; // Clear existing content
+        for (let i = 0; i < computer_hand.length; i++) {
+            let symbol;
+            if (computer_hand[i].type == 'snow') {
+                symbol = "❄️";
+            } else if (computer_hand[i].type == 'fire') {
+                symbol = "🔥";
+            } else {
+                symbol = "💧";
+            }
+            let card = document.createElement('div');
+            card.className = `card computer_card_html ${computer_hand[i].type}`;
+            card.id = `c${i}`;
+            card.innerHTML = `${computer_hand[i].number}${symbol}`;
+            computer_hand_div.appendChild(card);
+        }
+    }
+
+    // Start game function
+    function start_game() {
+        game_area.style.display = 'block';
+        player_area.style.display = 'block';
+        computer_area.style.display = 'block';
+        start_game_button.disabled = true;
+        play_card_button.disabled = true;
+
+        create_deck();
+        shuffleDeck();
+        add_10_random_extra_cards();
+        draw_five_cards();
+        display_player_hand();
+        display_computer_hand();
+    }
+
+    //Function to play_round
+    function play_round() {
+        // Find which card has been selected
+        let selected_card = document.querySelector('.player_card_html.selected');
+        console.log(selected_card);
+        }
+
+
+    
+
+    // Add event listener to start game button
+    start_game_button.addEventListener('click', start_game);
+
+    // Add event listener to play card button
+    play_card_button.addEventListener('click', play_round);
+</script>
+</body>
+</html>
