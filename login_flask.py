@@ -144,7 +144,10 @@ def test_db_data():
     question_definition_json = json.dumps(question_defination)
     
     return render_template("test_db_data.html", question_blank=question_blank_json, question_defination=question_definition_json, username=username)
-
+#Route for bonus card game
+@app.route('/bonus2')
+def bonus2():
+    return render_template("cardju.html")
 
 #Test for test_db_data.html using new method
 @app.route('/test_get_question_dict')
