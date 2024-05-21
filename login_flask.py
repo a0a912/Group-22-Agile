@@ -6,6 +6,9 @@ from usermod import execute, select_all, update, check_secure_question, select_p
 from manage import return_all_secure_question
 import secrets 
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
+import hashlib
+import base64
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 
@@ -39,7 +42,14 @@ def forgot():
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
-    # print(username, password)
+    
+    print(f" Testing Login username: {username}, password: {password}")
+    #hash the password
+    #password = generate_password_hash(password, method='pbkdf2:sha256')
+    hash_object = hashlib.sha256(password.encode())
+    password = base64.b64encode(hash_object.digest()).decode('utf-8')
+    print(f"Testing Login username: {username}, hashed password: {password}")
+
     result = auth(username, password)
     
     if result[0]:
@@ -70,8 +80,21 @@ def register():
     secure_question2 = request.form.get('secure_question2')
     answer1 = request.form.get('answer1')
     answer2 = request.form.get('answer2')
+    print(f"Testing Register username: {username}, password: {password}")
+
+
+    # Hash the password
+    #hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+    #Use unsalted hash
+    hash_object = hashlib.sha256(password.encode())
+    hashed_password = base64.b64encode(hash_object.digest()).decode('utf-8')
+    print(f"Testing Registering user: {username}, Hashed password: {hashed_password}")
     
-    result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
+    
+    # Pass the hashed password to the sign_up function
+    result = sign_up(username, hashed_password, secure_question1, answer1, secure_question2, answer2)
+    
+    #result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         return redirect(url_for('login_page'))
     else:
@@ -144,7 +167,10 @@ def test_db_data():
     question_definition_json = json.dumps(question_defination)
     
     return render_template("test_db_data.html", question_blank=question_blank_json, question_defination=question_definition_json, username=username)
-
+#Route for bonus card game
+@app.route('/bonus2')
+def bonus2():
+    return render_template("cardju.html")
 
 #Test for test_db_data.html using new method
 @app.route('/test_get_question_dict')
