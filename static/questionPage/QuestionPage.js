@@ -170,7 +170,7 @@ function displayChoice(incorrect_list,answer) {
 }
 
 const next_questionButton = document.getElementById('next_question'); 
-function endGame(win,score,number_of_question) {
+function endGame(win,score,number_of_question,win_streak,question_length){
     
     const banner = document.getElementsByClassName('banner')[0];
     const submitButton = document.querySelector('input[id="submit_button"]');
@@ -264,11 +264,22 @@ function endGame(win,score,number_of_question) {
 
 
 
+    //show special button
+    if (win_streak == question_length) {
+        const specialButton = document.getElementById('special');
 
+        specialButton.style.display = 'inline-block';
+
+        specialButton.addEventListener('click', function(event) {
+            window.location.href = '/bonus2';
+        })
+
+    }
 
     
 
 }
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -402,10 +413,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             if (point < number_of_question / 2) {
                 console.log("You lose");
-                endGame(false,point,number_of_question);
+                endGame(false,point,number_of_question,win_streak,full_object.length);
             } else {
                 console.log('you win');
-                endGame(true, point,number_of_question);
+                endGame(true, point,number_of_question,win_streak,full_object.length);
             }
             Send(incorrect_answer, correct_answer, point);
 

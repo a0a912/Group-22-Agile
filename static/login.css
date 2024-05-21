@@ -120,3 +120,10 @@ h2 {
     color: #353F98;
     text-decoration: none;
 }
+#special {
+    grid-column: 4;
+}
+#next_question {
+    grid-column: 5;
+}
+    
