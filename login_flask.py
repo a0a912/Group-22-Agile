@@ -134,9 +134,18 @@ def update_password():
     password = request.form.get('password')
     new_password = request.form.get('new_password')
     # check if the current password is correct
-    current_password = select_password(username)
-    if password == current_password:
-        update("account", "password", new_password, f"username='{username}'")
+    
+    hash_object = hashlib.sha256(password.encode())
+    old_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+    print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
+
+    hash_object = hashlib.sha256(new_password.encode())
+    new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+    print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
+
+    current_password_db = select_password(username)
+    if old_password_hash == current_password_db:
+        update("account", "password", new_password_hash, f"username='{username}'")
         return redirect(url_for('login_page'))
     else:
         return redirect(url_for('profile')) 
@@ -210,8 +219,12 @@ def answer_questions():
     print(answers)
     # print(list_of_secure_questions)
     if check_secure_question(username, questions, answers):
-        change_password = request.form.get('password')
-        update("account", "password", change_password, f"username='{username}'")
+        change_password_temp = request.form.get('password')
+        hash_object = hashlib.sha256(change_password_temp.encode())
+        new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+        print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+
+        update("account", "password", new_password_hash, f"username='{username}'")
         return redirect(url_for("home"))
     else:
         session['fail_count'] = session.get('fail_count', 0) + 1
