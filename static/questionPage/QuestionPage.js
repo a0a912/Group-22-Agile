@@ -167,7 +167,27 @@ function displayChoice(incorrect_list,answer) {
 
 
 
+    
 }
+function startCountdown() {
+    let timeLeft = 30; // 30 seconds
+
+    const countdownElement = document.getElementById('time');
+
+    const countdownInterval = setInterval(function() {
+        countdownElement.style.width = `${timeLeft * 25}px`; // Adjust the width based on the remaining time
+        timeLeft--;
+
+        if (timeLeft <= 0) {
+            clearInterval(countdownInterval);
+            countdownElement.style.width = '0px'; // Set the width to 0 when the time is up
+            // Add your logic here for what should happen when the time is up
+            
+        }
+    }, 1000); // Update the countdown every second (1000 milliseconds)
+}
+
+window.addEventListener('load', startCountdown);
 
 const next_questionButton = document.getElementById('next_question'); 
 function endGame(win,score,number_of_question,win_streak,question_length){
@@ -330,6 +350,10 @@ let correct_answer =[];
 let incorrect_answer =[];
 // __main__
 document.addEventListener('DOMContentLoaded', function() {
+
+    //endless
+    startCountdown()
+
     const winS = document.getElementById('winstreak');
     winS.style.display = 'none';
     // get the data

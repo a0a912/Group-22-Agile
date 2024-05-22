@@ -292,3 +292,42 @@ div#choices input,label{
     grid-column: 4;
     padding: 10px 0 10px 0 ;
 }
+#time_container {
+    height: 25px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    margin-right: 20%;
+    margin-left: 20%;
+    border-radius: 25px;
+    display: flex;
+    position: relative; /* Add position relative to the outer div */
+  }
+  
+  #time {
+    width: calc(100% - 50px); /* Adjust the width of the inner div based on the outer div's width */
+    height: 10px;
+
+    background-color: #fff;
+    border-radius: 3px;
+    position: absolute; /* Add position absolute to the inner div */
+    left: 0; /* Start the inner div from the right */
+    top: 50%; /* Center the inner div vertically */
+    transform: translateY(-50%); /* Adjust the position of the inner div */
+    padding-right: -20px;
+}
+
+
+#bomb {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 70px;
+    height: 70px;
+    background-image: url('/static/Endless/bomb.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
