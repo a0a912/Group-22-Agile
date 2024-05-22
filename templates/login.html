@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/login.css">
-    <title>UNOLINGO Login</title>
+    <link rel="stylesheet" href="/static/login/login.css">
+    <title>UNOLINGO-Login</title>
 </head>
 <body>
     <button class = "dark-mode" id = "DarkModeToggle"></button>
@@ -15,9 +15,10 @@
     <div class = "dark-mode" id = "DarkModeToggle">
     <div class="container">
         <div class="logo">
-            <img src="static/Trilingo_blue_Owl.png" alt="Logo">
+            <img src="/static/login/duck-spin.gif" alt="Logo">
             <h1>Welcome back to Unolingo</h1>
             <h2>Login into your account</h2>
+            
         </div>
         <form class="login-form" action="/auth/login" method="POST">
             <h2 id="loginMessage">Login into your account</h2>
@@ -44,12 +45,6 @@
     </div>
 </div>
 </body>
-    <script>
-        window.onload = function() {
-            var darkMode = localStorage.getItem('darkMode') === 'true';
-            document.body.classList.toggle("dark-mode", darkMode);
-        };
-    </script>
     <script>
         window.onload = function() {
             var darkMode = localStorage.getItem('darkMode') === 'true';

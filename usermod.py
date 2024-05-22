@@ -1,4 +1,6 @@
 import sqlite3
+import hashlib
+import base64
 database = './database/database.db'
 connection = sqlite3.connect(database,check_same_thread=False) # create the file if it does not exist 
 cursor = connection.cursor() # cursor is used to interact with the database 
@@ -130,8 +132,16 @@ def create_account_table():
                 secure_question1 TEXT,
                 secure_question2 TEXT);"""
     # statement to insert an admin user in default
-    statement_admin_insert = """INSERT INTO ACCOUNT(username,password,role,score) 
-    VALUES ('admin','admin123','admin',0)"""
+    admin_plain_password = "admin123"
+    hash_object = hashlib.sha256(admin_plain_password.encode())
+    admin_hashed_password = base64.b64encode(hash_object.digest()).decode('utf-8')
+
+    statement_admin_insert = f"INSERT INTO ACCOUNT(username,password,role,score) VALUES ('admin','{admin_hashed_password}','admin',0)"
+
+
+
+    #statement_admin_insert = """INSERT INTO ACCOUNT(username,password,role,score) 
+    #VALUES ('admin','admin123','admin',0)"""
     # create table
     execute(statement_account)
     # insert admin user
