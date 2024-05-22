@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'FeatherBold';
-    src: url('font/Feather Bold.ttf') format('truetype');
+    src: url('/bootstrap/font/Feather Bold.ttf') format('truetype');
 
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'din-round';
-    src: url('font/DINRoundPro.ttf') format('truetype');
+    src: url('/static/font/DINRoundPro.ttf') format('truetype');
 }
 
 :root {
