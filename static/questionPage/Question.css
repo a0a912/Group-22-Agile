@@ -296,5 +296,5 @@ div#choices input,label{
     position: fixed;
     top: 10px;
     right: 10px;
-    background-image: url();
+    background-image: url('/static/questionPage/exit.png');
 }
