@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'FeatherBold';
-    src: url('/bootstrap/font/Feather Bold.ttf') format('truetype');
+    src: url('/static/font/Feather Bold.ttf') format('truetype');
 
     font-weight: normal;
     font-style: normal;
@@ -24,7 +24,7 @@
     position : relative;
     background-color: var(--dark-blue);
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 23% 53% 23%;
     width: 100%;
     height: 20dvh;
     margin: 0px;
