@@ -1,33 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/login.css">
-    <title>answers</title>
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
+        <link rel="shortcut icon" type="image/x-icon" href="static\secure-icon.png" />
+        <!-- Styles -->
+        <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        <!-- Icons CDN -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/761d42c757.js" crossorigin="anonymous"></script>
+        <title>Unolingo forgot answer</title>
+      
+        <!-- <link rel="stylesheet" href="static\bootstrap\css\HomePageCSS.css">
+        <script src="static\bootstrap\css\HomePageJS.JS" defer></script> -->
+        <link rel="stylesheet" href="static/login.css">
+        <!-- Custom Fonts -->
+        <link href="static\bootstrap\vendor\font-awesome\css\font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+      </head>
+      
 <body>
     <div class="banner">
-        <div class="unolingo"><h2>UNOLINGO</h2></div>
+        <div class="unolingo" ><h2>UNOLINGO</h2></div>
+        <div class="options">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('register_page') }}">Sign Up</a>
+            <a href="{{ url_for('login_page') }}">Login</a>
     </div>
-    </div>
+    
     <div class="container">
         <div class="logo">
-            <img src="static/trilingo_blue_owl.png" alt="Logo">
+            <img src="static/Trilingo_blue_Owl.png" alt="Logo">
         </div>
-        <form class="reset-form" action="/auth/forgot/answer" method="POST">
-                <p>user: {{ username }}</p>
-                <input type="hidden" name="username" value="{{ username }}">
-                <p>{{ questions[0] }}</p>
-                <input type="text" name="answer1" placeholder="answer for secure question1">
-                <p>{{ questions[1] }}</p>
-                <input type="text" name="answer2" placeholder="answer for secure question2">
-                <p>new password</p>
-                <input type="password" name="password" placeholder="password">
-                <p>confirm new password</p>
-                <input type="password" name="password" placeholder="password">
+        <form class="signup-form" action="/auth/forgot/answer" method="POST">
+            <div class="form-group">
+                <label for="username">Username : {{ username }}</label>
+                <input class="input-signup" type="hidden" name="username" value="{{ username }}">
+                <br>
+                <label for="secure_question1">Security Question 1</label>
+                <div>{{ questions[0] }}</div>
+                <input class="input-signup" type="text" name="answer1" placeholder="answer for secure question1">
+                <br>
+                <label for="secure_question2">Security Question 2</label>
+                <div>{{ questions[1] }}</div>
+                <input class="input-signup" type="text" name="answer2" placeholder="answer for secure question2">
+                <br>
+                <label for="password">New password</label>
+                <br>
+                <input class="input-signup" type="password" name="password" placeholder="Enter new password">
+                <small id="passwordHelp" class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
+                <br>
+                <label for="password">Confirm new password</label>
+                <br>
+                <input class="input-signup" type="password" name="password" placeholder="Enter new password again">
                 <button type="submit">Submit</button>
+            </div>
         </form>
     </div>
 </body>
+<!-- jQuery -->
+<script src="static\bootstrap\vendor\jquery\jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="static\bootstrap\vendor\bootstrap\js\bootstrap.min.js"></script>
 </html>

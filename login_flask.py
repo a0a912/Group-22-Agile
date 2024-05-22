@@ -29,13 +29,7 @@ def register_page():
     list_of_secure_questions = return_all_secure_question()
     return render_template("register.html", list_of_secure_questions=list_of_secure_questions)
 
-@app.route('/forgot', methods=['GET'])
-def forgot_page():
-    return render_template("forgot.html")
 
-@app.route("/forgot", methods=['GET'])
-def forgot():
-    return render_template("forgot.html")
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
@@ -192,18 +186,24 @@ def test_get_question_dict():
 
 
 # get the secure questions for the user, and send it to the resetq page
-@app.route("/auth/forgot", methods=['POST'])
-def forgot_questions():
+@app.route("/forgot", methods=['GET', 'POST'])
+def forgot():
     username = request.form.get('username')
     # print(username)
-    questions = show_secure_question(username)
-    if not questions:
-        return redirect(url_for('forgot_questions'))
-    # return questions
+    if request.method == "POST":
+        if username is None:
+            flash("Not existing username. Please try again.")
+            return redirect(url_for('forgot'))
+        questions = show_secure_question(username)
+        if not questions:
+            return redirect(url_for('forgot'))
+        # return questions
+        else:
+            session['username'] = username
+            session['questions'] = questions
+            return redirect(url_for('answer'))
     else:
-        session['username'] = username
-        session['questions'] = questions
-        return redirect(url_for('answer'))
+        return render_template("forgot.html")
     
 # to the reset password page, receive answers here and send it to the resetp route
 @app.route("/forgot/answer", methods=['GET'])
@@ -236,7 +236,16 @@ def answer_questions():
             message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
         if session.get('fail_count') == 5:
             message = "You tried 5 attempts. Please try again later."
-        return redirect(url_for('forgot_questions'), message) 
+        return redirect(url_for('forgot'), message) 
+        
+
+        
+############################################################################################################
+# a simple testing route 
+# route is /test_question
+# click on submit button to update the score
+# this is a prototype for the question page, when we done implementing the question page, we will remove this route
+# and the test_question.html
 ############################################################################################################
 # a simple testing route 
 # route is /test_question

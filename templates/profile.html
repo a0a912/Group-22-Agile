@@ -43,26 +43,28 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 {% if not username %}
-                <li class="page">
+                <ul >
                     <a href="{{ url_for('register_page') }}">Sign-up</a>
-                </li>
-                <li class="page">
+                </ul>
+                <ul class="page">
                     <a href="{{ url_for('login_page') }}">Login</a>
-                </li>
+                </ul>
                 {% endif %}
                 {% if username %}
-                <li class="page">
+                <ul class="page">
                     <a href="{{ url_for('question') }}">Quiz</a>
-                </li>
-                <li class="page">
+                </ul>
+                <ul class="page">
                     <a href="{{ url_for('ranking') }}">Ranking</a>
-                </li>
-                <li class="page">
+                </ul>
+                <ul >
                     <a href="{{ url_for('profile') }}">Profile: {{ username }}</a>
-                </li>
-                <li class="page">
-                    <a href="{{ url_for('logout') }}">Logout</a>
-                </li>
+                </ul>
+                <ul class="page">
+                  <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                  <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                  </form>
+                </ul>
                 {% endif %}
               </ul>
         </div>
@@ -77,30 +79,38 @@
 }
     </style>
     <footer>
-      <div class="container"id="maincontent" tabindex="-1">
-          <div class="col-lg-8 col-lg-offset-2">
-            <form action="/profile/update/password" method="POST">
-              <table>
-                <tr>
-                  <th for="username">Username</th>
-                  <th for="password">Current Password</th>
-                  <th for="new_password">New Password</th>
-                  <th> Question History</th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <input type="password" name="password" id="password" placeholder="Current password" required>
-                  </td>
-                  <td>
-                    <input type="password" name="new_password" id="new_password" placeholder="New password" required>
-                    <button type="submit" class="btn btn-primary">Reset</button> 
-                  </td>
-                  <td>1</td>
-              </table>
-              <input type="hidden" name="username" value="{{ username }}">
+      <div class="container" id="maincontent" tabindex="-1">
+        <div class="col-lg-8 offset-lg-2">
+          <h5>User Information</h5>
+            <form action="/profile/update/password" method="POST" class="mt-5">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" value="{{ username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="password">Current Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Current password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                </div>
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" placeholder="New password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                    <small id="passwordHelp" class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
+                  </div>
+                <button type="submit" class="btn btn-primary">Reset</button>
             </form>
+            <div class="mt-5">
+                <h5>Question History</h5>
+                <div>
+                  <tr>Number</tr>
+                  <tr>Correct</tr>
+                  <tr>Incorrect</tr>
+                  <tr>Review</tr>
+
+                </div>
+                <!-- Add your question history here -->
+            </div>
         </div>
+    </div>
       </footer>
     </body>
   

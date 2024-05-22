@@ -21,7 +21,7 @@
             <h1 id = "Welcome">Welcome {{username}}!</h1>
             <li class = NavBar>
                 <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
-                <ul><a href="{{ url_for('profile') }}">Profile </a></ul>
+                <ul><a href="{{ url_for('profile') }}">Profile</a></ul>
                 <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
                     <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
                 </form> </ul>
@@ -80,7 +80,10 @@
     document.getElementById("Game6").addEventListener("click", function() {
         window.location.href = "{{ url_for('question') }}";
     });
-    
+    window.onload = function() {
+    var darkMode = localStorage.getItem('darkMode') === 'true';
+    document.body.classList.toggle("dark-mode", darkMode);
+    }
 </script>
 </body>
 </html>
