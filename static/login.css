@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'FeatherBold';
-    src: url('Feather Bold.ttf') format('truetype');
+    src: url('font/Feather Bold.ttf') format('truetype');
 
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'dine-round';
-    src: url('DINRoundPro.ttf') format('truetype');
+    font-family: 'din-round';
+    src: url('font/DINRoundPro.ttf') format('truetype');
 }
 
 .banner {
@@ -27,7 +27,7 @@
 }
 
 h2 {
-    font-family: 'dine-round', 'sans-serif';
+    font-family: 'FeatherBold', 'sans-serif';
 }
 
 .container {
