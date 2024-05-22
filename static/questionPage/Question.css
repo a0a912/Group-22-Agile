@@ -292,3 +292,9 @@ div#choices input,label{
     grid-column: 4;
     padding: 10px 0 10px 0 ;
 }
+#exit{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-image: url();
+}

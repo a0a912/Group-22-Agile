@@ -345,6 +345,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let index = 0;
     const nextQuestionButton = document.getElementById('next_question');
     const form = document.getElementById("question_form");
+    const exit = document.getElementById('exit');
+
+
+    exit.addEventListener('click', function() {
+        window.location.href = '/';
+    })
     
 
     // Attach the form submit event listener once
