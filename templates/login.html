@@ -6,13 +6,11 @@
     <link rel="stylesheet" href="/static/login/login.css">
     <title>UNOLINGO-Login</title>
 </head>
-<body>
-    <button class = "dark-mode" id = "DarkModeToggle"></button>
+<body class="dark-mode">
     <div class="banner">
-        <div class="unolingo" herf="{{ url_for('home')}}"><h2>UNOLINGO</h2>
+        <h1 id = "Welcome">Unolingo</h1>
     </div>
 
-    <div class = "dark-mode" id = "DarkModeToggle">
     <div class="container">
         <div class="logo">
             <img src="/static/login/duck-spin.gif" alt="Logo">
@@ -21,9 +19,8 @@
             
         </div>
         <form class="login-form" action="/auth/login" method="POST">
-            <h2 id="loginMessage">Login into your account</h2>
-            <input type="username" name="username" placeholder="username" class="input-field">
-            <input type="password" name="password" placeholder="password" class="input-field">
+            <input id="login-input" type="username" name="username" placeholder="username" class="input-field">
+            <input id="login-input" type="password" name="password" placeholder="password" class="input-field">
             <div class="forgot-password">
                 <a href="{{ url_for('forgot') }}">Forgot Password?</a>
             </div>
@@ -31,13 +28,7 @@
             <div class="signup-link">
                 <p>Don't have an account? <a href="{{ url_for('register_page') }}">Sign up</a></p>
             </div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <popup class="alert">
-                        {{ messages[0] }}
-                    </popup>
-                {% endif %}
-            {% endwith %}
+            
         </form>
     </div>
 </div>

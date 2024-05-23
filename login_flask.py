@@ -90,8 +90,10 @@ def register():
     
     #result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
+        flash('Signup successful! Please login.', 'success')
         return redirect(url_for('login_page'))
     else:
+        flash('Signup failed. Please try again.', 'error')
         return redirect(url_for('register_page'))
 
 # making a post request to the server to get secure questions

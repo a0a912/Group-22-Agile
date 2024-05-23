@@ -7,7 +7,7 @@
     <title>Document</title>
     
 </head>
-<body>
+<body class = "dark-mode">
     <div class = "banner">
         <h1 id = "TopScores">See the top rankings!</h1>
         <li class = NavBar>
@@ -39,7 +39,12 @@
 
     </table>
 </div>
-
+    <script>
+        window.onload = function() {
+            var darkMode = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle("dark-mode", darkMode);
+        };
+    </script>
     
 </body>
 </html>
