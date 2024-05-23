@@ -88,6 +88,16 @@ def change_weight_for_table(table_name:str,weight:int,word:str="*"):
     statement = f"""UPDATE {table_name} SET weight = {weight} WHERE word = '{word}'"""
     execute(statement)
 
+def replace_s(word):
+    if "'s" in word["correct"]:
+        word["correct"] = word["correct"].replace("'s", "’s")
+    for i in range(len(word["incorrect"])):
+        if "'s" in word["incorrect"][i]:
+            word["incorrect"][i] = word["incorrect"][i].replace("'s", "’s")
+    if "'s" in word["example"]:
+        word["example"] = word["example"].replace("'s", "’s")
+    return word
+
 if __name__ == "__main__":
     create_secure_question_table()
     create_account_table()
@@ -120,6 +130,7 @@ if __name__ == "__main__":
     with open("database/data.json","r",encoding="utf-8") as file:
         data = json.load(file)
         for word in data:
+            word = replace_s(word)
             word_tuple = get_meaning_phone(word["word"],data)
             # make it into an object
             word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4])
@@ -180,16 +191,10 @@ if __name__ == "__main__":
     with open("database/gre_words.json","r",encoding="utf-8") as file:
         data = json.load(file)
         for word in data:
+            word = replace_s(word)
             word_tuple = get_meaning_phone(word["word"],data)
-            # we need to replace "'s" with "`" because of the sql syntax
-            new_list_without_quote_3 = []
-            for i in word_tuple[3]:
-                if "'s" in i:
-                    new_list_without_quote_3.append(i.replace("'s","`s"))
-                else:
-                    new_list_without_quote_3.append(i)
             # make it into an object
-            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],new_list_without_quote_3,word_tuple[4])
+            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4])
             # make it into a dictionary for json
             word_for_question_dictionary = word_for_question.__dict__
             # append the dictionary into table question_GRE_definition of database
