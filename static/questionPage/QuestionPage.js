@@ -266,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const full_object = JSON.parse(elementHtml);
     const number_of_question = full_object.length;
     let win_streak = 0;
+    questionCount = 0;
     let index = 0;
 
     respone_box.style.display = 'none';
@@ -279,9 +280,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Selected value: ", selectedOption.value);
             if (selectedOption.value === full_object[index - 1].correct) {
                 console.log("Correct answer");
-                timeLeft += 2; // Add 1 second if answer is correct
+                timeLeft += 2; // Add 2 seconds if answer is correct
                 point += 1;
                 score.innerHTML = point;
+                console.log(point);
                 win_streak += 1;
                 correct_answer.push(full_object[index - 1].id);
                 description(true);
@@ -312,9 +314,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextQuestionButton = document.getElementById('next_question');
     nextQuestionButton.addEventListener('click', function(event) {
         event.preventDefault();
+        console.log(point);
         if (index < full_object.length) {
             if (win_streak === 3) {
                 winstreak();
+                win_streak = 0;
             }
             displayQuestion(full_object, index);
             displayChoice(full_object[index].incorrect_list, full_object[index].correct);
@@ -328,5 +332,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    startCountdown(false, point, number_of_question, full_object.length);
+    function startCountdown() {
+        timeLeft = 30; // Ensure timeLeft is initialized to 30 seconds
+        const countdownElement = document.getElementById('time');
+
+        countdownInterval = setInterval(function() {
+            if (!countdownElement) {
+                clearInterval(countdownInterval);
+                return;
+            }
+            countdownElement.style.width = `${timeLeft * 25}px`;
+            countdownElement.innerHTML = timeLeft;
+
+            if (timeLeft > 0) {
+                timeLeft--; // Decrease timeLeft by 1 second
+            } else {
+                clearInterval(countdownInterval);
+                countdownElement.style.width = '0px'; // Set the width to 0
+                const win = point >= number_of_question / 2;
+                endGame(win, point, number_of_question, 0, full_object.length);
+                Send(incorrect_answer, correct_answer, point);
+            }
+        }, 1000);
+    }
+
+    let win = false;
+    if (win_streak === number_of_question) {
+        win = true;
+    }
+
+    startCountdown();
 });
