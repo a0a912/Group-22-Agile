@@ -481,7 +481,7 @@
       },
       {
           "word": "sphinx",
-          "correct": "A mythical creature with a lion's body.",
+          "correct": "A mythical creature with a lion’s body.",
           "incorrect": [
               "A type of bird.",
               "A kitchen tool.",
@@ -509,16 +509,7 @@
           ],
           "example": "The rainforest is home to diverse wildlife."
       },
-      {
-          "word": "saturn",
-          "correct": "A planet with rings.",
-          "incorrect": [
-              "A type of bird.",
-              "A kitchen appliance.",
-              "A kind of tree."
-          ],
-          "example": "Saturn is the sixth planet from the Sun."
-      },
+
       {
           "word": "cheetah",
           "correct": "A fast-running wild cat.",

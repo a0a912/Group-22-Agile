@@ -25,14 +25,19 @@ def get_meaning_phone(word,data):
         word_original_json = response_of_meaning.json()[0]
         # get the word
         my_word = word_original_json["word"]
+        word_phonetics=""
         # get the phonetics
-        if word_original_json["phonetics"][0]["audio"] != "":
-            word_phonetics = word_original_json["phonetics"][0]["audio"]
-        # elif word_original_json["phonetics"][1]["audio"] != "":
-        #     word_phonetics = word_original_json["phonetics"][1]["audio"]
-        else:
-            word_phonetics = ""
-            print("No audio available")
+        # try:
+        #     if word_original_json["phonetics"][0]["audio"] != "":
+        #         word_phonetics = word_original_json["phonetics"][0]["audio"]
+        #     # elif word_original_json["phonetics"][1]["audio"] != "":
+        #     #     word_phonetics = word_original_json["phonetics"][1]["audio"]
+        #     else:
+        #         word_phonetics = ""
+        #         print("No audio available")
+        # except:
+        #     word_phonetics = ""
+        #     print("No audio available")
         # get the meaning
         for word in data:
             if word["word"] == my_word:
@@ -117,6 +122,9 @@ if __name__ == "__main__":
         for word in data:
             word_tuple = get_meaning_phone(word["word"],data)
             # make it into an object
+            print(word_tuple)
+            for i in word_tuple:
+                print(i)
             word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4])
             # make it into a dictionary for json
             word_for_question_dictionary = word_for_question.__dict__
@@ -136,6 +144,7 @@ if __name__ == "__main__":
             # randomly choose 3 words from the list of words to be the incorrect answers
             Word.choose_word(word_blank,list_of_words)
             word_blank_dictionary = word_blank.__dict__
+            print(json.dumps(word_blank_dictionary['incorrect_list']))
             statement= f"""INSERT INTO {question_blank}
                         (word, correct, incorrect, phonetics_url,example) 
                         VALUES ('{word_blank_dictionary['word']}', 
@@ -177,23 +186,24 @@ if __name__ == "__main__":
         for word in data:
             word_tuple = get_meaning_phone(word["word"],data)
             # we need to replace "'s" with "`" because of the sql syntax
-            new_list_without_quote = []
+            new_list_without_quote_3 = []
             for i in word_tuple[3]:
                 if "'s" in i:
-                    new_list_without_quote.append(i.replace("'s","`s"))
+                    new_list_without_quote_3.append(i.replace("'s","`s"))
                 else:
-                    new_list_without_quote.append(i)
+                    new_list_without_quote_3.append(i)
             # make it into an object
-            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],new_list_without_quote,word_tuple[4])
+            word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],new_list_without_quote_3,word_tuple[4])
             # make it into a dictionary for json
             word_for_question_dictionary = word_for_question.__dict__
+            print(word_for_question_dictionary['correct'])
             # append the dictionary into table question_GRE_definition of database
             statement= f"""INSERT INTO {question_GRE_definition}
                         (word, correct, incorrect,phonetics_url, example) 
                         VALUES ('{word_for_question_dictionary['word']}', 
                             '{word_for_question_dictionary['correct']}', 
                             '{json.dumps(word_for_question_dictionary['incorrect_list'])}',
-                            '{word_for_question_dictionary['phonetics']}', 
+                            '', 
                             "{word_for_question_dictionary['word_example']}")"""
             execute(statement)
             change_weight_for_table(question_GRE_definition,5,word_for_question_dictionary['word'])
@@ -209,7 +219,7 @@ if __name__ == "__main__":
                         VALUES ('{word_blank_dictionary['word']}', 
                             '{word_blank_dictionary['correct']}', 
                             '{json.dumps(word_blank_dictionary['incorrect_list'])}',
-                            '{word_for_question_dictionary['phonetics']}',  
+                            '',  
                             "{word_blank_dictionary['word_example']}")"""
             execute(statement)
             change_weight_for_table(question_GRE_blank,5,word_blank_dictionary['word'])

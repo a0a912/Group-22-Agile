@@ -47,7 +47,7 @@
         "Commonly discussed in everyday conversations.",
         "Lacking depth or complexity."
       ],
-      "example": "The professor's lecture on quantum physics was so esoteric that few students could follow along."
+      "example": "The professor’s lecture on quantum physics was so esoteric that few students could follow along."
     },
     {
       "word": "veracity",
@@ -87,7 +87,7 @@
         "To acknowledge with respect.",
         "To support or endorse."
       ],
-      "example": "It is inappropriate to disparage someone's efforts, even if you disagree with them."
+      "example": "It is inappropriate to disparage someone’s efforts, even if you disagree with them."
     },
     {
       "word": "abate",
@@ -97,7 +97,7 @@
         "To exacerbate a situation.",
         "To remain constant."
       ],
-      "example": "The storm's fury finally abated after hours of torrential rain."
+      "example": "The storm’s fury finally abated after hours of torrential rain."
     },
     {
       "word": "anomaly",
@@ -134,7 +134,7 @@
       "correct": "To increase the power, status, or wealth of something or someone; to make something seem greater or more impressive than it is.",
       "incorrect": [
         "To diminish or reduce.",
-        "To undermine one's reputation.",
+        "To undermine one’s reputation.",
         "To simplify or minimize."
       ],
       "example": "He constantly aggrandized his achievements in an attempt to gain admiration."
@@ -145,7 +145,7 @@
       "incorrect": [
         "To force someone to comply.",
         "To intimidate or threaten.",
-        "To ignore someone's wishes."
+        "To ignore someone’s wishes."
       ],
       "example": "She managed to cajole her friend into attending the concert with her."
     },
@@ -167,7 +167,7 @@
         "Rigidity; inflexibility.",
         "Unfairness; bias."
       ],
-      "example": "The governor showed clemency by reducing the prisoner's sentence."
+      "example": "The governor showed clemency by reducing the prisoner’s sentence."
     },
     {
       "word": "connoisseur",
@@ -197,7 +197,7 @@
         "Having no effect.",
         "Beneficial or advantageous."
       ],
-      "example": "The deleterious effects of smoking on one's health are well-documented."
+      "example": "The deleterious effects of smoking on one’s health are well-documented."
     },
     {
         "word": "aberration",
@@ -257,7 +257,7 @@
             "A type of food.",
             "A form of entertainment."
         ],
-        "example": "He hoped to emulate his father's success in business."
+        "example": "He hoped to emulate his father’s success in business."
     },
     {
         "word": "innocuous",
@@ -317,7 +317,7 @@
             "A form of transportation.",
             "A type of food."
         ],
-        "example": "The recalcitrant student refused to follow the teacher's instructions."
+        "example": "The recalcitrant student refused to follow the teacher’s instructions."
     },
     {
         "word": "sanguine",
@@ -437,11 +437,11 @@
               "A form of weather.",
               "A type of animal."
           ],
-          "example": "The mendacious politician's promises were not to be trusted."
+          "example": "The mendacious politician’s promises were not to be trusted."
       },
       {
           "word": "onus",
-          "correct": "Used to refer to something that is one's duty or responsibility.",
+          "correct": "Used to refer to something that is one’s duty or responsibility.",
           "incorrect": [
               "A type of food.",
               "A form of transportation.",
@@ -717,7 +717,7 @@
             "A form of weather.",
             "A type of food."
         ],
-        "example": "The company's rapacious pursuit of profits led to unethical business practices."
+        "example": "The company’s rapacious pursuit of profits led to unethical business practices."
     },
     {
         "word": "serendipity",
@@ -769,16 +769,6 @@
         ],
         "example": "Her wins ome smile charmed everyone she met."
     },
-    {
-      "word": "xenial",
-      "correct": "Relating to hospitality or guest-friendship.",
-      "incorrect": [
-          "A type of bird.",
-          "A form of weather.",
-          "A type of food."
-      ],
-      "example": "The xenial host welcomed the guests with warmth and generosity."
-  },
   {
       "word": "yammer",
       "correct": "To talk foolishly or incessantly; to whine or complain.",
@@ -847,11 +837,11 @@
           "A form of weather.",
           "A type of animal."
       ],
-      "example": "The speaker was eloquent, holding the audience's attention throughout."
+      "example": "The speaker was eloquent, holding the audience’s attention throughout."
   },
   {
       "word": "fickle",
-      "correct": "Changing frequently, especially as regards one's loyalties, interests, or affection.",
+      "correct": "Changing frequently, especially as regards one’s loyalties, interests, or affection.",
       "incorrect": [
           "A type of bird.",
           "A form of weather.",
@@ -868,16 +858,6 @@
           "A type of animal."
       ],
       "example": "He was known for his gregarious personality, always surrounded by friends."
-  },
-  {
-      "word": "halycon",
-      "correct": "Denoting a period of time in the past that was idyllically happy and peaceful.",
-      "incorrect": [
-          "A type of weather.",
-          "A form of transportation.",
-          "A type of food."
-      ],
-      "example": "She remembered her childhood as a halcyon time of innocence and joy."
   },
   {
       "word": "impetuous",
