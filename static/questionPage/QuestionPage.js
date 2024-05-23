@@ -3,7 +3,8 @@ let countdownInterval = null;
 let correct_answer = [];
 let incorrect_answer = [];
 let endGameCalled = false; // To ensure endGame is called only once
-let timeLeft = 30; // Initialize timeLeft outside the function for global access
+let timeLeft = 30;
+let isPaused = false; // Initialize timeLeft outside the function for global access
 
 function resetAnswer() {
     const submitButton = document.querySelector('input[id="submit_button"]');
@@ -27,6 +28,7 @@ function resetAnswer() {
 }
 
 function winstreak() {
+    pauseCountdown();
     const container = document.getElementById('winstreak');
     const choices = document.getElementById('choices');
     const score_box = document.getElementsByClassName('score_container')[0];
@@ -52,7 +54,8 @@ function winstreak() {
         container.innerHTML = '';
         banner_text.innerHTML = defaultContent; // Reset text content
         banner.style.backgroundColor = ''; // Reset background color
-        banner_text.style.fontFamily = ''; // Reset font family
+        banner_text.style.fontFamily = '';
+        resumeCountdown();
     }, 3000); // 3 seconds delay (3000 milliseconds)
 }
 
@@ -224,6 +227,13 @@ function startCountdown(win,score,number_of_question,question_length) {
         }
     }, 1000);
 }
+function pauseCountdown() {
+    isPaused = true;
+}
+
+function resumeCountdown() {
+    isPaused = false;
+}
 
 function Send(incorrect_questions, correct_questions, score) {
     // Convert the string into a list of integers
@@ -344,9 +354,10 @@ document.addEventListener('DOMContentLoaded', function() {
             countdownElement.style.width = `${timeLeft * 25}px`;
             countdownElement.innerHTML = timeLeft;
 
-            if (timeLeft > 0) {
+            if (timeLeft > 0 && !isPaused) {
                 timeLeft--; // Decrease timeLeft by 1 second
-            } else {
+            } 
+            if (timeLeft <= 0) {
                 clearInterval(countdownInterval);
                 countdownElement.style.width = '0px'; // Set the width to 0
                 const win = point >= number_of_question / 2;
@@ -356,10 +367,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    let win = false;
-    if (win_streak === number_of_question) {
-        win = true;
-    }
 
     startCountdown();
 });
