@@ -40,3 +40,16 @@
 
 # sign_up_with_questions("eddie", "eddie123", "What is your favorite color?",'red',"What is your favorite food?","pizza")
 # check_secure_question("eddie", ["What is your favorite color?","What is your favorite food?"], ["red","pizza"])
+from manage import get_existing_words
+word_list = get_existing_words("database/gre_words.json")    
+print(", ".join(word_list))
+print(len(word_list))
+# 给我一个测重复的单词的方法
+# 从上述列表中获取单词，返回重复的单词
+
+list_without_duplicate = list(set(word_list))
+print(len(list_without_duplicate))
+# 打印出重复的单词
+for word in list_without_duplicate:
+    word_list.remove(word)
+print(", ".join(word_list))

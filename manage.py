@@ -8,6 +8,7 @@ connection = sqlite3.connect(database,check_same_thread=False) # create the file
 cursor = connection.cursor() # cursor is used to interact with the database 
 
 def execute(statement):
+    print(statement)
     cursor.execute(statement) 
     connection.commit()
 
@@ -27,8 +28,8 @@ def get_meaning_phone(word,data):
         # get the phonetics
         if word_original_json["phonetics"][0]["audio"] != "":
             word_phonetics = word_original_json["phonetics"][0]["audio"]
-        elif word_original_json["phonetics"][1]["audio"] != "":
-            word_phonetics = word_original_json["phonetics"][1]["audio"]
+        # elif word_original_json["phonetics"][1]["audio"] != "":
+        #     word_phonetics = word_original_json["phonetics"][1]["audio"]
         else:
             word_phonetics = ""
             print("No audio available")
