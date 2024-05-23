@@ -15,7 +15,7 @@
           {% if username %}
           <h1 id = "Welcome">{{username}}'s profile</h1>
           <li class = NavBar>
-            <ul> <a href="{{ url_for('home') }}">Home </a></ul>
+            <ul> <a href="{{ url_for('home') }}">Home </a></ul> 
             <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
             <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
                 <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
