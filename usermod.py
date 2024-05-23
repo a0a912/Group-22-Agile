@@ -27,7 +27,8 @@ def select_id(table_name:str, id:int, column_name="*") -> tuple:
     return result
 
 def select_max_id_by_account(table_name: str, account: int, column_name="*") -> tuple:
-    rows = cursor.execute(f"SELECT {column_name} FROM {table_name} WHERE account_id = {account} ORDER BY id DESC LIMIT 1")
+    statement = f"SELECT {column_name} FROM {table_name} WHERE account_id = {account} ORDER BY id DESC LIMIT 1"
+    rows = cursor.execute(statement)
     result = rows.fetchone()
     return result
 
