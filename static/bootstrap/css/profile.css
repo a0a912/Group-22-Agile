@@ -214,6 +214,7 @@ body.dark-mode {
     background-color: var(--hover-blue);
 }
 
+
 /* .alert {
     padding: 20px;
     background-color: #f44336; 
@@ -230,7 +231,7 @@ body.dark-mode {
 } */
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 1000px) {
 
 .banner{
     display: flex;
