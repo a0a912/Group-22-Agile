@@ -88,6 +88,8 @@ body{
     font-family: "eudox";
     display: flex;
     flex-direction: column;
+    background-color: white;
+   
 }
 
 div#choices input,label{
@@ -218,7 +220,7 @@ div#choices input,label{
     width: 80px;
     align-items: center;
     justify-content: center;
-    background-color: #95f44c;
+    background-color: white;
     margin: 0px;
 
     border-radius: 10px;
@@ -295,6 +297,7 @@ div#choices input,label{
     grid-column: 4;
     padding: 10px 0 10px 0 ;
 }
+
 #time_container {
     height: 25px;
     width: auto;
@@ -333,4 +336,31 @@ div#choices input,label{
     background-size: cover;
     background-repeat: no-repeat;
     
+
+
+body.dark-mode {
+    background-color:var(--dark-grey);
+    color: white;
+}
+
+#DarkModeToggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--dark-grey);
+    border: #353F98 2px solid;
+}
+
+#DarkModeToggle:hover {
+    background-color: var(--hover-blue);
+}
+
+#DarkModeToggle.dark-mode {
+    background-color: white;
+}
+
+#DarkModeToggle.dark-mode:hover {
+    background-color: var(--hover-blue);
+
 }
