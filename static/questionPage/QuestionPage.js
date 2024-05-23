@@ -29,6 +29,7 @@ function resetAnswer() {
 
 function winstreak() {
     pauseCountdown();
+    
     const container = document.getElementById('winstreak');
     const choices = document.getElementById('choices');
     const score_box = document.getElementsByClassName('score_container')[0];
@@ -45,6 +46,7 @@ function winstreak() {
     score_box.style.display = 'none';
     container.style.display = 'flex';
     container.innerHTML += '<img id="winstreakImg" src="/static/questionPage/duck-winstreak.gif">'; 
+    
 
     setTimeout(function() {
         question_text.style.display = '';
@@ -328,6 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (index < full_object.length) {
             if (win_streak === 3) {
                 winstreak();
+                timeLeft += 5;
                 win_streak = 0;
             }
             displayQuestion(full_object, index);
