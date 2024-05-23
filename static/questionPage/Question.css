@@ -236,7 +236,7 @@ div#choices input,label{
     width: 80px;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #78C745;
     margin: 0px;
 
     border-radius: 10px;
@@ -389,6 +389,7 @@ body.dark-mode {
     justify-content: space-between;
     
 }
+
 .QuestionReview{
     display: flex;
     height: 80px;
@@ -396,6 +397,7 @@ body.dark-mode {
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     justify-content: center;
+    margin-bottom: 20px;
 
 }
 #reviewbody{
