@@ -43,7 +43,7 @@
     grid-column: 2;
 }
 
-li{
+li {
     display: inline;
     list-style: none;
     text-decoration: none;
@@ -179,7 +179,7 @@ body.dark-mode {
     margin: 10px;
 }
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 1000px) {
 
 .banner{
     display: flex;

@@ -335,7 +335,7 @@ div#choices input,label{
     background-image: url('/static/Endless/bomb.png');
     background-size: cover;
     background-repeat: no-repeat;
-    
+}   
 
 
 body.dark-mode {
@@ -362,5 +362,14 @@ body.dark-mode {
 
 #DarkModeToggle.dark-mode:hover {
     background-color: var(--hover-blue);
+}
 
+/* ------------------------------------- MOBILE ----------------------------------------- */
+@media screen and (max-width: 1000px) {
+
+    .banner{
+        display: flex;
+        flex-direction: column;
+    }
+    
 }
