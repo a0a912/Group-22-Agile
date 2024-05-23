@@ -2,8 +2,9 @@
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+import ast
 
-from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account
+from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -247,15 +248,35 @@ def answer_questions():
 
 @app.route("/endless", methods=['GET'])
 def endless():
-    questions_list_json = generate_question_list(14,14,"QUESTION_BLANK")
+    from manage import get_existing_words
+    word_list = get_existing_words("database/data.json")    
+ 
+    length = len(word_list)
+    questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
 @app.route("/review", methods=['GET'])
 def review():
 
-    print(select_max_id_by_account('QUESTION_ACCOUNT', 2,'correct_questions'))
-  
-    return render_template("review.html")
+    print(select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions'))
+
+    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions')
+    questions_id = eval(wrongQuestions[0])
+
+
+    # questions_text = []
+    # for id in questions_id:
+    #     questions_text.append(select_id('QUESTION_BLANK', id,'incorrect_questions'))
+    print(select_id('QUESTION_BLANK', 2,'incorrect_questions'))
+    
+ 
+
+
+
+    # print(questions_text)
+
+    wrongQuestion_JSON = json.dumps(questions_text)
+    return render_template("review.html", wrongQuestion=wrongQuestion_JSON)
         
         
 
