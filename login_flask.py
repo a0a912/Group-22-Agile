@@ -249,6 +249,9 @@ def endless():
     questions_list_json = generate_question_list(14,14,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
+@app.route("/review", methods=['GET'])
+def review():
+    return render_template("review.html")
         
         
 
