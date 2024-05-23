@@ -8,7 +8,7 @@ connection = sqlite3.connect(database,check_same_thread=False) # create the file
 cursor = connection.cursor() # cursor is used to interact with the database 
 
 def execute(statement):
-    print(statement)
+    # print(statement)
     cursor.execute(statement) 
     connection.commit()
 
@@ -122,9 +122,6 @@ if __name__ == "__main__":
         for word in data:
             word_tuple = get_meaning_phone(word["word"],data)
             # make it into an object
-            print(word_tuple)
-            for i in word_tuple:
-                print(i)
             word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],word_tuple[3],word_tuple[4])
             # make it into a dictionary for json
             word_for_question_dictionary = word_for_question.__dict__
@@ -144,7 +141,6 @@ if __name__ == "__main__":
             # randomly choose 3 words from the list of words to be the incorrect answers
             Word.choose_word(word_blank,list_of_words)
             word_blank_dictionary = word_blank.__dict__
-            print(json.dumps(word_blank_dictionary['incorrect_list']))
             statement= f"""INSERT INTO {question_blank}
                         (word, correct, incorrect, phonetics_url,example) 
                         VALUES ('{word_blank_dictionary['word']}', 
@@ -196,7 +192,6 @@ if __name__ == "__main__":
             word_for_question = Word(word_tuple[0],word_tuple[1],word_tuple[2],new_list_without_quote_3,word_tuple[4])
             # make it into a dictionary for json
             word_for_question_dictionary = word_for_question.__dict__
-            print(word_for_question_dictionary['correct'])
             # append the dictionary into table question_GRE_definition of database
             statement= f"""INSERT INTO {question_GRE_definition}
                         (word, correct, incorrect,phonetics_url, example) 
