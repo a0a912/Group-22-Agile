@@ -1,8 +1,9 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score
-from usermod import execute, select_all, update, check_secure_question, select_password
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+
+from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -251,6 +252,9 @@ def endless():
 
 @app.route("/review", methods=['GET'])
 def review():
+
+    print(select_max_id_by_account('QUESTION_ACCOUNT', 2,'correct_questions'))
+  
     return render_template("review.html")
         
         
