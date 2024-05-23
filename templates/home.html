@@ -17,6 +17,7 @@
     <header>
         <div class = "banner">
             <!-- Check if user is loged in -->
+            <button class = "dark-mode" id = "DarkModeToggle"></button>
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
             <li class = NavBar>
@@ -37,7 +38,7 @@
         </div>
     </header>  
 
-<button class = "dark-mode" id = "DarkModeToggle"></button>
+
 <div class = "StudyMode">
     <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
     <button class = "GameModeButton" id = "Game1">Basic Fill in the Blank</button>
