@@ -249,7 +249,7 @@ def endless():
     questions_list_json = generate_question_list(14,14,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
-        return redirect(url_for('forgot'), message) 
+        
         
 
         
