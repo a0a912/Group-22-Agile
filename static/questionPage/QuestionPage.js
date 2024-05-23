@@ -128,6 +128,7 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     const respone = document.createElement('h2');
     const respone_des = document.createElement('h3');
     const ducky = document.createElement("img");
+    const time_container = document.getElementById('time_container');
 
     if (win) {
         respone.innerHTML = 'lets go!';
@@ -140,6 +141,10 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     }
     ducky.id = 'ducky';
     respone.id = 'respone_end';
+    if (time_container) {
+        time_container.style.display = 'none';
+    }
+    
 
     const score_outerdiv = document.createElement('div');
     const score_innerdiv = document.createElement('div');
@@ -158,7 +163,7 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     score_div.appendChild(score_outerdiv_incorrect);
     score_div.id = 'score_div';
 
-    choices_form.append(respone, respone_des, score_div, ducky);
+    choices_form.append(ducky,respone, respone_des, score_div);
     form.style.display = 'none';
     question_text.style.display = 'none';
     description_text.style.display = 'none';
@@ -184,14 +189,26 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
         });
     }
 
+    next_questionButton.addEventListener('click', function() {
+        
+        window.location.href = '/';
+    })
+
     clearInterval(countdownInterval); // Stop the countdown
 }
 //endless
-function startCountdown() {
+function startCountdown(win,score,number_of_question,question_length) {
     timeLeft = 30; // Ensure timeLeft is initialized to 30 seconds
     const countdownElement = document.getElementById('time');
 
     countdownInterval = setInterval(function() {
+        
+
+        // if no countdown element is found, then stop the function
+        if (!countdownElement) {
+            clearInterval(countdownInterval);
+            return;
+        }
         countdownElement.style.width = `${timeLeft *25}px`;
         countdownElement.innerHTML = timeLeft;
 
@@ -200,7 +217,10 @@ function startCountdown() {
         } else {
             clearInterval(countdownInterval);
             countdownElement.style.width = '0px'; // Set the width to 0
-            endGame(false, 0, 0, 0, 0);
+            console.log("score: ", score);
+            console.log("number_of_question: ", number_of_question);
+            
+            endGame(win, score, number_of_question, 0, question_length);
         }
     }, 1000);
 }
@@ -308,5 +328,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    startCountdown();
+    startCountdown(false, point, number_of_question, full_object.length);
 });
