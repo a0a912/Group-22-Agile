@@ -170,6 +170,22 @@ div#choices input,label{
     align-items: center;
 
 }
+.button{
+    display: inline-block;
+    background-color: #353F98;
+    color: #fff;
+    border: none;
+    padding: 4px 23px;
+    border-radius: 15px;
+
+    cursor: pointer;
+    font-family: "eudox";
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    align-items: center;
+    margin: 30px;
+}
   
 #question_form input[type="submit"]:hover {
     background-color: #5b6bfd;
@@ -391,8 +407,8 @@ div#choices input,label{
     background-image: url('/static/Endless/bomb.png');
     background-size: cover;
     background-repeat: no-repeat;
-}   
-
+    
+}
 
 body.dark-mode {
     background-color:var(--dark-grey);
@@ -428,4 +444,27 @@ body.dark-mode {
         flex-direction: column;
     }
     
+}
+#pageSettings{
+    position: relative;
+    padding: 1.5rem 4.5rem 4.5rem;
+}
+#second_box{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.QuestionReview{
+    display: flex;
+    height: 80px;
+    width: auto;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+
+}
+#reviewbody{
+
+background-color: #F6F7FB;
+
 }
