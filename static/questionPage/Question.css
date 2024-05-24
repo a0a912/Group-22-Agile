@@ -451,16 +451,6 @@ body.dark-mode {
 #DarkModeToggle.dark-mode:hover {
     background-color: var(--hover-blue);
 }
-
-/* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 1000px) {
-
-    .banner{
-        display: flex;
-        flex-direction: column;
-    }
-    
-}
 #pageSettings{
     position: relative;
     padding: 1.5rem 4.5rem 4.5rem;
@@ -468,6 +458,7 @@ body.dark-mode {
 #second_box{
     display: flex;
     justify-content: space-between;
+    font-family: sans-serif;
     
 }
 
@@ -479,10 +470,40 @@ body.dark-mode {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     justify-content: center;
     margin-bottom: 20px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
 
 }
+.QuestionReview .front,
+.QuestionReview .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flipped {
+    transform: rotateX(180deg);
+  }
 #reviewbody{
 
 background-color: #F6F7FB;
 
+}
+#questionList{
+    font-family: sans-serif;
+}
+.QuestionReview p {
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+
+/* ------------------------------------- MOBILE ----------------------------------------- */
+@media screen and (max-width: 1000px) {
+
+    .banner{
+        display: flex;
+        flex-direction: column;
+    }
+    
 }

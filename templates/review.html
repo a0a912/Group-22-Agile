@@ -5,40 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='questionPage/Question.CSS') }}">
-    <script>
-        const questions_list = {{ wrongQuestion|safe }};
-        
-        
-        console.log(typeof(questions_list));
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const questions_container = document.getElementById
-            ('questionList');
-            
-
-            for (let i = 0; i < questions_list.length; i++) {
-                let div = document.createElement('div');
-                
-                let p = document.createElement('p');
-
-                div.classList.add('QuestionReview');
-                
-                p.innerHTML = questions_list[i];
-
-                div.appendChild(p);
-                questions_container.appendChild(div);
-
-            }
-
-            
-        })
-
-    
-        
-        
-
-        
-    </script>
+    <script src="{{ url_for('static', filename='review/review.js') }}" ></script>
+    <link rel="stylesheet" href="/static/questionPage/Question.css">
+    <div id = 'AnswertoJS' style="display: none;">{{answer_JSON}}</div>
+    <div id = 'QuestiontoJS' style="display: none;">{{wrongQuestion_JSON}}</div>
 </head>
 <body id ='reviewbody'>
     <header>

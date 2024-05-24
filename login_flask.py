@@ -261,34 +261,24 @@ def endless():
 
 @app.route("/review", methods=['GET'])
 def review():
-
-    print(select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions'))
-
     wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions')
+    
     if wrongQuestions is not None:
         questions_id = eval(wrongQuestions[0])
     else:
         questions_id = []
+        answer_text = []
+
     questions_text = []
+    answer_text = []
     for id in questions_id:
+        answer_text.append(select_id('QUESTION_BLANK', id,'correct'))
         questions_text.append(select_id('QUESTION_BLANK', id,'example'))
 
     list_question = [item[0] for item in questions_text]
+    list_ans = [item[0] for item in answer_text]
 
-    
-
-  
-    
-
-    
- 
-
-
-    
-    
-
-    wrongQuestion_JSON = json.dumps(list_question)
-    return render_template("review.html"),jsonify(wrongQuestion_JSON)
+    return render_template("review.html", wrongQuestion_JSON=json.dumps(list_question), answer_JSON=json.dumps(list_ans))
         
         
 
