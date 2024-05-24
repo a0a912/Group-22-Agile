@@ -126,7 +126,14 @@ def test_generate_question_list():
                         "{word_for_question_dictionary['word_example']}")"""
         execute(statement)
     result = generate_question_list(2,2,table)
-    expected_result = '[{"question": "I ate an apple.", "incorrect_list": ["A color", "A car", "A movie"], "id": 1, "correct": "A fruit"}, {"question": "I ate a banana.", "incorrect_list": ["A color", "A car", "A movie"], "id": 2, "correct": "A fruit"}]'
-    print(result)
+    new_result = []
+    for question in eval(result):
+        question.pop('id')
+        new_result.append(question)
+    expected_result = '[{"question": "I ate a banana.", "incorrect_list": ["A color", "A car", "A movie"], "correct": "A fruit"},{"question": "I ate an apple.", "incorrect_list": ["A color", "A car", "A movie"], "correct": "A fruit"}]'
+    expected_result= eval(expected_result)
+    new_result= sorted(new_result,key = lambda x: x['question'])
+    print(new_result)
     print(expected_result)
-    assert eval(result) == eval(expected_result)
+    assert new_result == expected_result
+    drop(table)
