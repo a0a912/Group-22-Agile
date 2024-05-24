@@ -170,6 +170,38 @@ div#choices input,label{
     align-items: center;
 
 }
+.button{
+    display: inline-block;
+    background-color: #353F98;
+    color: #fff;
+    border: none;
+    padding: 4px 23px;
+    border-radius: 15px;
+
+    cursor: pointer;
+    font-family: "eudox";
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    align-items: center;
+    margin: 30px;
+}
+.button{
+    display: inline-block;
+    background-color: #353F98;
+    color: #fff;
+    border: none;
+    padding: 4px 23px;
+    border-radius: 15px;
+
+    cursor: pointer;
+    font-family: "eudox";
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    align-items: center;
+    margin: 30px;
+}
   
 #question_form input[type="submit"]:hover {
     background-color: #5b6bfd;
@@ -276,7 +308,7 @@ div#choices input,label{
     width: 80px;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #78C745;
     margin: 0px;
 
     border-radius: 10px;
@@ -391,8 +423,8 @@ div#choices input,label{
     background-image: url('/static/Endless/bomb.png');
     background-size: cover;
     background-repeat: no-repeat;
-}   
-
+    
+}
 
 body.dark-mode {
     background-color:var(--dark-grey);
@@ -421,6 +453,52 @@ body.dark-mode {
 #DarkModeToggle.dark-mode:hover {
     background-color: var(--hover-blue);
 }
+#pageSettings{
+    position: relative;
+    padding: 1.5rem 4.5rem 4.5rem;
+}
+#second_box{
+    display: flex;
+    justify-content: space-between;
+    font-family: sans-serif;
+    
+}
+
+.QuestionReview{
+    display: flex;
+    height: 80px;
+    width: auto;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    margin-bottom: 20px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+
+}
+.QuestionReview .front,
+.QuestionReview .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flipped {
+    transform: rotateX(180deg);
+  }
+#reviewbody{
+
+background-color: #F6F7FB;
+
+}
+#questionList{
+    font-family: sans-serif;
+}
+.QuestionReview p {
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 1000px) {
