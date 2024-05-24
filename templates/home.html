@@ -20,6 +20,7 @@
             <button class = "dark-mode" id = "DarkModeToggle"></button>
             <button style="width: auto;" class = "mute_button_class" id = "mute_button_id"> <img id="unmute" src="static\assets\duck_win_unmute.png" alt="unmute" width="100" height="100"> <p id="mute_text">Mute </p></button>
             <img id="image_as_button" src="static\assets\duck_win_unmute.png" alt="logo" width="100" height="100">
+            <img id="duck_no_sunglasses_image_as_button" src="static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100">
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
             <li class = NavBar>
@@ -113,6 +114,16 @@
             image_as_button.src = "static/assets/duck_win_mute.png";
         } else {
             image_as_button.src = "static/assets/duck_win_unmute.png";
+        }
+    });
+
+    document.getElementById("duck_no_sunglasses_image_as_button").addEventListener("click", function() {
+        let image_as_button = document.getElementById("duck_no_sunglasses_image_as_button");
+        if (image_as_button.src.includes("static/assets/duck_win_no_sunglasses.png")) {
+            image_as_button.src = "static/assets/duck_win_sunglasses.png";
+        } 
+        else if (image_as_button.src.includes("static/assets/duck_win_sunglasses.png")) {
+            image_as_button.src = "static/assets/duck_win_no_sunglasses.png";
         }
     });
 
