@@ -297,6 +297,9 @@ def GRE_Blank():
 
     return render_template("question.html", questions_list=questions_list_json)
 
+# @app.route("/GRE_definition", methods=['GET'])
+# def GRE_definition():
+
         
         
 
