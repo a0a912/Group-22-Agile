@@ -213,6 +213,7 @@ def forgot():
             session['questions'] = questions
             return redirect(url_for('answer'))
     else:
+        flash("Invalid Username")
         return render_template("forgot.html")
     
 # to the reset password page, receive answers here and send it to the resetp route

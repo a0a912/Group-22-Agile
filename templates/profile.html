@@ -38,13 +38,13 @@
                 <br>
                 <!-- New password -->
                 <label id="answers-label" for="password">New password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password">
+                <input class="input-field" type="password" name="password" placeholder="Enter new password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
                 <br>
                 <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
                 <br>
                 <!-- Confirm New Password-->
                 <label id="answers-label" for="password">Confirm new password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password again">
+                <input class="input-field" type="password" name="password" placeholder="Enter new password again" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
                 <button type="submit" class="answers-button">Reset</button>
             </form>
       </div>
