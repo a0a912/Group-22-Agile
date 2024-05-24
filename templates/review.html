@@ -7,15 +7,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='questionPage/Question.CSS') }}">
     <script>
         const questions_list = {{ wrongQuestion|safe }};
-        console.log(questions_list);
-        const array = JSON.parse(questions_list);
-        console.log(array[0]);
-
-        document.addEventListener('DomContentLoaded', function() {
-            
-            
         
-        });
+        
+        console.log(typeof(questions_list));
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions_container = document.getElementById
+            ('questionList');
+            
+
+            for (let i = 0; i < questions_list.length; i++) {
+                let div = document.createElement('div');
+                
+                let p = document.createElement('p');
+
+                div.classList.add('QuestionReview');
+                
+                p.innerHTML = questions_list[i];
+
+                div.appendChild(p);
+                questions_container.appendChild(div);
+
+            }
+
+            
+        })
+
+    
+        
         
 
         
@@ -45,11 +64,7 @@
 
 
         <div id = questionList>
-            <div class = 'QuestionReview'>
-                <p class ='review text'>questionList</p>
-            </div>
-            <div class = 'QuestionReview'>
-                <p class ='review text'>wrong question goes here</p>
+            
             </div>
 
 
