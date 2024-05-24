@@ -18,6 +18,8 @@
         <div class = "banner">
             <!-- Check if user is loged in -->
             <button class = "dark-mode" id = "DarkModeToggle"></button>
+            <button style="width: auto;" class = "mute_button_class" id = "mute_button_id"> <img id="unmute" src="static\assets\duck_win_unmute.png" alt="unmute" width="100" height="100"> <p id="mute_text">Mute </p></button>
+            <img id="image_as_button" src="static\assets\duck_win_unmute.png" alt="logo" width="100" height="100">
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
             <li class = NavBar>
@@ -85,6 +87,35 @@
     var darkMode = localStorage.getItem('darkMode') === 'true';
     document.body.classList.toggle("dark-mode", darkMode);
     }
+
+    /**
+     * Toggles the image and text of the mute button when clicked.
+     * If the image is currently the unmute image, it will change to the mute image
+     * and the text will change to "Unmute". If the image is currently the mute image,
+     * it will change to the unmute image and the text will change to "Mute".
+     */
+    document.getElementById("mute_button_id").addEventListener("click", function() {
+        let mute = document.getElementById("unmute");
+        let mute_text = document.getElementById("mute_text");
+        if(mute.src.includes("unmute")){
+            mute.src = `static/assets/duck_win_mute.png`;
+            mute_text.innerHTML = "Unmute";
+        }
+        else{
+            mute.src = "static/assets/duck_win_unmute.png";
+            mute_text.innerHTML = "Mute";
+        }
+    });
+
+    document.getElementById("image_as_button").addEventListener("click", function() {
+        let image_as_button = document.getElementById("image_as_button");
+        if (image_as_button.src.includes("static/assets/duck_win_unmute.png")) {
+            image_as_button.src = "static/assets/duck_win_mute.png";
+        } else {
+            image_as_button.src = "static/assets/duck_win_unmute.png";
+        }
+    });
+
 </script>
 </body>
 </html>
