@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="static/login/signup.css">
   <title>Unolingo Signup</title>
+  <style>
+    #error_message {
+      color: red;
+    }
+  </style>
 </head>
 
 <body class="dark-mode">
@@ -19,6 +24,15 @@
         <img src="/static/login/duck-spin.gif" alt="Logo">
         <h1>Welcome to Unolingo</h1>
         <h2>Sign up your account</h2>
+        <div id="error_message">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
     </div>
     <form class="signup-form" action="/auth/register" method="POST">
       <!-- Username -->

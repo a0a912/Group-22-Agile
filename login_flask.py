@@ -57,18 +57,19 @@ def login():
         # if the user is authenticated then redirect to the home page with the username
         return redirect(url_for('home'))
     else:
+        message = result[1]
         # if the user is not authenticated then redirect to the login page with a message
         session['fail_count'] = session.get('fail_count', 0) + 1
         # if the user tried 5 times then redirect to the login page with a message
         if 3 <= session.get('fail_count') < 5:
             attempts = session.get('fail_count')
-            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-            flash(message)
+            message = f"Incorrect Password. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+            #flash(message)
             
         if session.get('fail_count') == 5:
-            message = "You tried 5 attempts. Please try again later."
-            flash(message)
-            
+            message = "Incorrect Password. You tried 5 attempts. Please try again later."
+            #flash(message)
+        flash(message)    
         return redirect(url_for('login_page'))
 
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
@@ -99,7 +100,8 @@ def register():
         flash('Signup successful! Please login.', 'success')
         return redirect(url_for('login_page'))
     else:
-        flash('Signup failed. Please try again.', 'error')
+        flash(result[1], 'error')
+        #flash('Signup failed. Please try again.', 'error')
         return redirect(url_for('register_page'))
 
 # making a post request to the server to get secure questions
