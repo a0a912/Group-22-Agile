@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo</title>
     <link rel="stylesheet" href="static\bootstrap\css\HomePageCSS.css">
+    <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
     <title>UNOLINGO-Login</title>
 </head>
 
@@ -12,6 +13,7 @@
     <header>
       <div class = "banner">
           <!-- Check if user is loged in -->
+          <button class = "dark-mode" id = "DarkModeToggle"></button>
           {% if username %}
           <h1 id = "Welcome">{{username}}'s profile</h1>
           <li class = NavBar>

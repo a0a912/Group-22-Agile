@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='questionPage/Question.CSS') }}">
+    <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
     
     <p style="display: none;" id="to_JS"></p>
     <script>
@@ -19,6 +20,7 @@
 <body class="dark-mode">
     <header>
         <div class = 'banner'>
+            <button class = "dark-mode" id = "DarkModeToggle"></button>
             <div class = 'banner_content'>
                 <div class="banner_text">
                     {% if "__" in questions_list %}
@@ -40,7 +42,7 @@
         <h1></h1>
     </header>
 
-    <button class = "dark-mode" id = "DarkModeToggle"></button>
+    
 
     <div id = 'winstreak'></div>
     <div class = 'score_container'>

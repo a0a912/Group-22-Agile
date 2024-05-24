@@ -144,7 +144,7 @@ li a {
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    /* background-color: white; */
    
 }
 
@@ -400,12 +400,14 @@ body.dark-mode {
 }
 
 #DarkModeToggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 70px;
+    height: 45px;
+    border-radius: 10%;
     border: none;
     background-color: var(--dark-grey);
     border: #353F98 2px solid;
+    margin-left: 5vw;
+    font-family: 'din-round', sans-serif;
 }
 
 #DarkModeToggle:hover {
@@ -423,9 +425,14 @@ body.dark-mode {
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 1000px) {
 
-    .banner{
-        display: flex;
-        flex-direction: column;
-    }
+.banner{
+    display: flex;
+    flex-direction: column;
+}
+
+#DarkModeToggle {
+    order: 3;
+    margin: auto;
+}
     
 }
