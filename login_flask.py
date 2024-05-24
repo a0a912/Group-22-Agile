@@ -5,6 +5,10 @@ from user_crud_func import auth, sign_up, select_all, show_secure_question,updat
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+import ast
+
+from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
 import json
