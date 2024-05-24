@@ -94,3 +94,16 @@
 #         word["example"] = word["example"].replace("'s", "’s")
 # word_tuple =  tuple(data)
 # print(word_tuple)
+
+from user_crud_func import update_score_table
+# update into QUESTION_GRE_FILL_IN table
+update_score_table("admin","QUESTION_GRE_FILL_IN", 100, ["1","2","3"], ["4","5","6"])
+# update into QUESTION_ACCOUNT_FILL_IN table
+update_score_table("admin","QUESTION_ACCOUNT_FILL_IN", 100, ["1","2","3"], ["4","5","6"])
+
+"""
+Associative table for basic definition questions is QUESTION_ACCOUNT
+Associative table for basic fill-in questions is QUESTION_ACCOUNT_FILL_IN
+Associative table for GRE definition questions is QUESTION_GRE_ACCOUNT
+Associative table for GRE fill-in questions is QUESTION_GRE_FILL_IN
+"""

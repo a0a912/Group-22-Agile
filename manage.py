@@ -167,11 +167,24 @@ if __name__ == "__main__":
                     correct_questions INT NOT NULL,
                     incorrect_questions INT NOT NULL,
                     FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_blank}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_blank}(id));"""
+    execute(statement_question_account)
+    print("Tables created for 2 types of questions of ordinary works, and the associative table for definition questions")
+    print("Database for defintion created")
+
+    # create an associative table for the question_account
+    statement_question_account = f"""CREATE TABLE IF NOT EXISTS QUESTION_ACCOUNT_FILL_IN
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
                     FOREIGN KEY(correct_questions) REFERENCES {question_definition}(id),
                     FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
     execute(statement_question_account)
-    print("Tables created for 2 types of questions of ordinary works, and the associative table for question_account")
-    print("Database created")
+    print("Tables created for 2 types of questions of ordinary works, and the associative table for fill-in questions")
+    print("Database for fill-in created")
 
     # create a table for the GRE question
     for table in question_GRE_table_list:
@@ -233,6 +246,18 @@ if __name__ == "__main__":
                     FOREIGN KEY(correct_questions) REFERENCES {question_GRE_definition}(id),
                     FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_definition}(id));"""
     execute(statement_question_account)
+    print("Database for GRE Definition created")
+
+    # create an associative table for the question_account
+    statement_question_account = f"""CREATE TABLE IF NOT EXISTS QUESTION_GRE_FILL_IN
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_GRE_blank}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_blank}(id));"""
+    execute(statement_question_account)
+    print("Tables created for 2 types of questions of ordinary works, and the associative table for GRE fill-in questions")
+    print("Database for GRE fill-in created")
     
-    print("Tables created for 2 types of questions of GRE words, and the associative table for question_GRE_account")
-    print("Database created")
