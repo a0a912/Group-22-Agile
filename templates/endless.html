@@ -36,7 +36,15 @@
                         <h1 class="banner_text_h1">Choose Correct Definition for the Word</h1>
                     {% endif %}
                 </div>
-                
+            </div>
+            <li class = NavBar>
+                <ul> <a href="{{ url_for('home') }}">Home </a></ul>
+                <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
+                <ul><a href="{{ url_for('profile') }}">Profile</a></ul>
+                <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                    <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                </form> </ul>
+            </li>
         </div>
         <h1></h1>
     </header>
