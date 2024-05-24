@@ -350,16 +350,8 @@ def read_question_account(id:int) -> dict:
     return user_dict
 
 
-"""
-how to build functions for the following functionalities:
-
-document my functions about how to use them.
-you can tell me where you need clarification.
-1. CRUD for questions
-    1.Update questions
-    2.delete questions
-3. Forget password
-4. Admin dashboard(delete user)
-5. rank func
-
-"""
+def select_from_username(username:str) -> tuple:
+    statement = f"SELECT id FROM account WHERE username='{username}'"
+    rows = cursor.execute(statement)
+    result = rows.fetchone()
+    return result
