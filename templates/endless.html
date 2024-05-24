@@ -6,23 +6,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='questionPage/Question.CSS') }}">
     <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
-
+    
     <p style="display: none;" id="to_JS"></p>
     <script>
-        questions_list = {{ questions_list|tojson|safe }};
+
+        questions_list = {{ questions_list|tojson|safe }}
         console.log(typeof(questions_list));
         // assign id to_js innder html to questionlist
-        document.getElementById("to_JS").innerHTML = questions_list;
+        document.getElementById("to_JS").innerHTML = questions_list
+        
+        
     </script>
     <script src="{{ url_for('static', filename='questionPage/QuestionPage.js') }}" ></script>
-    <script src="{{ url_for('static', filename='questionPage/DarkMode.js') }}" ></script>
-</head>
+    
+    
 
-<body class="dark-mode">
+</head>
+<body>
+
+    
     <header>
         <div class = 'banner'>
-            <!-- Mute Button -->
-            <button class = "mute" id="MuteToggle">Mute</button>
+            <button class = "dark-mode" id = "DarkModeToggle"></button>
             <div class = 'banner_content'>
                 <div class="banner_text">
                     {% if "__" in questions_list %}
@@ -35,14 +40,28 @@
         </div>
         <h1></h1>
     </header>
-    <!-- <button class = "dark-mode" id = "DarkModeToggle"></button>
-    <button class = "mute" id="MuteToggle"></button> -->
+
+    
+
+
+
+    <div class = 'score_container' style="display: none;">
+        <div class = 'score'>
+            <h3 id = score_text>Current Score:</h3>
+            <h3 id = score_number>0</h3>
+        </div>
+    </div>
+
+
     <div id = 'winstreak'></div>
-    <div class = 'score_container'>
-            <div class = 'score'>
-                <h3 id = score_text>Current Score:</h3>
-                <h3 id = score_number>0</h3>
-            </div>
+    
+    
+    <div id = 'time_container'>
+        
+        
+        <div id = 'time'></div>
+        <div id = 'bomb'></div>
+
     </div>
     <div class = 'question_container'>
         <h1 id = 'question_text'>hi</h1>
@@ -76,55 +95,11 @@
         
     </div>
             
-    <script>
-        function toggleDarkmode() {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
 
-            var darkMode = element.classList.contains("dark-mode");
-            localStorage.setItem('darkMode', darkMode);
+    
 
-            var button = document.getElementById('DarkModeToggle');
-            button.textContent = darkMode ? 'Light' : 'Dark';
-            }
 
-            window.onload = function() {
-            var darkMode = localStorage.getItem('darkMode') === 'true';
-            document.body.classList.toggle("dark-mode", darkMode);
-
-            var button = document.getElementById('DarkModeToggle');
-            button.textContent = darkMode ? 'Light' : 'Dark';
-            }
-
-            const darkModeToggle = document.getElementById('DarkModeToggle');
-            darkModeToggle.addEventListener('click', toggleDarkmode);
-        
-        // Initialize a global mute state
-        let isMuted = false;
-
-        // Initialize your sounds
-        let oof_sound = new Audio('/static/assets/oof.mp3');
-        let murloc_sound = new Audio('/static/assets/murloc.mp3');
-        murloc_sound.preload = 'auto';
-        oof_sound.preload = 'auto';
-
-        // Function to mute or unmute sounds based on the global state
-        function toggleMute() {
-            isMuted = !isMuted; // Toggle the mute state
-
-            // Mute or unmute the sounds based on the new state
-            if (isMuted) {
-                oof_sound.volume = 0;
-                murloc_sound.volume = 0;
-            } else {
-                oof_sound.volume = 1;
-                murloc_sound.volume = 1;
-            }
-            var button = document.getElementById('MuteToggle');
-            button.textContent = isMuted ? 'Sound' : 'Muted';
-        }
-        document.getElementById('MuteToggle').addEventListener('click', toggleMute);
-    </script>
-
+    
+    
 </body>
 </html>

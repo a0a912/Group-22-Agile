@@ -238,7 +238,18 @@ def answer_questions():
             message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
         if session.get('fail_count') == 5:
             message = "You tried 5 attempts. Please try again later."
-        return redirect(url_for('forgot'), message) 
+
+        return redirect(url_for('forgot_questions'), message) 
+    
+
+
+
+@app.route("/endless", methods=['GET'])
+def endless():
+    questions_list_json = generate_question_list(14,14,"QUESTION_BLANK")
+    return render_template("endless.html", questions_list=questions_list_json)
+
+        
         
 
         
@@ -248,6 +259,7 @@ def answer_questions():
 # click on submit button to update the score
 # this is a prototype for the question page, when we done implementing the question page, we will remove this route
 # and the test_question.html
+
 ############################################################################################################
 # a simple testing route 
 # route is /test_question
@@ -258,6 +270,8 @@ def answer_questions():
 @app.route('/test_question', methods=['GET'])
 def test_question():
     return render_template("test_question.html")
+
+
 # when we click on submit button after answering all quesions in the question page
 @app.route("/question/update_score", methods=['POST'])
 def update_score_page():
@@ -268,6 +282,8 @@ def update_score_page():
     incorrect_questions = data.get('incorrect_questions')
     update_score(username,score,correct_questions,incorrect_questions)
     return jsonify({'message': 'Score updated successfully'}), 200
+
+
 
 
 if __name__ == "__main__":

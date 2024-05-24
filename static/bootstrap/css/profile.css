@@ -193,6 +193,31 @@ body.dark-mode {
     color: white;
 }
 
+#DarkModeToggle {
+    width: 70px;
+    height: 45px;
+    border-radius: 10%;
+    border: none;
+    background-color: var(--dark-grey);
+    border: #353F98 2px solid;
+    margin-left: 5vw;
+    font-family: 'din-round', sans-serif;
+    color: white;
+}
+
+#DarkModeToggle:hover {
+    background-color: var(--hover-blue);
+}
+
+#DarkModeToggle.dark-mode {
+    background-color: var(--dark-blue);
+}
+
+#DarkModeToggle.dark-mode:hover {
+    background-color: var(--hover-blue);
+}
+
+
 /* .alert {
     padding: 20px;
     background-color: #f44336; 
@@ -209,11 +234,20 @@ body.dark-mode {
 } */
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 1000px) {
 
 .banner{
     display: flex;
     flex-direction: column;
+}
+
+#Welcome{
+    font-family: 'din-round', sans-serif;
+}
+
+#DarkModeToggle {
+    order: 3;
+    margin: auto;
 }
 
 }

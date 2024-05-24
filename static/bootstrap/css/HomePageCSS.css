@@ -43,7 +43,7 @@
     grid-column: 2;
 }
 
-li{
+li {
     display: inline;
     list-style: none;
     text-decoration: none;
@@ -90,27 +90,26 @@ body.dark-mode {
 
 #DarkModeToggle {
     width: 70px;
-    height: 40px;
+    height: 45px;
     border-radius: 10%;
     border: none;
     background-color: var(--dark-grey);
-    border: black 2px solid;
-    font-family: "FeatherBold";
-    font-weight: bolder;
+    border: #353F98 2px solid;
+    margin-left: 5vw;
+    font-family: 'din-round', sans-serif;
     color: white;
-    align-items: top;
 }
 
 #DarkModeToggle:hover {
-    background-color: black;
+    background-color: var(--hover-blue);
 }
 
 #DarkModeToggle.dark-mode {
-    background-color: black;
+    background-color: var(--dark-blue);
 }
 
 #DarkModeToggle.dark-mode:hover {
-    background-color: black;
+    background-color: var(--hover-blue);
 }
 
 .StudyMode {
@@ -183,7 +182,7 @@ body.dark-mode {
     margin: 10px;
 }
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 1000px) {
 
 .banner{
     display: flex;
@@ -193,7 +192,7 @@ body.dark-mode {
 
 #Welcome{
     text-align: center;
-    font-family: 'dine-round', sans-serif;
+    font-family: 'din-round', sans-serif;
     color: white;
     margin: 0px;
     padding: 0px;
@@ -224,6 +223,11 @@ body.dark-mode {
     background-color: var(--dark-blue);
     border-radius: 10px;
     border: none;
+}
+
+#DarkModeToggle {
+    order: 3;
+    margin: auto;
 }
 
 }

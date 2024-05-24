@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo</title>
     <link rel="stylesheet" href="static\bootstrap\css\HomePageCSS.css">
+    <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
     <title>UNOLINGO-Login</title>
 </head>
 
@@ -12,15 +13,16 @@
     <header>
       <div class = "banner">
           <!-- Check if user is loged in -->
+          <button class = "dark-mode" id = "DarkModeToggle"></button>
           {% if username %}
           <h1 id = "Welcome">{{username}}'s profile</h1>
           <li class = NavBar>
-              <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
-              <ul><a href="{{ url_for('profile') }}">Profile</a></ul>
-              <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
-                  <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                  </form> 
-              </ul>
+            <ul> <a href="{{ url_for('home') }}">Home </a></ul> 
+            <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
+            <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                </form> 
+            </ul>
           </li>
           {% endif %}  
       </div>
@@ -37,6 +39,7 @@
                 <!-- New password -->
                 <label id="answers-label" for="password">New password</label>
                 <input class="input-field" type="password" name="password" placeholder="Enter new password">
+                <br>
                 <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
                 <br>
                 <!-- Confirm New Password-->
