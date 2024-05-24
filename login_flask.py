@@ -5,7 +5,7 @@ from user_crud_func import auth, sign_up, select_all, show_secure_question,updat
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
@@ -261,7 +261,9 @@ def endless():
 
 @app.route("/review", methods=['GET'])
 def review():
-    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions')
+    
+    user_id = int(select_from_username(session.get('username'))[0])
+    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', user_id,'incorrect_questions')
     
     if wrongQuestions is not None:
         questions_id = eval(wrongQuestions[0])
