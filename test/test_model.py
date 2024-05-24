@@ -29,13 +29,13 @@ class TestSelectWord(unittest.TestCase):
     def test_select_word(self):
         result = select_word("QUESTION_DEFINITION", "apple")
         self.assertIsInstance(result, tuple)
-        self.assertEqual(len(result), 6)
+        self.assertEqual(len(result), 7)
         self.assertEqual(result[0], 1)
         self.assertEqual(result[1], "apple")
         self.assertEqual(result[2], "A round fruit with seeds.")
         self.assertEqual(result[3], '["A type of bird.", "An underwater creature.", "A mode of transportation."]')
         self.assertEqual(result[4], 1)
-        self.assertEqual(result[5], "I enjoy eating a juicy apple for breakfast.")
+        self.assertEqual(result[5], 'https://api.dictionaryapi.dev/media/pronunciations/en/apple-uk.mp3')
 
 class TestGetQuestionDict(unittest.TestCase):
     def test_get_question_dict_with_word(self):
@@ -44,10 +44,10 @@ class TestGetQuestionDict(unittest.TestCase):
         self.assertEqual(len(result), 7)
         self.assertEqual(result["id"], 1)
         self.assertEqual(result["word"], "apple")
-        self.assertEqual(result["correct"], 1)
+        self.assertEqual(result["correct"], 'A round fruit with seeds.')
         self.assertEqual(result["incorrect_list"], '["A type of bird.", "An underwater creature.", "A mode of transportation."]')
         self.assertEqual(result["weight"], 1)
-        self.assertEqual(result["phonetics"], "ˈæpəl")
+        self.assertEqual(result["phonetics"], 'https://api.dictionaryapi.dev/media/pronunciations/en/apple-uk.mp3')
         self.assertEqual(result["example"], "I enjoy eating a juicy apple for breakfast.")
 
     def test_get_question_dict_with_id(self):
@@ -56,10 +56,10 @@ class TestGetQuestionDict(unittest.TestCase):
         self.assertEqual(len(result), 7)
         self.assertEqual(result["id"], 1)
         self.assertEqual(result["word"], "apple")
-        self.assertEqual(result["correct"], 1)
+        self.assertEqual(result["correct"], 'A round fruit with seeds.')
         self.assertEqual(result["incorrect_list"], '["A type of bird.", "An underwater creature.", "A mode of transportation."]')
         self.assertEqual(result["weight"], 1)
-        self.assertEqual(result["phonetics"], "ˈæpəl")
+        self.assertEqual(result["phonetics"], 'https://api.dictionaryapi.dev/media/pronunciations/en/apple-uk.mp3')
         self.assertEqual(result["example"], "I enjoy eating a juicy apple for breakfast.")
 
 if __name__ == "__main__":

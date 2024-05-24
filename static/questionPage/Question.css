@@ -300,23 +300,39 @@ body.dark-mode {
     color: white;
 }
 
-#DarkModeToggle {
-    width: 40px;
+body.dark-mode div:not(.banner) {
+    background-color: var(--dark-grey); 
+    color: white;
+}
+
+body.mute {
+    background-color:black;
+    color: white;
+}
+
+
+#MuteToggle {
+    width: 60px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10%;
     border: none;
-    background-color: var(--dark-grey);
-    border: #353F98 2px solid;
+    background-color: black;
+    border: black 2px solid;
+    font-family: "GabrielSans-bold";
+    font-weight: bolder;
+    font-size: 15px;
+    color: white;
+    text-align: center;
 }
 
-#DarkModeToggle:hover {
-    background-color: var(--hover-blue);
+#MuteToggle:hover {
+    background-color: black;
 }
 
-#DarkModeToggle.dark-mode {
-    background-color: white;
+#MuteToggle.muted {
+    background-color: black;
 }
 
-#DarkModeToggle.dark-mode:hover {
-    background-color: var(--hover-blue);
+#MuteToggle.muted:hover {
+    background-color: black;
 }

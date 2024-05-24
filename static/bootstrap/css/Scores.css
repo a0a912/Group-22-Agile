@@ -110,27 +110,6 @@ body.dark-mode {
     color: white;
 }
 
-#DarkModeToggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background-color: var(--dark-grey);
-    border: #353F98 2px solid;
-}
-
-#DarkModeToggle:hover {
-    background-color: var(--hover-blue);
-}
-
-#DarkModeToggle.dark-mode {
-    background-color: white;
-}
-
-#DarkModeToggle.dark-mode:hover {
-    background-color: var(--hover-blue);
-}
-
 @media screen and (max-width: 799px) {
 
     .banner{

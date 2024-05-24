@@ -89,24 +89,28 @@ body.dark-mode {
 }
 
 #DarkModeToggle {
-    width: 40px;
+    width: 70px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10%;
     border: none;
     background-color: var(--dark-grey);
-    border: #353F98 2px solid;
+    border: black 2px solid;
+    font-family: "FeatherBold";
+    font-weight: bolder;
+    color: white;
+    align-items: top;
 }
 
 #DarkModeToggle:hover {
-    background-color: var(--hover-blue);
+    background-color: black;
 }
 
 #DarkModeToggle.dark-mode {
-    background-color: white;
+    background-color: black;
 }
 
 #DarkModeToggle.dark-mode:hover {
-    background-color: var(--hover-blue);
+    background-color: black;
 }
 
 .StudyMode {

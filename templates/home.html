@@ -16,6 +16,7 @@
 
     <header>
         <div class = "banner">
+            <button class = "dark-mode" id = "DarkModeToggle"></button>
             <!-- Check if user is loged in -->
             {% if username %}
             <h1 id = "Welcome">Welcome {{username}}!</h1>
@@ -37,15 +38,16 @@
         </div>
     </header>  
 
-<button class = "dark-mode" id = "DarkModeToggle"></button>
+
 <div class = "StudyMode">
     <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
-    <button class = "GameModeButton" id = "Game1">Basic Fill in the Blank</button>
-    <button class = "GameModeButton" id = "Game2">GRE Fill in the Blank</button>
-    <button class = "GameModeButton" id = "Game3">Basic Definitions</button>
-    <button class = "GameModeButton" id = "Game4">GRE Defitions</button>
-    <button class = "GameModeButton" id = "Game5">Basic Endless Mode</button>
-    <button class = "GameModeButton" id = "Game6">GRE Endless Mode</button>
+    <button class = "GameModeButton" id = "Game1" {% if not username %}disabled{% endif %}>Basic Fill in the Blank</button>
+    <button class = "GameModeButton" id = "Game2" {% if not username %}disabled{% endif %}>GRE Fill in the Blank</button>
+    <button class = "GameModeButton" id = "Game3" {% if not username %}disabled{% endif %}>Basic Definitions</button>
+    <button class = "GameModeButton" id = "Game4" {% if not username %}disabled{% endif %}>GRE Definitions</button>
+    <button class = "GameModeButton" id = "Game5" {% if not username %}disabled{% endif %}>Basic Endless Mode</button>
+    <button class = "GameModeButton" id = "Game6" {% if not username %}disabled{% endif %}>GRE Endless Mode</button>
+</div>
     <!-- <div id="SubmitButtonDiv">
         <button id = "SubmitButton">Submit</button>
     </div> -->

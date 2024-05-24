@@ -321,10 +321,6 @@ function Send(incorrect_questions, correct_questions, score) {
         console.error('Error:', error);
     });
 }
-oof_sound = new Audio('/static/assets/oof.mp3');
-murloc_sound = new Audio('/static/assets/murloc.mp3');
-murloc_sound.preload = 'auto';
-oof_sound.preload = 'auto';
 
 let correct_answer =[];
 let incorrect_answer =[];
