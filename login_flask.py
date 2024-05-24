@@ -1,13 +1,13 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
 import ast
-
+from manage import get_existing_words
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
@@ -17,6 +17,9 @@ import hashlib
 import base64
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
+
+data = get_existing_words("database/data.json")
+length = len(data)
 
 # page of login when you open the website 127.0.0.1:8888/
 
@@ -252,10 +255,7 @@ def answer_questions():
 
 @app.route("/endless", methods=['GET'])
 def endless():
-    from manage import get_existing_words
-    word_list = get_existing_words("database/data.json")    
- 
-    length = len(word_list)
+
     questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
@@ -281,6 +281,22 @@ def review():
     list_ans = [item[0] for item in answer_text]
 
     return render_template("review.html", wrongQuestion_JSON=json.dumps(list_question), answer_JSON=json.dumps(list_ans))
+
+
+@app.route("/GRE_definition", methods=['GET'])
+def GRE_definition():
+    questions_list_json = generate_question_list(length,5,"GRE_DEFINITION")
+
+    return render_template("question.html", questions_list=questions_list_json)
+
+
+
+@app.route("/GRE_Blank", methods=['GET'])
+def GRE_Blank():
+    questions_list_json = generate_question_list(length,5,"GRE_BLANK")
+
+    return render_template("question.html", questions_list=questions_list_json)
+
         
         
 
@@ -305,15 +321,28 @@ def test_question():
 
 
 # when we click on submit button after answering all quesions in the question page
-@app.route("/question/update_score", methods=['POST'])
+@app.route("/basic/update_score", methods=['POST'])
 def update_score_page():
     username = session.get('username')
     data = request.get_json()
     score = data.get('score')
     correct_questions = data.get('correct_questions')
     incorrect_questions = data.get('incorrect_questions')
-    update_score(username,score,correct_questions,incorrect_questions)
+    
+    update_score_table(username,'QUESTION_ACCOUNT',score, correct_questions, incorrect_questions)
     return jsonify({'message': 'Score updated successfully'}), 200
+
+@app.route("/GRE/update_score", methods=['POST'])
+def update_score_page_GRE():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+    
+    update_score_table(username,'QUESTION_GRE_ACCOUNT',score, correct_questions, incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
+
 
 
 

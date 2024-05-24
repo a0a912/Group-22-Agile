@@ -487,11 +487,11 @@ body.dark-mode {
 .flipped {
     transform: rotateX(180deg);
   }
-#reviewbody{
+/* #reviewbody{
 
 background-color: #F6F7FB;
 
-}
+} */
 #questionList{
     font-family: sans-serif;
 }
