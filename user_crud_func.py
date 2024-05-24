@@ -279,6 +279,45 @@ def update_score(index, score,correct_questions:list=None,incorrect_questions:li
     insert(table_name,column_name,value)
     return True, "Score updated, correct and incorrect questions updated"
 
+
+def update_score_table(index,table, score,correct_questions:list=None,incorrect_questions:list=None) -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
+    if not isinstance(score, int):
+        return False, "Score should be an integer"
+    if isinstance(index, int):
+        account_id=index
+        try:
+            old_score = select_id("account", account_id, "score")[0]
+        except:
+            print(f"User ID {index} not found")
+            return False, "User not found"
+    else:
+        try:
+            old_score = select_username(index, "score")[0]
+            account_id = select_username(index, "id")[0]
+        except:
+            print(f"User Name {index} not found")
+            return False, "User not found"
+    score += old_score
+    print("the old score is", old_score)
+    print("the new score is", score)
+    # update the score of the user with the new score in the ACCOUNT table of database
+    update("ACCOUNT", "score", score, f"id='{account_id}'")
+    # if there is nothing in the list, set it to empty list
+    if not correct_questions:
+        correct_questions = []
+    if not incorrect_questions:
+        incorrect_questions = []
+    correct_questions = list(set(correct_questions)) # remove duplicates
+    incorrect_questions = list(set(incorrect_questions)) # remove duplicates
+    # update the correct and incorrect questions of the user in the QUESTION_ACCOUNT table of database
+    # the correct and incorrect questions are stored as a string in the database
+    value = f'({account_id},"{correct_questions}","{incorrect_questions}")' 
+    table_name = table
+    column_name = "account_id,correct_questions,incorrect_questions"
+    insert(table_name,column_name,value)
+    return True, "Score updated, correct and incorrect questions updated"
+
+
 #update_score("xinyu", 100, ["1","2","3"], ["4","5","6"])
 ############################################################################################
 # reading all data about one user from the QUESTION_ACCOUNT table using user_id            #
@@ -311,16 +350,8 @@ def read_question_account(id:int) -> dict:
     return user_dict
 
 
-"""
-how to build functions for the following functionalities:
-
-document my functions about how to use them.
-you can tell me where you need clarification.
-1. CRUD for questions
-    1.Update questions
-    2.delete questions
-3. Forget password
-4. Admin dashboard(delete user)
-5. rank func
-
-"""
+def select_from_username(username:str) -> tuple:
+    statement = f"SELECT id FROM account WHERE username='{username}'"
+    rows = cursor.execute(statement)
+    result = rows.fetchone()
+    return result

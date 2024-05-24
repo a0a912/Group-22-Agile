@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 countdownElement.style.width = '0px'; // Set the width to 0
                 const win = point >= number_of_question / 2;
                 endGame(win, point, number_of_question, 0, full_object.length);
-                Send(incorrect_answer, correct_answer, point);
+                
             }
         }, 1000);
     }

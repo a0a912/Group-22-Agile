@@ -1,8 +1,14 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score
-from usermod import execute, select_all, update, check_secure_question, select_password
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+import ast
+
+from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
+import ast
+
+from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -246,9 +252,35 @@ def answer_questions():
 
 @app.route("/endless", methods=['GET'])
 def endless():
-    questions_list_json = generate_question_list(14,14,"QUESTION_BLANK")
+    from manage import get_existing_words
+    word_list = get_existing_words("database/data.json")    
+ 
+    length = len(word_list)
+    questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
+@app.route("/review", methods=['GET'])
+def review():
+    
+    user_id = int(select_from_username(session.get('username'))[0])
+    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', user_id,'incorrect_questions')
+    
+    if wrongQuestions is not None:
+        questions_id = eval(wrongQuestions[0])
+    else:
+        questions_id = []
+        answer_text = []
+
+    questions_text = []
+    answer_text = []
+    for id in questions_id:
+        answer_text.append(select_id('QUESTION_BLANK', id,'correct'))
+        questions_text.append(select_id('QUESTION_BLANK', id,'example'))
+
+    list_question = [item[0] for item in questions_text]
+    list_ans = [item[0] for item in answer_text]
+
+    return render_template("review.html", wrongQuestion_JSON=json.dumps(list_question), answer_JSON=json.dumps(list_ans))
         
         
 
