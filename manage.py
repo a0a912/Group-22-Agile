@@ -88,7 +88,7 @@ def change_weight_for_table(table_name:str,weight:int,word:str="*"):
     statement = f"""UPDATE {table_name} SET weight = {weight} WHERE word = '{word}'"""
     execute(statement)
 
-def replace_s(word):
+def replace_s(word:dict):
     if "'s" in word["correct"]:
         word["correct"] = word["correct"].replace("'s", "’s")
     for i in range(len(word["incorrect"])):
