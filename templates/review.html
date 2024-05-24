@@ -15,7 +15,16 @@
             const questions_container = document.getElementById
             ('questionList');
             
+            if (questions_list.length == 0) {
+                let div = document.createElement('div');
+                const p = document.createElement('p');
 
+                div.classList.add('QuestionReview');
+                p.innerHTML = 'No wrong questions';
+                questions_container.appendChild(p);
+                div.appendChild(p);
+                questions_container.appendChild(div);
+            }
             for (let i = 0; i < questions_list.length; i++) {
                 let div = document.createElement('div');
                 

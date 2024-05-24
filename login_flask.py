@@ -261,18 +261,17 @@ def review():
     print(select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions'))
 
     wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', 2,'incorrect_questions')
-    questions_id = eval(wrongQuestions[0])
-    print(wrongQuestions)
-
-
+    if wrongQuestions is not None:
+        questions_id = eval(wrongQuestions[0])
+    else:
+        questions_id = []
     questions_text = []
     for id in questions_id:
         questions_text.append(select_id('QUESTION_BLANK', id,'example'))
 
-        
     list_question = [item[0] for item in questions_text]
 
-    print(list_question)
+    
 
   
     
@@ -285,7 +284,7 @@ def review():
     
 
     wrongQuestion_JSON = json.dumps(list_question)
-    return render_template("review.html", wrongQuestion=wrongQuestion_JSON)
+    return render_template("review.html"),jsonify(wrongQuestion_JSON)
         
         
 
