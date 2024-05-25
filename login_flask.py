@@ -1,6 +1,6 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
-from model import Word, get_question_dict,generate_question_list
+from model import Word, get_question_dict,generate_question_list,tableMatch,question_from_ID_list
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table
 import ast
 
@@ -19,7 +19,10 @@ app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 
 data = get_existing_words("database/data.json")
-length = len(data)
+basic_length = len(data)
+
+GRE_data = get_existing_words("database/GRE_words.json")
+GRE_length = len(GRE_data)
 
 # page of login when you open the website 127.0.0.1:8888/
 
@@ -259,8 +262,10 @@ def answer_questions():
 @app.route("/endless", methods=['GET'])
 def endless():
 
-    questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
+    questions_list_json = generate_question_list(basic_length,basic_length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
+
+
 @app.route('/table', methods=['POST'])
 def table():
     data = request.get_json()
@@ -283,11 +288,14 @@ def table():
 def review():
     table = session.get('table_data')
     print(table)
+    
     user_id = int(select_from_username(session.get('username'))[0])
-    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', user_id,'incorrect_questions')
+    wrongQuestions = select_max_id_by_account(tableMatch(table), user_id,'incorrect_questions')
     
     if wrongQuestions is not None:
         questions_id = eval(wrongQuestions[0])
+        session['wrong_questions_id'] = questions_id
+        
     else:
         questions_id = []
         answer_text = []
@@ -308,7 +316,7 @@ def review():
 
 @app.route("/GRE_definition", methods=['GET'])
 def GRE_definition():
-    questions_list_json = generate_question_list(length,5,"GRE_DEFINITION")
+    questions_list_json = generate_question_list(GRE_length,5,"GRE_DEFINITION")
 
     return render_template("question.html", questions_list=questions_list_json)
 
@@ -316,12 +324,23 @@ def GRE_definition():
 
 @app.route("/GRE_Blank", methods=['GET'])
 def GRE_Blank():
-    questions_list_json = generate_question_list(length,5,"GRE_BLANK")
+    questions_list_json = generate_question_list(GRE_length,5,"GRE_BLANK")
 
     return render_template("question.html", questions_list=questions_list_json)
 
-# @app.route("/GRE_definition", methods=['GET'])
-# def GRE_definition():
+
+@app.route("/review/redo", methods=['GET'])
+def redo():
+    print(session.get('wrong_questions_id'))
+    questions_list_json = question_from_ID_list(session.get('wrong_questions_id'),session.get('table_data'))
+    return render_template("question.html", questions_list=questions_list_json)
+
+@app.route("/GRE_endless", methods=['GET'])
+def GRE_endless():
+
+
+    questions_list_json = generate_question_list(GRE_length,GRE_length,"GRE_BLANK")
+    return render_template("endless.html", questions_list=questions_list_json)
 
 
         

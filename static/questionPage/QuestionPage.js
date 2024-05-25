@@ -87,6 +87,9 @@ function description(result) {
     descriptionBox.style.display = 'grid';
     descriptionBox.style.gridTemplateColumns = 'repeat(5, 1fr)';
     submitButton.style.display = 'none';
+    descriptionBox.style.alignItems = 'center';
+    descriptionBox.style.textAlign = 'center';
+    descriptionBox.style.justifyContent = 'center';
 }
 
 function shuffleArray(array) {
@@ -173,10 +176,29 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     question_text.style.display = 'none';
     description_text.style.display = 'none';
     next_questionButton.style.backgroundColor = 'rgb(88,204,2)';
-    next_questionButton.style.border = '2px solid rgb(88,204,2)';
+    next_questionButton.style.border = 'none';
     next_questionButton.value = 'Home';
     next_questionButton.style.color = 'white';
-    correct_wrong.innerHTML = 'lesson review';
+
+    const answer = document.getElementById('answer');
+    answer.style.display = 'none';
+
+    const reviewButton = document.createElement('button');
+    reviewButton.style.display = 'inline-block';
+    reviewButton.innerHTML = 'Lesson Review';
+    reviewButton.value = 'Lesson Review';
+    reviewButton.classList.add('button');
+    reviewButton.setAttribute('id', 'lesson_review');
+    reviewButton.style.justifySelf = 'center';
+    respone_box.append(reviewButton);
+
+
+    reviewButton.addEventListener('click', function() {
+        window.location.href = '/review';
+    });
+    
+    
+    
     correct_wrong.style.color = 'rgb(229, 229, 229)';
     score_box.style.display = 'none';
     descriptionBox.style.display = 'grid';
@@ -185,6 +207,7 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     descriptionBox.style.borderTop = 'rgb(229, 229, 229) 1px solid';
     banner.style.display = 'none';
     submitButton.style.display = 'none';
+
 
     if (win_streak == question_length) {
         const specialButton = document.getElementById('special');
@@ -343,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const full_object = JSON.parse(elementHtml);
     const number_of_question = full_object.length;
     let win_streak = 0;
+    let win_streak_noreset = 0;
     questionCount = 0;
     let index = 0;
 
@@ -366,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 score.innerHTML = point;
                 console.log(point);
                 win_streak += 1;
+                win_streak_noreset += 1;
                 correct_answer.push(full_object[index - 1].id);
                 description(true);
             } else {
@@ -382,7 +407,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayQuestion(question_list, index) {
         if (index >= question_list.length) {
+            window.location.href = "/";
             return alert('No more questions');
+            
         }
         const questionElement = document.getElementById('question_text');
         questionElement.innerHTML = question_list[index].question;
@@ -409,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resetAnswer();
         } else {
             const win = point >= number_of_question / 2;
-            endGame(win, point, number_of_question, win_streak, full_object.length);
+            endGame(win, point, number_of_question, win_streak_noreset, full_object.length);
             console.log("table: ", full_object[0].table_name);
             //////////////// send data to backend////////////
             Send(incorrect_answer, correct_answer, point, full_object[0].table_name);
