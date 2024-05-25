@@ -261,10 +261,28 @@ def endless():
 
     questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
+@app.route('/table', methods=['POST'])
+def table():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'error': 'No data provided'}), 400
+    
+    table_data = data.get('table')
+    if not table_data:
+        return jsonify({'error': 'No table data provided'}), 400
+    print(table_data)
 
+    session['table_data'] = table_data
+    
+    # Process the data if needed
+    # For example, storing in session or preparing for the next route
+    
+    # Return a response with data for the next step
+    return redirect(url_for('review'))
 @app.route("/review", methods=['GET'])
 def review():
-    
+    table = session.get('table_data')
+    print(table)
     user_id = int(select_from_username(session.get('username'))[0])
     wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', user_id,'incorrect_questions')
     
@@ -277,13 +295,15 @@ def review():
     questions_text = []
     answer_text = []
     for id in questions_id:
-        answer_text.append(select_id('QUESTION_BLANK', id,'correct'))
-        questions_text.append(select_id('QUESTION_BLANK', id,'example'))
+        answer_text.append(select_id(table, id,'correct'))
+        questions_text.append(select_id(table, id,'example'))
 
     list_question = [item[0] for item in questions_text]
     list_ans = [item[0] for item in answer_text]
 
     return render_template("review.html", wrongQuestion_JSON=json.dumps(list_question), answer_JSON=json.dumps(list_ans))
+
+
 
 
 @app.route("/GRE_definition", methods=['GET'])

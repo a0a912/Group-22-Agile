@@ -237,25 +237,25 @@ function resumeCountdown() {
     isPaused = false;
 }
 
-function Send(incorrect_questions, correct_questions, score,table = 'QUESTION_BLANK') {
+function Send(incorrect_questions, correct_questions, score, table = 'QUESTION_BLANK') {
     // Convert the string into a list of integers
     incorrect_questions = incorrect_questions.map(Number);
     correct_questions = correct_questions.map(Number);
-    if (table == 'QUESTION_BLANK') {
+    let endpoint;
+
+    // Determine the endpoint based on the table value
+    if (table === 'QUESTION_BLANK') {
         endpoint = '/basic/fill_in_update_score';
-        
-    }
-    else if(table == 'QUESTION_DEFINITION') { 
-    
+    } else if (table === 'QUESTION_DEFINITION') {
         endpoint = '/basic/def_update_score';
-    }
-    else if(table == 'GRE_BLANK') {
+    } else if (table === 'GRE_BLANK') {
         endpoint = '/GRE/fill_in_update_score';
-    }
-    else {
+    } else {
         endpoint = '/GRE/def_update_score';
     }
     console.log("endpoint: ", endpoint);
+
+    // First fetch request to the determined endpoint
     fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -267,15 +267,65 @@ function Send(incorrect_questions, correct_questions, score,table = 'QUESTION_BL
             incorrect_questions: incorrect_questions,
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Success:', data);
-        //alert('Result submitted successfully!');
+        
+        // Second fetch request to /table
+        return fetch('/table', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                table: table,
+            }),
+        });
     })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Table Success:', data);
+    })
+    //     // Third fetch request to /review
+    //     return fetch('/review', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ 
+    //             table: table,
+    //         }),
+    //     });
+    // })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     return response.json();
+    // })
+    // .then(data => {
+    //     console.log('Review Success:', data);
+    //     // Handle the success response from /review
+    //     // For example, you can update the UI or alert the user
+    // })
+    // .catch((error) => {
+    //     console.error('Error:', error);
+    // });
 }
+
+// Example usage: Call Send() with appropriate parameters when needed
+// Send(incorrect_questions, correct_questions, score, table);
+
 
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
