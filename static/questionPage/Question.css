@@ -364,14 +364,14 @@ div#choices input,label{
 
 }
 #special{
-    justify-self: end;
+    justify-self: center;
 
     display:none ;
 
     
     
 
-    font-family: 'eudox';
+    font-family: 'din-round', sans-serif;
     background-color: #FFD117;
     color: #fff;
     border: 2px solid #fff;
@@ -499,6 +499,31 @@ background-color: #F6F7FB;
     transform-style: preserve-3d;
     transition: transform 0.5s;
   }
+
+#lesson_review{
+    grid-row: 1;
+    grid-column: 1;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+
+    display:inline-block ;
+
+    font-family: 'din-round', sans-serif;
+  
+    color: #fff;
+    border: 2px solid #fff;
+    width: 180px;
+    margin: 0px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+
+    padding: 10px 0 10px 0 ;
+}
+
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
 @media screen and (max-width: 1000px) {

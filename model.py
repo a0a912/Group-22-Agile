@@ -63,7 +63,7 @@ def select_word(table_name:str, word:str, column_name="*") -> tuple:
 def get_question_dict(table_name, index) -> dict:
     if isinstance(index, str):
         try:
-            id = select_word("QUESTION_DEFINITION", index)[0]
+            id = select_word(table_name, index)[0]
         except:
             print(f"Word {index} not found")
     else:
@@ -87,7 +87,7 @@ def get_question_dict(table_name, index) -> dict:
 #################################################################################################
 import secrets
 import json
-
+#generate a list of questions (randomly)
 def generate_question_list(IDrange,number_of_questions,table_name):
     questions_list = []
     questions_id = []
@@ -112,3 +112,39 @@ def generate_question_list(IDrange,number_of_questions,table_name):
 
     questions_list_json = json.dumps(questions_list)
     return questions_list_json
+
+
+#pull question from ID list and table then convert to json
+def question_from_ID_list(id:list,table_name:str):
+    questions_list = []
+    questions_id = []
+
+    for i in id:
+        question_data = get_question_dict(table_name, i)
+        question_dict = {
+            'question': question_data.get('example'),
+            'incorrect_list': json.loads(question_data.get('incorrect_list')),
+            'id': question_data.get('id'),
+            'correct': question_data.get('correct'),
+            'table_name': table_name
+        }
+
+        questions_list.append(question_dict)
+
+    questions_list_json = json.dumps(questions_list)
+    return questions_list_json
+    
+#match questiontable with user respone table
+def tableMatch(table_name):
+    respone = ''
+    if table_name == "QUESTION_DEFINITION":
+        respone= 'QUESTION_ACCOUNT'
+    elif table_name == "QUESTION_BLANK":
+        respone= 'QUESTION_ACCOUNT_FILL_IN'
+    elif table_name == "GRE_BLANK":
+        respone= 'QUESTION_GRE_FILL_IN'
+    elif table_name == "GRE_DEFINITION":
+        respone= 'QUESTION_GRE_ACCOUNT'
+    else:
+        raise Exception("Invalid table name")
+    return respone
