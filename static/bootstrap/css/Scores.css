@@ -29,6 +29,12 @@
     align-items: center;
 }
 
+#duck_no_sunglasses_image_as_button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 .MainBody {
     position: relative;
     display: grid;

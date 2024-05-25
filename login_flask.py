@@ -1,13 +1,13 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
-from model import Word, get_question_dict,generate_question_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account
+from model import Word, get_question_dict,generate_question_list,tableMatch,question_from_ID_list
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
 import ast
-
+from manage import get_existing_words
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
@@ -17,6 +17,12 @@ import hashlib
 import base64
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
+
+data = get_existing_words("database/data.json")
+basic_length = len(data)
+
+GRE_data = get_existing_words("database/GRE_words.json")
+GRE_length = len(GRE_data)
 
 # page of login when you open the website 127.0.0.1:8888/
 
@@ -57,18 +63,19 @@ def login():
         # if the user is authenticated then redirect to the home page with the username
         return redirect(url_for('home'))
     else:
+        message = result[1]
         # if the user is not authenticated then redirect to the login page with a message
         session['fail_count'] = session.get('fail_count', 0) + 1
         # if the user tried 5 times then redirect to the login page with a message
         if 3 <= session.get('fail_count') < 5:
             attempts = session.get('fail_count')
-            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-            flash(message)
+            message = f"Incorrect Password. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+            #flash(message)
             
         if session.get('fail_count') == 5:
-            message = "You tried 5 attempts. Please try again later."
-            flash(message)
-            
+            message = "Incorrect Password. You tried 5 attempts. Please try again later."
+            #flash(message)
+        flash(message)    
         return redirect(url_for('login_page'))
 
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
@@ -99,7 +106,8 @@ def register():
         flash('Signup successful! Please login.', 'success')
         return redirect(url_for('login_page'))
     else:
-        flash('Signup failed. Please try again.', 'error')
+        flash(result[1], 'error')
+        #flash('Signup failed. Please try again.', 'error')
         return redirect(url_for('register_page'))
 
 # making a post request to the server to get secure questions
@@ -211,6 +219,7 @@ def forgot():
             session['questions'] = questions
             return redirect(url_for('answer'))
     else:
+        flash("Invalid Username")
         return render_template("forgot.html")
     
 # to the reset password page, receive answers here and send it to the resetp route
@@ -252,21 +261,41 @@ def answer_questions():
 
 @app.route("/endless", methods=['GET'])
 def endless():
-    from manage import get_existing_words
-    word_list = get_existing_words("database/data.json")    
- 
-    length = len(word_list)
-    questions_list_json = generate_question_list(length,length,"QUESTION_BLANK")
+
+    questions_list_json = generate_question_list(basic_length,basic_length,"QUESTION_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
+
+@app.route('/table', methods=['POST'])
+def table():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'error': 'No data provided'}), 400
+    
+    table_data = data.get('table')
+    if not table_data:
+        return jsonify({'error': 'No table data provided'}), 400
+    print(table_data)
+
+    session['table_data'] = table_data
+    
+    # Process the data if needed
+    # For example, storing in session or preparing for the next route
+    
+    # Return a response with data for the next step
+    return redirect(url_for('review'))
 @app.route("/review", methods=['GET'])
 def review():
+    table = session.get('table_data')
+    print(table)
     
     user_id = int(select_from_username(session.get('username'))[0])
-    wrongQuestions = select_max_id_by_account('QUESTION_ACCOUNT', user_id,'incorrect_questions')
+    wrongQuestions = select_max_id_by_account(tableMatch(table), user_id,'incorrect_questions')
     
     if wrongQuestions is not None:
         questions_id = eval(wrongQuestions[0])
+        session['wrong_questions_id'] = questions_id
+        
     else:
         questions_id = []
         answer_text = []
@@ -274,13 +303,46 @@ def review():
     questions_text = []
     answer_text = []
     for id in questions_id:
-        answer_text.append(select_id('QUESTION_BLANK', id,'correct'))
-        questions_text.append(select_id('QUESTION_BLANK', id,'example'))
+        answer_text.append(select_id(table, id,'correct'))
+        questions_text.append(select_id(table, id,'example'))
 
     list_question = [item[0] for item in questions_text]
     list_ans = [item[0] for item in answer_text]
 
     return render_template("review.html", wrongQuestion_JSON=json.dumps(list_question), answer_JSON=json.dumps(list_ans))
+
+
+
+
+@app.route("/GRE_definition", methods=['GET'])
+def GRE_definition():
+    questions_list_json = generate_question_list(GRE_length,5,"GRE_DEFINITION")
+
+    return render_template("question.html", questions_list=questions_list_json)
+
+
+
+@app.route("/GRE_Blank", methods=['GET'])
+def GRE_Blank():
+    questions_list_json = generate_question_list(GRE_length,5,"GRE_BLANK")
+
+    return render_template("question.html", questions_list=questions_list_json)
+
+
+@app.route("/review/redo", methods=['GET'])
+def redo():
+    print(session.get('wrong_questions_id'))
+    questions_list_json = question_from_ID_list(session.get('wrong_questions_id'),session.get('table_data'))
+    return render_template("question.html", questions_list=questions_list_json)
+
+@app.route("/GRE_endless", methods=['GET'])
+def GRE_endless():
+
+
+    questions_list_json = generate_question_list(GRE_length,GRE_length,"GRE_BLANK")
+    return render_template("endless.html", questions_list=questions_list_json)
+
+
         
         
 
@@ -305,14 +367,51 @@ def test_question():
 
 
 # when we click on submit button after answering all quesions in the question page
-@app.route("/question/update_score", methods=['POST'])
-def update_score_page():
+
+#basic route for update
+@app.route("/basic/def_update_score", methods=['POST'])
+def definition_update_score():
     username = session.get('username')
     data = request.get_json()
     score = data.get('score')
     correct_questions = data.get('correct_questions')
     incorrect_questions = data.get('incorrect_questions')
-    update_score(username,score,correct_questions,incorrect_questions)
+    
+    update_score_table(username,'QUESTION_ACCOUNT',score, correct_questions, incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
+@app.route("/basic/fill_in_update_score", methods=['POST'])
+def fill_in_update_score():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+    
+    update_score_table(username,'QUESTION_ACCOUNT_FILL_IN',score, correct_questions, incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
+
+@app.route("/GRE/def_update_score", methods=['POST'])
+def GRE_definition_update_score_page():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+    
+    update_score_table(username,'QUESTION_GRE_ACCOUNT',score, correct_questions, incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
+
+
+@app.route("/GRE/fill_in_update_score", methods=['POST'])
+def GRE_fill_in_update_score():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+
+    update_score_table(username,'QUESTION_GRE_FILL_IN',score, correct_questions, incorrect_questions)
+
     return jsonify({'message': 'Score updated successfully'}), 200
 
 

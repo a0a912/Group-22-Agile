@@ -18,6 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const questions_container = document.getElementById('questionList');
 
+    const redobutton = document.getElementById('redo');
+
+    redobutton.addEventListener('click', () => {
+        window.location.href= '/review/redo';
+    })
+
     if (questions.length > 0) {
         for (let i = 0; i < questions.length; i++) {
             let div = document.createElement('div');

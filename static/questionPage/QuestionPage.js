@@ -87,6 +87,9 @@ function description(result) {
     descriptionBox.style.display = 'grid';
     descriptionBox.style.gridTemplateColumns = 'repeat(5, 1fr)';
     submitButton.style.display = 'none';
+    descriptionBox.style.alignItems = 'center';
+    descriptionBox.style.textAlign = 'center';
+    descriptionBox.style.justifyContent = 'center';
 }
 
 function shuffleArray(array) {
@@ -173,10 +176,29 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     question_text.style.display = 'none';
     description_text.style.display = 'none';
     next_questionButton.style.backgroundColor = 'rgb(88,204,2)';
-    next_questionButton.style.border = '2px solid rgb(88,204,2)';
+    next_questionButton.style.border = 'none';
     next_questionButton.value = 'Home';
     next_questionButton.style.color = 'white';
-    correct_wrong.innerHTML = 'lesson review';
+
+    const answer = document.getElementById('answer');
+    answer.style.display = 'none';
+
+    const reviewButton = document.createElement('button');
+    reviewButton.style.display = 'inline-block';
+    reviewButton.innerHTML = 'Lesson Review';
+    reviewButton.value = 'Lesson Review';
+    reviewButton.classList.add('button');
+    reviewButton.setAttribute('id', 'lesson_review');
+    reviewButton.style.justifySelf = 'center';
+    respone_box.append(reviewButton);
+
+
+    reviewButton.addEventListener('click', function() {
+        window.location.href = '/review';
+    });
+    
+    
+    
     correct_wrong.style.color = 'rgb(229, 229, 229)';
     score_box.style.display = 'none';
     descriptionBox.style.display = 'grid';
@@ -185,6 +207,7 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     descriptionBox.style.borderTop = 'rgb(229, 229, 229) 1px solid';
     banner.style.display = 'none';
     submitButton.style.display = 'none';
+
 
     if (win_streak == question_length) {
         const specialButton = document.getElementById('special');
@@ -237,12 +260,26 @@ function resumeCountdown() {
     isPaused = false;
 }
 
-function Send(incorrect_questions, correct_questions, score) {
+function Send(incorrect_questions, correct_questions, score, table = 'QUESTION_BLANK') {
     // Convert the string into a list of integers
     incorrect_questions = incorrect_questions.map(Number);
     correct_questions = correct_questions.map(Number);
+    let endpoint;
 
-    fetch('/question/update_score', {
+    // Determine the endpoint based on the table value
+    if (table === 'QUESTION_BLANK') {
+        endpoint = '/basic/fill_in_update_score';
+    } else if (table === 'QUESTION_DEFINITION') {
+        endpoint = '/basic/def_update_score';
+    } else if (table === 'GRE_BLANK') {
+        endpoint = '/GRE/fill_in_update_score';
+    } else {
+        endpoint = '/GRE/def_update_score';
+    }
+    console.log("endpoint: ", endpoint);
+
+    // First fetch request to the determined endpoint
+    fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -253,15 +290,65 @@ function Send(incorrect_questions, correct_questions, score) {
             incorrect_questions: incorrect_questions,
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Success:', data);
-        //alert('Result submitted successfully!');
+        
+        // Second fetch request to /table
+        return fetch('/table', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                table: table,
+            }),
+        });
     })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Table Success:', data);
+    })
+    //     // Third fetch request to /review
+    //     return fetch('/review', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ 
+    //             table: table,
+    //         }),
+    //     });
+    // })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     return response.json();
+    // })
+    // .then(data => {
+    //     console.log('Review Success:', data);
+    //     // Handle the success response from /review
+    //     // For example, you can update the UI or alert the user
+    // })
+    // .catch((error) => {
+    //     console.error('Error:', error);
+    // });
 }
+
+// Example usage: Call Send() with appropriate parameters when needed
+// Send(incorrect_questions, correct_questions, score, table);
+
 
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
@@ -269,6 +356,7 @@ murloc_sound.preload = 'auto';
 oof_sound.preload = 'auto';
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded');
     const winS = document.getElementById('winstreak');
     winS.style.display = 'none';
 
@@ -278,8 +366,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const full_object = JSON.parse(elementHtml);
     const number_of_question = full_object.length;
     let win_streak = 0;
+    let win_streak_noreset = 0;
     questionCount = 0;
     let index = 0;
+
+    
+
+    
 
     respone_box.style.display = 'none';
 
@@ -297,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 score.innerHTML = point;
                 console.log(point);
                 win_streak += 1;
+                win_streak_noreset += 1;
                 correct_answer.push(full_object[index - 1].id);
                 description(true);
             } else {
@@ -313,7 +407,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayQuestion(question_list, index) {
         if (index >= question_list.length) {
+            window.location.href = "/";
             return alert('No more questions');
+            
         }
         const questionElement = document.getElementById('question_text');
         questionElement.innerHTML = question_list[index].question;
@@ -340,8 +436,10 @@ document.addEventListener('DOMContentLoaded', function() {
             resetAnswer();
         } else {
             const win = point >= number_of_question / 2;
-            endGame(win, point, number_of_question, win_streak, full_object.length);
-            Send(incorrect_answer, correct_answer, point);
+            endGame(win, point, number_of_question, win_streak_noreset, full_object.length);
+            console.log("table: ", full_object[0].table_name);
+            //////////////// send data to backend////////////
+            Send(incorrect_answer, correct_answer, point, full_object[0].table_name);
         }
     });
 
