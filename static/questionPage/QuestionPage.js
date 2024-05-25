@@ -237,12 +237,26 @@ function resumeCountdown() {
     isPaused = false;
 }
 
-function Send(incorrect_questions, correct_questions, score) {
+function Send(incorrect_questions, correct_questions, score,table = 'QUESTION_BLANK') {
     // Convert the string into a list of integers
     incorrect_questions = incorrect_questions.map(Number);
     correct_questions = correct_questions.map(Number);
-
-    fetch('/question/update_score', {
+    if (table == 'QUESTION_BLANK') {
+        endpoint = '/basic/fill_in_update_score';
+        
+    }
+    else if(table == 'QUESTION_DEFINITION') { 
+    
+        endpoint = '/basic/def_update_score';
+    }
+    else if(table == 'GRE_BLANK') {
+        endpoint = '/GRE/fill_in_update_score';
+    }
+    else {
+        endpoint = '/GRE/def_update_score';
+    }
+    console.log("endpoint: ", endpoint);
+    fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -269,6 +283,7 @@ murloc_sound.preload = 'auto';
 oof_sound.preload = 'auto';
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded');
     const winS = document.getElementById('winstreak');
     winS.style.display = 'none';
 
@@ -280,6 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let win_streak = 0;
     questionCount = 0;
     let index = 0;
+
+    
+
+    
 
     respone_box.style.display = 'none';
 
@@ -341,7 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             const win = point >= number_of_question / 2;
             endGame(win, point, number_of_question, win_streak, full_object.length);
-            Send(incorrect_answer, correct_answer, point);
+            console.log("table: ", full_object[0].table_name);
+            //////////////// send data to backend////////////
+            Send(incorrect_answer, correct_answer, point, full_object[0].table_name);
         }
     });
 

@@ -104,7 +104,8 @@ def generate_question_list(IDrange,number_of_questions,table_name):
             'question': question_data.get('example'),
             'incorrect_list': json.loads(question_data.get('incorrect_list')),
             'id': question_data.get('id'),
-            'correct': question_data.get('correct')
+            'correct': question_data.get('correct'),
+            'table_name': table_name
         }
 
         questions_list.append(question_dict)
