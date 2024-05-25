@@ -242,11 +242,20 @@ function Send(incorrect_questions, correct_questions, score,table = 'QUESTION_BL
     incorrect_questions = incorrect_questions.map(Number);
     correct_questions = correct_questions.map(Number);
     if (table == 'QUESTION_BLANK') {
-        endpoint = '/basic/update_score';
+        endpoint = '/basic/fill_in_update_score';
+        
+    }
+    else if(table == 'QUESTION_DEFINITION') { 
+    
+        endpoint = '/basic/def_update_score';
+    }
+    else if(table == 'GRE_BLANK') {
+        endpoint = '/GRE/fill_in_update_score';
     }
     else {
-        endpoint = '/GRE/update_score';
+        endpoint = '/GRE/def_update_score';
     }
+    console.log("endpoint: ", endpoint);
     fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -351,14 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             const win = point >= number_of_question / 2;
             endGame(win, point, number_of_question, win_streak, full_object.length);
-            console.log("table: ", full_object.table);
+            console.log("table: ", full_object[0].table_name);
             //////////////// send data to backend////////////
-            if (full_object[0].table_name == 'GRE_DEFINITION' || full_object[0].table_name == 'GRE_BLANK') {
-                Send(incorrect_answer, correct_answer, point, 'GRE_DEFINITION');
-            }
-            else {
-            Send(incorrect_answer, correct_answer, point);
-            }
+            Send(incorrect_answer, correct_answer, point, full_object[0].table_name);
         }
     });
 

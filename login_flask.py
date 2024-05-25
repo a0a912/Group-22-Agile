@@ -300,6 +300,7 @@ def GRE_Blank():
 # @app.route("/GRE_definition", methods=['GET'])
 # def GRE_definition():
 
+
         
         
 
@@ -324,8 +325,10 @@ def test_question():
 
 
 # when we click on submit button after answering all quesions in the question page
-@app.route("/basic/update_score", methods=['POST'])
-def update_score_page():
+
+#basic route for update
+@app.route("/basic/def_update_score", methods=['POST'])
+def definition_update_score():
     username = session.get('username')
     data = request.get_json()
     score = data.get('score')
@@ -334,9 +337,19 @@ def update_score_page():
     
     update_score_table(username,'QUESTION_ACCOUNT',score, correct_questions, incorrect_questions)
     return jsonify({'message': 'Score updated successfully'}), 200
+@app.route("/basic/fill_in_update_score", methods=['POST'])
+def fill_in_update_score():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+    
+    update_score_table(username,'QUESTION_ACCOUNT_FILL_IN',score, correct_questions, incorrect_questions)
+    return jsonify({'message': 'Score updated successfully'}), 200
 
-@app.route("/GRE/update_score", methods=['POST'])
-def update_score_page_GRE():
+@app.route("/GRE/def_update_score", methods=['POST'])
+def GRE_definition_update_score_page():
     username = session.get('username')
     data = request.get_json()
     score = data.get('score')
@@ -346,6 +359,18 @@ def update_score_page_GRE():
     update_score_table(username,'QUESTION_GRE_ACCOUNT',score, correct_questions, incorrect_questions)
     return jsonify({'message': 'Score updated successfully'}), 200
 
+
+@app.route("/GRE/fill_in_update_score", methods=['POST'])
+def GRE_fill_in_update_score():
+    username = session.get('username')
+    data = request.get_json()
+    score = data.get('score')
+    correct_questions = data.get('correct_questions')
+    incorrect_questions = data.get('incorrect_questions')
+
+    update_score_table(username,'QUESTION_GRE_FILL_IN',score, correct_questions, incorrect_questions)
+
+    return jsonify({'message': 'Score updated successfully'}), 200
 
 
 
