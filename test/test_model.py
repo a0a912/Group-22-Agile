@@ -130,8 +130,7 @@ def test_generate_question_list():
     for question in eval(result):
         question.pop('id')
         new_result.append(question)
-    expected_result = '[{"question": "I ate a banana.", "incorrect_list": ["A color", "A car", "A movie"], "correct": "A fruit"},{"question": "I ate an apple.", "incorrect_list": ["A color", "A car", "A movie"], "correct": "A fruit"}]'
-    expected_result= eval(expected_result)
+    expected_result = [{'question': 'I ate a banana.', 'incorrect_list': ['A color', 'A car', 'A movie'], 'correct': 'A fruit', 'table_name': 'QUESTION_DEFINITION'}, {'question': 'I ate an apple.', 'incorrect_list': ['A color', 'A car', 'A movie'], 'correct': 'A fruit', 'table_name': 'QUESTION_DEFINITION'}]
     new_result= sorted(new_result,key = lambda x: x['question'])
     print(new_result)
     print(expected_result)

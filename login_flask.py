@@ -21,7 +21,7 @@ app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 data = get_existing_words("database/data.json")
 basic_length = len(data)
 
-GRE_data = get_existing_words("database/GRE_words.json")
+GRE_data = get_existing_words("database/gre_words.json")
 GRE_length = len(GRE_data)
 
 # page of login when you open the website 127.0.0.1:8888/
