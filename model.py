@@ -45,6 +45,14 @@ class Word:
             elif i[-3:].lower() == "ies" and i[:-3].lower() == self.word[:-1]:
                 index = list_of_word.index(i)
                 list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+            elif i[-2:].lower() == "ed":
+                if i[:-2].lower() == self.word:
+                    index = list_of_word.index(i)
+                    list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+                elif i[:-1].lower() == self.word:
+                    index = list_of_word.index(i)
+                    list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+
         self.word_example = " ".join(list_of_word)
 ############################################################################################################
 # get a word from the table using the word                                                                 #
