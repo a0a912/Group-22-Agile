@@ -15,6 +15,7 @@ import json
 from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
 import base64
+import time
 app = Flask(__name__)
 app.secret_key = "d4413d05138d1fa03489e233df6aca24"
 
@@ -48,6 +49,16 @@ def register_page():
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
+    session['username'] = username
+    
+     # Check if the user has been blocked due to too many failed attempts
+    blocked_time = session.get(f'{username}_blocked_time')
+    if blocked_time and time.time() - blocked_time < 5 * 60:  # 5 minutes
+        flash("You have made too many failed attempts. Please try again 5 minutes later.")
+        return redirect(url_for('login_page'))
+    elif blocked_time and time.time() - blocked_time >= 5 * 60:  # 5 minutes
+        session[f'{username}_fail_count'] = 0
+        session[f'{username}_blocked_time'] = None
     
     print(f" Testing Login username: {username}, password: {password}")
     #hash the password
@@ -60,21 +71,21 @@ def login():
     
     if result[0]:
         session['username'] = username
+        session[f'{username}_fail_count'] = 0
+        session[f'{username}_blocked'] = False
         # if the user is authenticated then redirect to the home page with the username
         return redirect(url_for('home'))
     else:
         message = result[1]
         # if the user is not authenticated then redirect to the login page with a message
-        session['fail_count'] = session.get('fail_count', 0) + 1
-        # if the user tried 5 times then redirect to the login page with a message
-        if 3 <= session.get('fail_count') < 5:
-            attempts = session.get('fail_count')
+        session[f'{username}_fail_count'] = session.get(f'{username}_fail_count', 0) + 1
+        # If the user has failed 5 times, block them
+        if session.get(f'{username}_fail_count') >= 5:
+            session[f'{username}_blocked_time'] = time.time()
+            message = "You have made too many failed attempts. Please try again 5 minutes later."
+        elif 3 <= session.get(f'{username}_fail_count') < 5:
+            attempts = session.get(f'{username}_fail_count')
             message = f"Incorrect Password. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-            #flash(message)
-            
-        if session.get('fail_count') == 5:
-            message = "Incorrect Password. You tried 5 attempts. Please try again later."
-            #flash(message)
         flash(message)    
         return redirect(url_for('login_page'))
 
@@ -101,13 +112,12 @@ def register():
     # Pass the hashed password to the sign_up function
     result = sign_up(username, hashed_password, secure_question1, answer1, secure_question2, answer2)
     
-    #result = sign_up(username, password, secure_question1, answer1, secure_question2, answer2)
     if result[0]:
         flash('Signup successful! Please login.', 'success')
         return redirect(url_for('login_page'))
     else:
-        flash(result[1], 'error')
-        #flash('Signup failed. Please try again.', 'error')
+        # flash(result[1], 'error')
+        flash('Signup failed. Please try again.', 'error')
         return redirect(url_for('register_page'))
 
 # making a post request to the server to get secure questions
@@ -204,14 +214,16 @@ def test_get_question_dict():
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/forgot", methods=['GET', 'POST'])
 def forgot():
-    username = request.form.get('username')
-    # print(username)
     if request.method == "POST":
+        username = request.form.get('username')
         if username is None:
-            flash("Not existing username. Please try again.")
+            message = "Invalid Username. Please try again."
+            flash(message)
             return redirect(url_for('forgot'))
         questions = show_secure_question(username)
         if not questions:
+            message = "Invalid Username. Please try again."
+            flash(message)
             return redirect(url_for('forgot'))
         # return questions
         else:
@@ -219,7 +231,6 @@ def forgot():
             session['questions'] = questions
             return redirect(url_for('answer'))
     else:
-        flash("Invalid Username")
         return render_template("forgot.html")
     
 # to the reset password page, receive answers here and send it to the resetp route
@@ -237,27 +248,47 @@ def answer_questions():
     answer2 = request.form.get('answer2')
     answers = [answer1,answer2]
     print(answers)
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
     # print(list_of_secure_questions)
-    if check_secure_question(username, questions, answers):
+
+    if new_password != confirm_password:
+        message = "Passwords do not match. Please try again."
+        flash(message)
+        return redirect(url_for('answer'))
+    
+    result = check_secure_question(username, questions, answers)
+
+    if result == True and new_password == confirm_password:
         change_password_temp = request.form.get('password')
         hash_object = hashlib.sha256(change_password_temp.encode())
         new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
         print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
 
         update("account", "password", new_password_hash, f"username='{username}'")
-        return redirect(url_for("home"))
+        session.pop('username', None)
+        return redirect(url_for("login_page"))
     else:
         session['fail_count'] = session.get('fail_count', 0) + 1
-        if 3 <= session.get('fail_count') < 5:
-            attempts = session.get('fail_count')
-            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-        if session.get('fail_count') == 5:
-            message = "You tried 5 attempts. Please try again later."
+        if session.get('fail_count') < 3:
+            message = "Incorrect Answers. Please try again."
+            flash(message)
+        elif 3 <= session.get('fail_count') < 5:
+            attempts = session.get(f'{username}_fail_count')
+            message = f"Incorrect Answers. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+            flash(message)
+        elif session.get('fail_count') == 5:
+            session[f'{username}_blocked'] = True
+            message = "You have made too many failed attempts. Please try again later."
+            flash(message)
 
-        return redirect(url_for('forgot_questions'), message) 
+        return redirect(url_for('answer'))
+
+@app.route('/clear-session')
+def clear_session(): 
+    session.pop('username', None) 
+    return redirect(url_for('home'))
     
-
-
 
 @app.route("/endless", methods=['GET'])
 def endless():
@@ -284,6 +315,7 @@ def table():
     
     # Return a response with data for the next step
     return redirect(url_for('review'))
+
 @app.route("/review", methods=['GET'])
 def review():
     table = session.get('table_data')

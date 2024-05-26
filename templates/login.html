@@ -5,32 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/login/login.css">
     <title>UNOLINGO-Login</title>
-    <style>
-        #error_message {
-          color: red;
-        }
-      </style>
+    
 </head>
 <body class="dark-mode">
+    <header>
     <div class="banner">
         <h1 id = "Welcome">Unolingo</h1>
+        <li class = NavBar>
+            <ul> <a href="{{ url_for('home') }}">Home </a></ul> 
+        </li>
     </div>
+    </header>
 
     <div class="container">
         <div class="logo">
             <img src="/static/login/duck-spin.gif" alt="Logo">
             <h1>Welcome back to Unolingo</h1>
             <h2>Login into your account</h2>
-            <div id="error_message">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <p>{{message}}</p>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
-            
         </div>
         <form class="login-form" action="/auth/login" method="POST">
             <input id="login-input" type="username" name="username" placeholder="username" class="input-field">
@@ -42,8 +33,16 @@
             <div class="signup-link">
                 <p>Don't have an account? <a href="{{ url_for('register_page') }}">Sign up</a></p>
             </div>
-            
         </form>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div id="error_message">
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
     </div>
 </div>
     </div>

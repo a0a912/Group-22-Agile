@@ -14,11 +14,14 @@
 </head>
 
 <body class="dark-mode">
-  <div class="banner">
+  <header>
     <div class="banner">
       <h1 id = "Welcome">Unolingo</h1>
+      <li class = NavBar>
+        <ul> <a href="{{ url_for('home') }}">Home </a></ul> 
+      </li>
     </div>
-  </div>
+  </header>
   <div class="container">
     <div class="logo">
         <img src="/static/login/duck-spin.gif" alt="Logo">
@@ -36,7 +39,6 @@
     </div>
     <form class="signup-form" action="/auth/register" method="POST">
       <!-- Username -->
-      <br>
       <label for="username" id="signup-label">Username</label>
       <input class="input-field" type="username" name="username" required minlength="4" placeholder="Enter Username"/>
       <small class="form-text text-muted">Must contain at least 4 characters.</small>
@@ -68,11 +70,8 @@
         </select>
         <input type="text" name="answer2" class="input-field" required placeholder="Enter Answer 2" />  
         <small class="form-text text-muted">Must type an answer and choose a different answer from security question 1.</small>
-      
       <br>
-      <div class="forgot-password">
-          <a href="{{ url_for('forgot') }}">Forgot Password?</a>
-      </div>
+      <br>
       <button type="submit" class="signup-button">Sign-up</button>
       <div class="login-link">
         <p class="signup-link">Already Have an Account?<a href="{{ url_for('login_page') }}">    Login</a></p>

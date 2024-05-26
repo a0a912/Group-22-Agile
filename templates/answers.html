@@ -5,30 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/login/answers.css">
     <title>forgot</title>
-    <style>
-        #error_message {
-          color: red;
-        }
-    </style>
 </head>
 <body class="dark-mode">
-    <div class="banner">
-        <h1 id = "Welcome">Unolingo</h1>
-    </div>
+    <header>
+        <div class="banner">
+            <h1 id = "Welcome">Unolingo</h1>
+            <li class = NavBar>
+                <ul> <a id="home-button" href="{{ url_for('clear_session') }}">Home </a></ul> 
+            </li>
+        </div>
+    </header>
     
     <div class="container">
         <div class="logo">
             <img src="/static/login/duck-spin.gif" alt="Logo">
             <h1></h1>
-            <div id="error_message">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <p>{{message}}</p>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
         </div>
         <form class="answers-form" action="/auth/forgot/answer" method="POST">
                 <!-- Username -->
@@ -45,14 +36,23 @@
                 <br>
                 <!-- New password -->
                 <label id="answers-label" for="password">New password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <input class="input-field" type="password" name="new_password" placeholder="Enter new password"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
                 <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
                 <br>
                 <!-- Confirm New Password-->
                 <label id="answers-label" for="password">Confirm new password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password again"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <input class="input-field" type="password" name="confirm_password" placeholder="Enter new password again"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
                 <button type="submit" class="answers-button">Submit</button>
         </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div id="error_message">
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 </body>
     <script>

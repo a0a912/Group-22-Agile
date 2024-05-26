@@ -122,7 +122,7 @@ def check_secure_question(username:str, question:list, answer:list) -> bool:
         if user_question1 == question1 and user_question2 == question2 and user_answer1 == answer1 and user_answer2 == answer2:
             return True
         else:
-            return False
+            return False, "Incorrect Answers"
     
     
 def create_account_table():

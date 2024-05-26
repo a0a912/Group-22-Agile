@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/login/forgot.css">
     <title>forgot</title>
-    <style>
-        #error_message {
-          color: red;
-        }
-    </style>
 </head>
+
 <body class="dark-mode">
+    <header>
     <div class="banner">
         <h1 id = "Welcome">Unolingo</h1>
+        <li class = NavBar>
+            <ul> <a href="{{ url_for('home') }}">Home </a></ul> 
+        </li>
     </div>
+    </header>
     
     <div class="container">
         <div class="logo">
             <img src="/static/login/duck-spin.gif" alt="Logo">
             <h1>Did you forget your password?</h1>
-            <div id="error_message">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <p>{{message}}</p>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
         </div>
         <form class="reset-form" action="/forgot" method="post">
             <input type="text" name="username" placeholder="Enter username" class="input-field" minlength="4">
             <button type="submit" class="forgot-button">Submit</button>
-        
         </form>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div id="error_message">
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}    
     </div>
 </body>
     <script>
