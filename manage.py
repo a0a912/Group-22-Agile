@@ -202,7 +202,7 @@ if __name__ == "__main__":
         execute(statement_question_table)
 
     # an  list to store the words themselves
-    '''list_of_words= get_existing_words("database/gre_words.json")
+    list_of_words= get_existing_words("database/gre_words.json")
     # get the words we have in the json file, this words are not processed, with only the word, and 4 meanings, 1 correct and 3 incorrect
     with open("database/gre_words.json","r",encoding="utf-8") as file:
         data = json.load(file)
@@ -262,5 +262,5 @@ if __name__ == "__main__":
                     FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_blank}(id));"""
     execute(statement_question_account)
     print("Tables created for 2 types of questions of ordinary works, and the associative table for GRE fill-in questions")
-    print("Database for GRE fill-in created")'''
+    print("Database for GRE fill-in created")
     
