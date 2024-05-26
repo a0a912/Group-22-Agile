@@ -260,14 +260,15 @@ def answer_questions():
     result = check_secure_question(username, questions, answers)
 
     if result == True and new_password == confirm_password:
-        change_password_temp = request.form.get('password')
-        hash_object = hashlib.sha256(change_password_temp.encode())
-        new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
-        print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+        change_password_temp = request.form.get('new_password')
+        if change_password_temp is not None:    
+            hash_object = hashlib.sha256(change_password_temp.encode())
+            new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+            print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
 
-        update("account", "password", new_password_hash, f"username='{username}'")
-        session.pop('username', None)
-        return redirect(url_for("login_page"))
+            update("account", "password", new_password_hash, f"username='{username}'")
+            session.pop('username', None)
+            return redirect(url_for("login_page"))
     else:
         session['fail_count'] = session.get('fail_count', 0) + 1
         if session.get('fail_count') < 3:
