@@ -115,7 +115,7 @@ if __name__ == "__main__":
     question_GRE_table_list = [question_GRE_definition, question_GRE_blank]
     [drop(table) for table in question_GRE_table_list]
 
-    '''# create a table for the question_defintion
+    # create a table for the question_defintion
     for table in question_table_list:
         statement_question_table = f"""CREATE TABLE IF NOT EXISTS {table}
                     (id  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -187,7 +187,7 @@ if __name__ == "__main__":
                     FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
     execute(statement_question_account)
     print("Tables created for 2 types of questions of ordinary works, and the associative table for fill-in questions")
-    print("Database for fill-in created")'''
+    print("Database for fill-in created")
 
     # create a table for the GRE question
     for table in question_GRE_table_list:
