@@ -1,11 +1,11 @@
-# import pytest
-# from login_flask import app as flask_app  
+import pytest
+from login_flask import app as flask_app  
 
-# @pytest.fixture
-# def client():
-#     flask_app.config['TESTING'] = True
-#     with flask_app.test_client() as client:
-#         yield client
+@pytest.fixture
+def client():
+    flask_app.config['TESTING'] = True
+    with flask_app.test_client() as client:
+        yield client
 
 # # Incorrect Password
 # def test_login_failure(client):
@@ -26,17 +26,17 @@
 #         #These messages are stored in session['_flashes']. 
 #         #The dict function is used to convert this to a dictionary, and ['message'] is used to retrieve the message.
 
-# # Incorrect Username and Password
-# def test_login_failure_incorrect_username_password(client):
-#     # Incorrect username and password
-#     data = {"username": "Testuse", "password": "wrongpass!"}
-#     response = client.post("/auth/login", data=data)
-#     assert response.status_code == 302
+# Incorrect Username and Password
+def test_login_failure_incorrect_username_password(client):
+    # Incorrect username and password
+    data = {"username": "Testuse", "password": "wrongpass!"}
+    response = client.post("/auth/login", data=data)
+    assert response.status_code == 302
 
-# # Blank Fields
-# def test_login_failure_blank_fields(client):
-#     # Username and password fields left blank
-#     data = {"username": "", "password": ""}
-#     response = client.post("/auth/login", data=data)
-#     assert response.status_code == 302
+# Blank Fields
+def test_login_failure_blank_fields(client):
+    # Username and password fields left blank
+    data = {"username": "", "password": ""}
+    response = client.post("/auth/login", data=data)
+    assert response.status_code == 302
 
