@@ -201,6 +201,7 @@ h2 {
 body.dark-mode {
     background-color:var(--dark-grey);
     color: white;
+    font-family: 'din-round';
 }
 
 #DarkModeToggle {
@@ -301,6 +302,7 @@ body.dark-mode .form-text {
     width: 70px;
     height: 70px;
 }
+
 .NavBar {
     margin-right: 1vw;
 }
