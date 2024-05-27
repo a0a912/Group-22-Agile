@@ -70,12 +70,12 @@ def login():
         if 3 <= session.get('fail_count') < 5:
             attempts = session.get('fail_count')
             message = f"Incorrect Password. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-            #flash(message)
+            flash(message, 'error')
             
         if session.get('fail_count') == 5:
             message = "Incorrect Password. You tried 5 attempts. Please try again later."
-            #flash(message)
-        flash(message)    
+            flash(message, 'error')
+        flash(message, 'error')    
         return redirect(url_for('login_page'))
 
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
@@ -204,22 +204,22 @@ def test_get_question_dict():
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/forgot", methods=['GET', 'POST'])
 def forgot():
-    username = request.form.get('username')
+    
     # print(username)
     if request.method == "POST":
-        if username is None:
-            flash("Not existing username. Please try again.")
-            return redirect(url_for('forgot'))
+        username = request.form.get('username')
+        if not username:
+            flash("Not existing username. Please try again.", 'error')
+            return render_template("forgot.html")
         questions = show_secure_question(username)
         if not questions:
-            return redirect(url_for('forgot'))
+            return render_template("forgot.html")
         # return questions
         else:
             session['username'] = username
             session['questions'] = questions
             return redirect(url_for('answer'))
     else:
-        flash("Invalid Username")
         return render_template("forgot.html")
     
 # to the reset password page, receive answers here and send it to the resetp route

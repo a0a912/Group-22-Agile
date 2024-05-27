@@ -17,6 +17,13 @@ window.onload = function() {
   var darkMode = localStorage.getItem('darkMode') === 'true';
   document.body.classList.toggle("dark-mode", darkMode);
 
+  var image_as_button = document.getElementById('duck_no_sunglasses_image_as_button');
+    if (darkMode) {
+        image_as_button.src = "static/assets/duck_win_sunglasses.png";
+    } else {
+        image_as_button.src = "static/assets/duck_win_no_sunglasses.png";
+    }
+    
   // Add event listener to the image button
   const darkModeToggle = document.getElementById('duck_no_sunglasses_image_as_button');
   darkModeToggle.addEventListener('click', toggleDarkmode);
