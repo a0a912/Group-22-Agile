@@ -1,0 +1,75 @@
+[
+    {
+      "word": "abate",
+      "correct": "To become less intense or widespread; to reduce in amount, degree, or severity.",
+      "incorrect": [
+        "To increase dramatically.",
+        "To exacerbate a situation.",
+        "To remain constant."
+      ],
+      "example": "The storm’s fury finally abated after hours of torrential rain."
+    },
+    {
+      "word": "aggrandize",
+      "correct": "To increase the power, status, or wealth of something or someone; to make something seem greater or more impressive than it is.",
+      "incorrect": [
+        "To diminish or reduce.",
+        "To undermine one’s reputation.",
+        "To simplify or minimize."
+      ],
+      "example": "He constantly aggrandized his achievements in an attempt to gain admiration."
+    },
+    {
+      "word": "castigate",
+      "correct": "To reprimand someone severely.",
+      "incorrect": [
+        "To praise someone excessively.",
+        "To overlook mistakes.",
+        "To reward bad behavior."
+      ],
+      "example": "The coach castigated the team for their lack of effort during the game."
+    },
+    {
+      "word": "clemency",
+      "correct": "Mercy; lenience.",
+      "incorrect": [
+        "Harshness; severity.",
+        "Rigidity; inflexibility.",
+        "Unfairness; bias."
+      ],
+      "example": "The governor showed clemency by reducing the prisoner’s sentence."
+    },
+      {
+          "word": "yield",
+          "correct": "Produce or provide (a natural, agricultural, or industrial product).",
+          "incorrect": [
+              "A type of weather.",
+              "A form of transportation.",
+              "A type of food."
+          ],
+          "example": "The farm yielded a rich harvest of fruits and vegetables."
+      },
+      {
+          "word": "abjure",
+          "correct": "To solemnly renounce (a belief, cause, or claim).",
+          "incorrect": [
+              "A type of plant.",
+              "A form of weather.",
+              "A type of animal."
+          ],
+          "example": "He abjured his allegiance to the king."
+      },
+      {
+        "word": "juxtapose",
+        "correct": "To place or deal with close together for contrasting effect.",
+        "incorrect": [
+            "A type of bird.",
+            "A form of weather.",
+            "A type of food."
+        ],
+        "example": "The artist juxtaposed light and dark colors to create a striking contrast."
+    }
+]
+
+  
+  

@@ -1,0 +1,66 @@
+[
+    {
+        "word": "cloud",
+        "correct": "A visible mass of condensed water vapor.",
+        "incorrect": [
+            "A type of fish.",
+            "A kitchen appliance.",
+            "A musical instrument."
+        ],
+        "example": "The sky was filled with fluffy white clouds."
+    },
+    {
+        "word": "fern",
+        "correct": "A flowerless plant with feathery fronds that reproduce by spores released from the undersides of the fronds.",
+        "incorrect": [
+            "A type of bird.",
+            "A kitchen appliance.",
+            "A musical instrument."
+        ],
+        "example": "The forest floor was covered in ferns."
+    },
+      {
+          "word": "bridge",
+          "correct": "A structure over a river.",
+          "incorrect": [
+              "A type of fruit.",
+              "A kind of bird.",
+              "A kitchen appliance."
+          ],
+          "example": "They crossed the old wooden bridge."
+      },
+      {
+          "word": "penguin",
+          "correct": "A flightless bird.",
+          "incorrect": [
+              "A type of tree.",
+              "A kitchen appliance.",
+              "A musical instrument."
+          ],
+          "example": "Penguins waddle adorably on the ice."
+      },
+      {
+          "word": "jungle",
+          "correct": "A dense forest in tropical regions.",
+          "incorrect": [
+              "A type of bird.",
+              "A musical instrument.",
+              "A piece of clothing."
+          ],
+          "example": "The explorers ventured into the thick jungle."
+      },
+      {
+          "word": "pyramid",
+          "correct": "A monumental structure in Egypt.",
+          "incorrect": [
+              "A type of fruit.",
+              "A kind of fish.",
+              "A kitchen appliance."
+          ],
+          "example": "The pyramids were built by ancient Egyptians."
+      }
+]
+
+  
+
+  
