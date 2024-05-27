@@ -539,7 +539,28 @@ background-color: #F6F7FB;
 }
 .highlight {
     background-color: #FFD117;
-  }
+}
+.hidden {
+    display: none;
+}
+#tutorial_text{
+    display: grid;
+    place-items: center;
+    height: 30vh;
+    font-family: 'din-round', sans-serif;
+}
+#tutorial_button{
+    width: 150px;
+    height: 40px;
+}
+.countdown {
+    position : absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'din-round', sans-serif;
+    font-size: 60px;
+}
 
 
 /* ------------------------------------- MOBILE ----------------------------------------- */

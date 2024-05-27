@@ -349,6 +349,69 @@ function Send(incorrect_questions, correct_questions, score, table = 'QUESTION_B
 // Example usage: Call Send() with appropriate parameters when needed
 // Send(incorrect_questions, correct_questions, score, table);
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function count3() {
+    const tutorial_text = document.getElementById('tutorial_text');
+    const tutorial_content = document.getElementById('tutorial_content');
+    
+    tutorial_text.style.display = 'none'; 
+    tutorial_text.classList.add('hidden');
+
+    //create sound 
+    const sound = new Audio('/static/Endless/countdown.mp3');
+    
+
+    sound.play();
+    await sleep(200);
+    for (let i = 3; i >= 0; i--) {
+        const countdownElement = document.createElement('h1');
+        countdownElement.classList.add('countdown');
+        if (i == 0) {
+            countdownElement.innerHTML = 'GO!';
+        } else {
+            countdownElement.innerHTML = i;
+        }
+     
+        tutorial_content.appendChild(countdownElement);
+        await sleep(1000);
+        countdownElement.remove();
+
+
+    }
+}
+
+async function HowtoEndless() {
+    pauseCountdown();
+    const gameplay = document.getElementById('gameplay');
+    const tutorial = document.getElementById('tutorial');
+    const tutorialButton = document.getElementById('tutorial_button');
+    const banner_text = document.getElementsByClassName('banner_text_h1')[0];
+    
+
+    banner_text.innerHTML = 'ENDLESS MODE';
+
+
+  
+ 
+
+    tutorialButton.addEventListener('click', function() {
+        (async function() {
+            await count3();
+        
+            gameplay.classList.remove('hidden');
+            tutorial.classList.add('hidden');
+            banner_text.innerHTML = 'Choose Correct Definition for the Word';
+    
+            resumeCountdown();
+        })();
+    });
+
+    
+
+    
+}
 
 oof_sound = new Audio('/static/assets/oof.mp3');
 murloc_sound = new Audio('/static/assets/murloc.mp3');
@@ -356,6 +419,11 @@ murloc_sound.preload = 'auto';
 oof_sound.preload = 'auto';
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    const bomb = document.getElementById('bomb');
+    if (bomb) {
+        HowtoEndless();
+    }
     console.log('DOM loaded');
     const winS = document.getElementById('winstreak');
     winS.style.display = 'none';

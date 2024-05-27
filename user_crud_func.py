@@ -355,3 +355,5 @@ def select_from_username(username:str) -> tuple:
     rows = cursor.execute(statement)
     result = rows.fetchone()
     return result
+
+
