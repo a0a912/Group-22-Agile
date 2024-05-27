@@ -42,6 +42,10 @@
     width: 100%;
 }
 
+.highlight {
+    background-color: rgb(190, 190, 25);
+}
+
 #ScoreTitle {
     text-align: center;
     font-family: 'din-round', sans-serif;
@@ -150,5 +154,16 @@ body.dark-mode {
     margin: auto;
 }
 
+#duck_no_sunglasses_image_as_button {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+}
 
+table {
+    width: 100%;
+}
 }

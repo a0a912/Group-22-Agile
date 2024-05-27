@@ -37,6 +37,8 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 100px; 
+    height: 100px;
 }
 
 #Welcome{
@@ -202,6 +204,15 @@ body.dark-mode {
     margin: 0px;
     padding: 0px;
     font-size: 7vh;
+}
+
+#duck_no_sunglasses_image_as_button {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
 }
 
 .StudyMode {

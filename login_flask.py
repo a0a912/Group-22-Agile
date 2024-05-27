@@ -86,7 +86,7 @@ def login():
         elif 3 <= session.get(f'{username}_fail_count') < 5:
             attempts = session.get(f'{username}_fail_count')
             message = f"Incorrect Password. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-        flash(message)    
+        flash(message, "error")    
         return redirect(url_for('login_page'))
 
 # register route making a post request to the server to check the username and password using the sign_up function from usermod.py
@@ -139,7 +139,8 @@ def ranking():
     scores = select_all("account", "username, score")
     #Sort the scores in descending order
     scores.sort(key=lambda x: x[1], reverse=True)
-    return render_template("scores.html", scores=scores)
+    current_user = session.get('username')
+    return render_template("scores.html", scores=scores, current_user=current_user)
 
 # profile route to show the profile of the user
 @app.route('/profile', methods=['GET'])
@@ -151,24 +152,27 @@ def profile():
 @app.route('/profile/update/password', methods=['POST'])
 def update_password():
     username = session.get('username')
-    password = request.form.get('password')
     new_password = request.form.get('new_password')
-    # check if the current password is correct
+    confirm_new_password = request.form.get('confirm_new_password')
     
-    hash_object = hashlib.sha256(password.encode())
-    old_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
-    print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
-
-    hash_object = hashlib.sha256(new_password.encode())
-    new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
-    print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
-
-    current_password_db = select_password(username)
-    if old_password_hash == current_password_db:
-        update("account", "password", new_password_hash, f"username='{username}'")
-        return redirect(url_for('login_page'))
+    # Check if the new password fields are not empty and match
+    if not new_password or not confirm_new_password or new_password != confirm_new_password:
+        flash("Please make sure the new passwords match and are not empty.", "error")
+        return redirect(url_for('profile'))
+    
+    # hash_object = hashlib.sha256(password.encode())
+    # old_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+    # print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
     else:
-        return redirect(url_for('profile')) 
+        hash_object = hashlib.sha256(new_password.encode())
+        new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+        print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+
+        
+        update("account", "password", new_password_hash, f"username='{username}'")
+        flash("Password updated successfully", "success")
+        return redirect(url_for('login_page'))
+    
 
 @app.route('/question')
 def question():
@@ -268,20 +272,22 @@ def answer_questions():
 
             update("account", "password", new_password_hash, f"username='{username}'")
             session.pop('username', None)
+            message = "Password changed successfully. Please login."
+            flash(message, "success")
             return redirect(url_for("login_page"))
     else:
         session['fail_count'] = session.get('fail_count', 0) + 1
         if session.get('fail_count') < 3:
             message = "Incorrect Answers. Please try again."
-            flash(message)
+            flash(message, "error")
         elif 3 <= session.get('fail_count') < 5:
             attempts = session.get(f'{username}_fail_count')
             message = f"Incorrect Answers. You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-            flash(message)
+            flash(message, "error")
         elif session.get('fail_count') == 5:
             session[f'{username}_blocked'] = True
             message = "You have made too many failed attempts. Please try again later."
-            flash(message)
+            flash(message, "error")
 
         return redirect(url_for('answer'))
 

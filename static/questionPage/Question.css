@@ -551,5 +551,46 @@ background-color: #F6F7FB;
     order: 3;
     margin: auto;
 }
-    
+
+#duck_no_sunglasses_image_as_button {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+}
+#image_as_button {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    width: 60px;
+    height: 60px;
+}
+
+}
+
+@media screen and (max-width: 700px){
+    #duck_no_sunglasses_image_as_button {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+    }
+    #image_as_button {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 80px;
+        width: 50px;
+        height: 50px;
+    }
+    li.NavBar {
+        position: fixed;
+        top: 150px;
+        right: 0 !important;
+    }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo</title>
-    <link rel="stylesheet" href="static\bootstrap\css\HomePageCSS.css">
+    <link rel="stylesheet" href="static\bootstrap\css\profile.css">
     <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
     <title>UNOLINGO-Login</title>
 </head>
@@ -13,7 +13,7 @@
     <header>
       <div class = "banner">
           <!-- Check if user is loged in -->
-          <img class = "dark-mode" id="duck_no_sunglasses_image_as_button" src="static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100">
+          <img class = "dark-mode" id="duck_no_sunglasses_image_as_button" src="static\assets\duck_win_no_sunglasses.png" alt="logo">
           {% if username %}
           <h1 id = "Welcome">{{username}}'s profile</h1>
           <li class = NavBar>
@@ -30,23 +30,35 @@
 
   
       <div class="container">
-          <h2>User Information</h2>
+        <h1>Update Password</h1>
+          <h2>Username: {{ username }}</h2>
             <form class="answers-form" action="/profile/update/password" method="POST">
-                <!-- Username -->
-                <label id="answers-label" for="username">Username : {{ username }}</label>
-                <input class="input-field" type="hidden" name="username" value="{{ username }}">
-                <br>
                 <!-- New password -->
-                <label id="answers-label" for="password">New password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <label id="answers-label" for="new_password">New password</label>
+                <input class="input-field" type="password" name="new_password" placeholder="Enter new password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
                 <br>
                 <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
                 <br>
                 <!-- Confirm New Password-->
-                <label id="answers-label" for="password">Confirm new password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter new password again" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
-                <button type="submit" class="answers-button">Reset</button>
+                <label id="answers-label" for="confirm_new_password">Confirm new password</label>
+                <input class="input-field" type="password" name="confirm_new_password" placeholder="Enter new password again" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <button type="submit" class="answers-button">Update</button>
             </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                {% if category == 'success' %}
+                    <div id="success_message">
+                        <p>{{message}}</p>
+                    </div>
+                {% elif category == 'error' %}
+                    <div id="error_message">
+                        <p>{{message}}</p>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
       </div>
   </body>
     <script>
