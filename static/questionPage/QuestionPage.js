@@ -413,6 +413,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const questionElement = document.getElementById('question_text');
         questionElement.innerHTML = question_list[index].question;
+
+        if (question_list[index].table_name.includes('DEFINITION')) {
+            const highlightWord = question_list[index].word;
+            const sentence = questionElement.textContent; // Get the text content of the question element
+            console.log("sentence: ", sentence);
+            console.log("highlightWord: ", highlightWord);
+            const regex = new RegExp(`\\b${highlightWord}\\b`, 'gi'); // Use word boundaries to match the entire word
+            const highlightedSentence = sentence.replace(regex, `<span class="highlight">${highlightWord}</span>`);
+            questionElement.innerHTML = highlightedSentence;
+        }
+            
+        
     }
 
     displayQuestion(full_object, index);
