@@ -1,24 +1,24 @@
 [
-      {
-          "word": "notebook",
-          "correct": "A book for writing notes.",
-          "incorrect": [
-              "A type of animal.",
-              "A kitchen utensil.",
-              "A kind of vehicle."
-          ],
-          "example": "She jotted down the lecture notes in her notebook."
-      },
-      {
-          "word": "violin",
-          "correct": "A string musical instrument.",
-          "incorrect": [
-              "A type of bird.",
-              "A kind of fruit.",
-              "A kitchen tool."
-          ],
-          "example": "She played a beautiful melody on the violin."
-      },
+    {
+        "word": "cloud",
+        "correct": "A visible mass of condensed water vapor.",
+        "incorrect": [
+            "A type of fish.",
+            "A kitchen appliance.",
+            "A musical instrument."
+        ],
+        "example": "The sky was filled with fluffy white clouds."
+    },
+    {
+        "word": "fern",
+        "correct": "A flowerless plant with feathery fronds that reproduce by spores released from the undersides of the fronds.",
+        "incorrect": [
+            "A type of bird.",
+            "A kitchen appliance.",
+            "A musical instrument."
+        ],
+        "example": "The forest floor was covered in ferns."
+    },
       {
           "word": "bridge",
           "correct": "A structure over a river.",

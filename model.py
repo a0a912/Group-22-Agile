@@ -35,6 +35,9 @@ class Word:
             elif i[-1].lower() in [".",",","!","?",";",":"] and i[:-1].lower() == self.word:
                 index = list_of_word.index(i)
                 list_of_word = list_of_word[:index] + ["_" * len(self.word)+i[-1]] + list_of_word[index+1:]
+            elif i[-1:].lower() in [".",",","!","?",";",":"] and i[:-2].lower() == self.word:
+                index = list_of_word.index(i)
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)+i[-1]] + list_of_word[index+1:]
             # if the word is not found, we have to deal with the case where the word may in plural form
             elif i[-1].lower() == "s" and i[:-1].lower() == self.word:
                 index = list_of_word.index(i)
