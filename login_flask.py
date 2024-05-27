@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list,tableMatch,question_from_ID_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table,update_score_endless
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
@@ -342,8 +342,28 @@ def GRE_endless():
     questions_list_json = generate_question_list(GRE_length,GRE_length,"GRE_BLANK")
     return render_template("endless.html", questions_list=questions_list_json)
 
+@app.route('/endless-basic-send', methods=['POST'])
+def endless_send():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'error': 'No data provided'}), 400
+    print(data)
+    update_score_endless(session.get('username'),data.get('score'),data.get('correct_questions'),data.get('incorrect_questions'),)
+    
 
-        
+    return jsonify({'message': 'Data received successfully'}), 200
+
+# @app.route('/endless-GRE-send', methods=['POST'])
+# def endless_GRE_send():
+#     data = request.get_json()
+#     if data is None:
+#         return jsonify({'error': 'No data provided'}), 400
+    
+#     update_score_endless(session.get('username'),data.get('score'),data.get('correct_questions'),data.get('incorrect_questions'),"GRE_ENDLESS_BLANK")
+    
+
+#     return jsonify({'message': 'Data received successfully'}), 200
+
         
 
         

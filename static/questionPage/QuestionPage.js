@@ -33,6 +33,28 @@ function resetAnswer() {
     submitButton.style.textAlign = 'center';
     submitButton.style.alignItems = 'center';
 }
+function endless_send(route,point) {
+    fetch(route, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            score: point
+
+
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+}
 
 function winstreak() {
     pauseCountdown();
@@ -552,6 +574,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 countdownElement.style.width = '0px'; // Set the width to 0
                 const win = point >= number_of_question / 2;
                 endGame(win, point, number_of_question, 0, full_object.length);
+                let route;
+                if (full_object.table_name === 'GRE_BLANK') {
+                    route = '/endless-GRE-send';
+                }
+                else{
+                    route = '/endless-basic-send';
+                }
+                console.log("route: ", route);
+                endless_send(route,point);
+               
+                
+                
                 
             }
         }, 1000);
