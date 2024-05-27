@@ -26,10 +26,36 @@ class Word:
         list_of_word = self.word_example.split(" ")
         for i in list_of_word:
             # find the word in the sentence
-            if i == self.word:
+            if i.lower() == self.word:
+                # print("found")
                 index = list_of_word.index(i)
                 # replace the word with blank of the same length
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:] 
+                # if the word is not found, then the word is not in the sentence, deal with the case with other punctuations
+            elif i[-1].lower() in [".",",","!","?",";",":"] and i[:-1].lower() == self.word:
+                index = list_of_word.index(i)
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)+i[-1]] + list_of_word[index+1:]
+            elif i[-1:].lower() in [".",",","!","?",";",":"] and i[:-2].lower() == self.word:
+                index = list_of_word.index(i)
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)+i[-1]] + list_of_word[index+1:]
+            # if the word is not found, we have to deal with the case where the word may in plural form
+            elif i[-1].lower() == "s" and i[:-1].lower() == self.word:
+                index = list_of_word.index(i)
                 list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+            elif i[-2:].lower() == "es" and i[:-2].lower() == self.word:
+                index = list_of_word.index(i)
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+            elif i[-3:].lower() == "ies" and i[:-3].lower() == self.word[:-1]:
+                index = list_of_word.index(i)
+                list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+            elif i[-2:].lower() == "ed":
+                if i[:-2].lower() == self.word:
+                    index = list_of_word.index(i)
+                    list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+                elif i[:-1].lower() == self.word:
+                    index = list_of_word.index(i)
+                    list_of_word = list_of_word[:index] + ["_" * len(self.word)] + list_of_word[index+1:]
+
         self.word_example = " ".join(list_of_word)
 ############################################################################################################
 # get a word from the table using the word                                                                 #

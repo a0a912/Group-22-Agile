@@ -22,6 +22,7 @@ def get_meaning_phone(word,data):
     # using the api of dictionary to get information about the word
     response_of_meaning = requests.get(f'https://api.dictionaryapi.dev/api/v2/entries/en/{word}')
     if response_of_meaning.status_code == 200:
+        # print("API works")
         word_original_json = response_of_meaning.json()[0]
         # get the word
         my_word = word_original_json["word"]
@@ -46,6 +47,8 @@ def get_meaning_phone(word,data):
                 word_example = word["example"]
                 break
         return my_word,word_phonetics,word_meaning,word_incorrect_list,word_example
+    # else:
+    #     print("API does not work")
     
 # get the existing words in the json file
 def get_existing_words(path):
