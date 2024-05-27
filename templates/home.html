@@ -42,17 +42,17 @@
     <div class = "StudyMode">
         <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
         <h2 id = "BasicMode">Elementary Difficulty</h2>
-        <button class = "GameModeButton" id = "Game1" {% if not username %}disabled{% endif %}> <img src = "static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100"> <p class = "GameTitle">Fill in the Blank</p> <p class = "GameDefinition">Presents a sentence with a missing word the user must complete by selecting the correct term</p></button>
-        <button class = "GameModeButton" id = "Game3" {% if not username %}disabled{% endif %}><p class = "GameTitle">Definitions</p> <p class = "GameDefinition">Select the correct definition for the highlighted word</p></button>
-        <button class = "GameModeButton" id = "Game5" {% if not username %}disabled{% endif %}><p class = "GameTitle">Race Against Time</p> <p class = "GameDefinition">Answer questions correctly to extend their remaining time and continue playing until time runs out</p></button>
+        <button class = "GameModeButton" id = "Game1" {% if not username %}disabled{% endif %}> <img src = "static\assets\Duck_fill_in.png" alt="Duck_fill_in_blank_mode" width="150" height="150"> <p class = "GameTitle">Fill in the Blank</p> <p class = "GameDefinition">Presents a sentence with a missing word the user must complete by selecting the correct term</p></button>
+        <button class = "GameModeButton" id = "Game3" {% if not username %}disabled{% endif %}><img src = "static\assets\Duck_define.png" alt="Duck_define_mode" width="150" height="150"><p class = "GameTitle">Definitions</p> <p class = "GameDefinition">Select the correct definition for the highlighted word</p></button>
+        <button class = "GameModeButton" id = "Game5" {% if not username %}disabled{% endif %}><img src = "static\assets\Duck_timer.png" alt="Duck_timer_mode" width="150" height="150"><p class = "GameTitle">Race Against Time</p> <p class = "GameDefinition">Answer questions correctly to extend their remaining time and continue playing until time runs out</p></button>
 
         <h2 id = "GreLevel">GRE Difficulty</h2>
-        <button class = "GameModeButton" id = "Game2" {% if not username %}disabled{% endif %}><p class = "GameTitle">Fill in the Blank</p> <p class = "GameDefinition">Presents a sentence with a missing word the user must complete by selecting the correct term</p></button>
-        <button class = "GameModeButton" id = "Game4" {% if not username %}disabled{% endif %}><p class = "GameTitle">Definitions</p> <p class = "GameDefinition">Select the correct definition for the highlighted word</p></button>
-        <button class = "GameModeButton" id = "Game6" {% if not username %}disabled{% endif %}><p class = "GameTitle">Race Against Time</p> <p class = "GameDefinition">Answer questions correctly to extend their remaining time and continue playing until time runs out</p></button>
+        <button class = "GameModeButton" id = "Game2" {% if not username %}disabled{% endif %}><img src = "static\assets\Duck_fill_in.png" alt="Duck_fill_in_blank_mode" width="150" height="150"><p class = "GameTitle">Fill in the Blank</p> <p class = "GameDefinition">Presents a sentence with a missing word the user must complete by selecting the correct term</p></button>
+        <button class = "GameModeButton" id = "Game4" {% if not username %}disabled{% endif %}><img src = "static\assets\Duck_define.png" alt="Duck_define_mode" width="150" height="150"><p class = "GameTitle">Definitions</p> <p class = "GameDefinition">Select the correct definition for the highlighted word</p></button>
+        <button class = "GameModeButton" id = "Game6" {% if not username %}disabled{% endif %}><img src = "static\assets\Duck_timer.png" alt="Duck_timer_mode" width="150" height="150"><p class = "GameTitle">Race Against Time</p> <p class = "GameDefinition">Answer questions correctly to extend their remaining time and continue playing until time runs out</p></button>
         
         <h2 id = "CustomLevel">Custom Learning Decks</h2>
-        <button class = "GameModeButton" id = "Game7" {% if not username %}disabled{% endif %}><p class = "GameTitle">Add a Custom Deck</p> <p class = "GameDefinition">Create a custom set of vocabulary words</p></button>
+        <button class = "GameModeButton" id = "Game7" {% if not username %}disabled{% endif %}><img src = "static\assets\Plus.png" alt="Plus_button" width="200" height="150"><p class = "GameTitle">Add a Custom Deck</p> <p class = "GameDefinition">Create a custom set of vocabulary words</p></button>
     </div>
     <!-- <div id="SubmitButtonDiv">
         <button id = "SubmitButton">Submit</button>

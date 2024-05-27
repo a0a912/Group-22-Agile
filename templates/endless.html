@@ -91,16 +91,28 @@
             <h1 id = 'question_text'>hi</h1>
             <div id = 'choices'>
                 <form id = 'question_form'>
-                    <input type="radio"  name="choice" value="a" id ='value1' class = ''>
-                    <label for="choice" id='choice1'class="label">{{choice1}}</label><br>
-                    <input type="radio"  name="choice" Value = "b" id = 'value2'>
-                    <label for="choice" id="choice2"class="label">{{choice2}}</label><br>
-                    <input type="radio"  name="choice" Value = "c" id = 'value3'>
-                    <label for="choice" id="choice3"class="label">{{choice3}}</label><br>
-                    <input type="radio"  name="choice"  Value = "d" id = 'value4'>
-                    <label for="choice" id="choice4"class="label">{{choice4}}</label><br>
-                    <div id = 'submit_container'><input type="submit" value="submit" id = 'submit_button'></div>
-                    
+                <div class = "ButtonChoices">
+                    <div class = 'ChoiceSet'>
+                        <input type="radio"  name="choice" value="a" id ='value1' class = ''>
+                        <label for="choice" id='choice1'class="label">{{choice1}}</label><br>
+                    </div>
+
+                    <div class = 'ChoiceSet'> 
+                        <input type="radio"  name="choice" Value = "b" id = 'value2'>
+                        <label for="choice" id="choice2"class="label">{{choice2}}</label><br>
+                    </div>
+
+                    <div class = 'ChoiceSet'>
+                        <input type="radio"  name="choice" Value = "c" id = 'value3'>
+                        <label for="choice" id="choice3"class="label">{{choice3}}</label><br>
+                    </div>
+
+                    <div class = 'ChoiceSet'>
+                        <input type="radio"  name="choice"  Value = "d" id = 'value4'>
+                        <label for="choice" id="choice4"class="label">{{choice4}}</label><br>
+                    </div>
+                </div>
+                <div id = 'submit_container'><input type="submit" value="submit" id = 'submit_button'></div>
                 </form>
             </div>
         </div>
