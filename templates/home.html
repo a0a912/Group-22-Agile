@@ -41,12 +41,15 @@
 
     <div class = "StudyMode">
         <h2 id = "ModeText">Select Your Study Difficulty Mode:</h2>
-        <button class = "GameModeButton" id = "Game1" {% if not username %}disabled{% endif %}>Basic Fill in the Blank</button>
-        <button class = "GameModeButton" id = "Game2" {% if not username %}disabled{% endif %}>GRE Fill in the Blank</button>
-        <button class = "GameModeButton" id = "Game3" {% if not username %}disabled{% endif %}>Basic Definitions</button>
-        <button class = "GameModeButton" id = "Game4" {% if not username %}disabled{% endif %}>GRE Definitions</button>
-        <button class = "GameModeButton" id = "Game5" {% if not username %}disabled{% endif %}>Basic Endless Mode</button>
-        <button class = "GameModeButton" id = "Game6" {% if not username %}disabled{% endif %}>GRE Endless Mode</button>
+        <h2 id = "BasicMode">Basic Levels</h2>
+        <button class = "GameModeButton" id = "Game1" {% if not username %}disabled{% endif %}>Fill in the Blank <p id = "Game1Text">Presents a sentence with a missing word the user must complete by selecting the correct term</p></button>
+        <button class = "GameModeButton" id = "Game3" {% if not username %}disabled{% endif %}>Definitions</button>
+        <button class = "GameModeButton" id = "Game5" {% if not username %}disabled{% endif %}>Race Against Time</button>
+
+        <h2 id = "GreLevel">GRE Levels</h2>
+        <button class = "GameModeButton" id = "Game2" {% if not username %}disabled{% endif %}>Fill in the Blank</button>
+        <button class = "GameModeButton" id = "Game4" {% if not username %}disabled{% endif %}>Definitions</button>
+        <button class = "GameModeButton" id = "Game6" {% if not username %}disabled{% endif %}>Race Against Time</button>
     </div>
     <!-- <div id="SubmitButtonDiv">
         <button id = "SubmitButton">Submit</button>
