@@ -351,7 +351,10 @@ def update_score_endless(index, score,correct_questions:list=None,incorrect_ques
     value = f'({account_id},"{correct_questions}","{incorrect_questions}",{score})' 
     table_name = table
     column_name = "account_id,correct_questions,incorrect_questions,score"
-    if not select_id(table_name,account_id):
+    # print(select("ACCOUNT", "id"))
+    list_of_id = [user[0] for user in select("BASIC_ENDLESS_BLANK", "account_id")]
+    # print(list_of_id)
+    if not account_id in list_of_id:
         insert(table_name,column_name,value)
     else:
         update(table_name, "score", score, f"account_id={account_id}")
