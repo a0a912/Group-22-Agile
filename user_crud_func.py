@@ -351,7 +351,10 @@ def update_score_endless(index, score,correct_questions:list=None,incorrect_ques
     value = f'({account_id},"{correct_questions}","{incorrect_questions}",{score})' 
     table_name = table
     column_name = "account_id,correct_questions,incorrect_questions,score"
-    insert(table_name,column_name,value)
+    if not select_id(table_name,account_id):
+        insert(table_name,column_name,value)
+    else:
+        update(table_name, "score", score, f"account_id={account_id}")
     return True, "Score updated, correct and incorrect questions updated"
 
 #update_score("xinyu", 100, ["1","2","3"], ["4","5","6"])

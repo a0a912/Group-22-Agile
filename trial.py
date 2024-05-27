@@ -97,7 +97,7 @@
 
 from user_crud_func import update_score_endless
 # update into QUESTION_GRE_FILL_IN table
-update_score_endless("admin",100, ["1","2","3"], ["4","5","6"])
+update_score_endless("admin",300, ["1","2","3"], ["4","5","6"])
 # update into QUESTION_ACCOUNT_FILL_IN table
 # update_score_endless("admin", 100, ["1","2","3"], ["4","5","6"])
 
