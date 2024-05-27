@@ -6,6 +6,13 @@ let endGameCalled = false; // To ensure endGame is called only once
 let timeLeft = 30;
 let isPaused = false; // Initialize timeLeft outside the function for global access
 
+/// sound
+const sound_track = new Audio('static/Endless/soundtrack.mp3');
+sound_track.volume = 0.1;
+
+const correct_sound = new Audio('/static/endless/correct.mp3');
+
+
 function resetAnswer() {
     const submitButton = document.querySelector('input[id="submit_button"]');
     const descriptionBox = document.getElementById('respone_box');
@@ -75,7 +82,7 @@ function description(result) {
         next_questionButton.style.border = '2px solid green'; 
         answer.innerText = 'correct';
         description.innerText = "  let's go";
-        murloc_sound.play();
+        correct_sound.play();
     } else {
         descriptionBox.style.backgroundColor = '#FFDFE0';
         next_questionButton.style.color = 'red';
@@ -123,6 +130,7 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     if (endGameCalled) return; // Ensure endGame is called only once
     endGameCalled = true;
 
+    sound_track.pause();
     const banner = document.getElementsByClassName('banner')[0];
     const submitButton = document.querySelector('input[id="submit_button"]');
     const descriptionBox = document.getElementById('respone_box');
@@ -399,6 +407,7 @@ async function HowtoEndless() {
     tutorialButton.addEventListener('click', function() {
         (async function() {
             await count3();
+            sound_track.play();
         
             gameplay.classList.remove('hidden');
             tutorial.classList.add('hidden');

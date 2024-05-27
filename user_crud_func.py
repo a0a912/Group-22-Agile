@@ -317,6 +317,45 @@ def update_score_table(index,table, score,correct_questions:list=None,incorrect_
     insert(table_name,column_name,value)
     return True, "Score updated, correct and incorrect questions updated"
 
+# update function for endless mode
+# table should be "BASIC_ENDLESS_BLANK"
+def update_score_endless(index, score,correct_questions:list=None,incorrect_questions:list=None,table="BASIC_ENDLESS_BLANK") -> tuple: # return a tuple, tuple[0] is the boolean, tuple[1] is the information
+    if not isinstance(score, int):
+        return False, "Score should be an integer"
+    if isinstance(index, int):
+        account_id=index
+        try:
+            old_score = 0
+        except:
+            print(f"User ID {index} not found")
+            return False, "User not found"
+    else:
+        try:
+            old_score = select_username(index, "score")[0]
+            account_id = select_username(index, "id")[0]
+        except:
+            print(f"User Name {index} not found")
+            return False, "User not found"
+    score += old_score
+    print("the old score is", old_score)
+    print("the new score is", score)
+    # if there is nothing in the list, set it to empty list
+    if not correct_questions:
+        correct_questions = []
+    if not incorrect_questions:
+        incorrect_questions = []
+    correct_questions = list(set(correct_questions)) # remove duplicates
+    incorrect_questions = list(set(incorrect_questions)) # remove duplicates
+    # update the correct and incorrect questions of the user in the QUESTION_ACCOUNT table of database
+    # the correct and incorrect questions are stored as a string in the database
+    value = f'({account_id},"{correct_questions}","{incorrect_questions}",{score})' 
+    table_name = table
+    column_name = "account_id,correct_questions,incorrect_questions,score"
+    if not select_id(table_name,account_id):
+        insert(table_name,column_name,value)
+    else:
+        update(table_name, "score", score, f"account_id={account_id}")
+    return True, "Score updated, correct and incorrect questions updated"
 
 #update_score("xinyu", 100, ["1","2","3"], ["4","5","6"])
 ############################################################################################

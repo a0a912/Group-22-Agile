@@ -22,6 +22,7 @@ def get_meaning_phone(word,data):
     # using the api of dictionary to get information about the word
     response_of_meaning = requests.get(f'https://api.dictionaryapi.dev/api/v2/entries/en/{word}')
     if response_of_meaning.status_code == 200:
+        # print("API works")
         word_original_json = response_of_meaning.json()[0]
         # get the word
         my_word = word_original_json["word"]
@@ -46,6 +47,8 @@ def get_meaning_phone(word,data):
                 word_example = word["example"]
                 break
         return my_word,word_phonetics,word_meaning,word_incorrect_list,word_example
+    # else:
+    #     print("API does not work")
     
 # get the existing words in the json file
 def get_existing_words(path):
@@ -103,6 +106,12 @@ if __name__ == "__main__":
     create_account_table()
     # drop everything in the database before adding new tables
     drop("QUESTION_ACCOUNT")
+    drop("BASIC_ENDLESS_BLANK")
+    drop("BASIC_ENDLESS_DEFINITION")
+    drop("QUESTION_ACCOUNT_FILL_IN")
+    drop("GRE_ENDLESS_BLANK")
+    drop("GRE_ENDLESS_DEFINITION")
+    drop("QUESTION_GRE_ACCOUNT")
     question_definition = "QUESTION_DEFINITION"
     question_blank = "QUESTION_BLANK"
     question_table_list = [question_definition, question_blank]
@@ -186,6 +195,33 @@ if __name__ == "__main__":
     print("Tables created for 2 types of questions of ordinary works, and the associative table for fill-in questions")
     print("Database for fill-in created")
 
+    # create a associate table for basic_endless_blank
+    statement_basic_endless_blank= f"""CREATE TABLE IF NOT EXISTS BASIC_ENDLESS_BLANK
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    score INT DEFAULT 0,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_blank}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_blank}(id));"""
+    execute(statement_basic_endless_blank)
+    print("Tables created for the associative table for fill-in questions for endless mode")
+
+    # create a associate table for basic_endless_definition
+    statement_basic_endless_definition= f"""CREATE TABLE IF NOT EXISTS BASIC_ENDLESS_DEFINITION
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    score INT DEFAULT 0,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_definition}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_definition}(id));"""
+    execute(statement_basic_endless_definition)
+    print("Tables created for the associative table for definition questions for endless mode")
+
+
     # create a table for the GRE question
     for table in question_GRE_table_list:
         statement_question_table = f"""CREATE TABLE IF NOT EXISTS {table}
@@ -261,3 +297,28 @@ if __name__ == "__main__":
     print("Tables created for 2 types of questions of ordinary works, and the associative table for GRE fill-in questions")
     print("Database for GRE fill-in created")
     
+        # create a associate table for gre_endless_blank
+    statement_gre_endless_blank= f"""CREATE TABLE IF NOT EXISTS GRE_ENDLESS_BLANK
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    score INT DEFAULT 0,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_GRE_blank}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_blank}(id));"""
+    execute(statement_gre_endless_blank)
+    print("Tables created for the associative table for fill-in questions for endless mode")
+
+    # create a associate table for gre_endless_definition
+    statement_gre_endless_definition= f"""CREATE TABLE IF NOT EXISTS GRE_ENDLESS_DEFINITION
+                    (id  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_id  INT NOT NULL,
+                    correct_questions INT NOT NULL,
+                    incorrect_questions INT NOT NULL,
+                    score INT DEFAULT 0,
+                    FOREIGN KEY(account_id) REFERENCES ACCOUNT(id),
+                    FOREIGN KEY(correct_questions) REFERENCES {question_GRE_definition}(id),
+                    FOREIGN KEY(incorrect_questions) REFERENCES {question_GRE_definition}(id));"""
+    execute(statement_gre_endless_definition)
+    print("Tables created for the associative table for definition questions for endless mode")
