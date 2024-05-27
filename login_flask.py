@@ -358,8 +358,11 @@ def endless_GRE_send():
     data = request.get_json()
     if data is None:
         return jsonify({'error': 'No data provided'}), 400
+    # print(data)
+    # print("Yes")
     
     update_score_endless(session.get('username'),data.get('score'),data.get('correct_questions'),data.get('incorrect_questions'),"GRE_ENDLESS_BLANK")
+    # update_score_endless('admin',100,[],[],"GRE_ENDLESS_BLANK")
     
 
     return jsonify({'message': 'Data received successfully'}), 200

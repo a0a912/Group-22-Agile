@@ -97,7 +97,7 @@
 
 from user_crud_func import update_score_endless,delete
 # update into QUESTION_GRE_FILL_IN table
-update_score_endless(3,200, ["1","2","3"], ["4","5","6"])
+update_score_endless('admin',100,[],[],"GRE_ENDLESS_BLANK")
 # update into QUESTION_ACCOUNT_FILL_IN table
 # delete("BASIC_ENDLESS_BLANK", "account_id=2")
 # update_score_endless("admin", 100, ["1","2","3"], ["4","5","6"])

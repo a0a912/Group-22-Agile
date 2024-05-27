@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const win = point >= number_of_question / 2;
                 endGame(win, point, number_of_question, 0, full_object.length);
                 let route;
-                if (full_object.table_name === 'GRE_BLANK') {
+                if (full_object[0].table_name === 'GRE_BLANK') {
                     route = '/endless-GRE-send';
                 }
                 else{
