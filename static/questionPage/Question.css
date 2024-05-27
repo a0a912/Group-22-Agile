@@ -224,7 +224,25 @@ div#choices input,label{
 
 #question_form{
     margin-top: 43px;
-    
+    width: 100%;
+    margin: auto;
+}
+
+.ButtonChoices {
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 46% 54%;
+    margin-top: 40px;
+}
+
+
+.ChoiceSet {
+    grid-column: 2;
+    display: inline;
+    align-self: center;
+    /* margin-left: 35%; */
 }
 
 #respone_box {
@@ -564,7 +582,7 @@ background-color: #F6F7FB;
 
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1050px) {
 
 .banner{
     display: flex;

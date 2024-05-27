@@ -21,8 +21,3 @@ window.onload = function() {
   const darkModeToggle = document.getElementById('duck_no_sunglasses_image_as_button');
   darkModeToggle.addEventListener('click', toggleDarkmode);
 }
-
-const button = document.getElementById('Game1');
-button.addEventListener('click', () => {
-  button.style.transform = button.style.transform === 'rotateX(180deg)';
-});
