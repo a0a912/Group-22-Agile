@@ -216,7 +216,7 @@ div#choices input,label{
     align-items: center;
     margin: 30px;
 }
-  
+
 #question_form input[type="submit"]:hover {
     background-color: #5b6bfd;
 }
@@ -478,16 +478,19 @@ body.dark-mode {
     
 }
 
+
+
 .QuestionReview{
     display: flex;
     height: 80px;
     width: auto;
-    background-color: white;
+    background-color: #5b6bfd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     justify-content: center;
     margin-bottom: 20px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
+    border-radius: 15px;
 
 }
 .QuestionReview .front,
@@ -592,6 +595,7 @@ background-color: #F6F7FB;
     width: 60px;
     height: 60px;
 }
+
 
 }
 
