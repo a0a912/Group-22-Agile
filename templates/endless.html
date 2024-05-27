@@ -50,59 +50,76 @@
         <h1></h1>
     </header>
 
+    <div id ='tutorial'>
+        <div id = 'tutorial_content'>
+            <div id = 'tutorial_text'>
+                <h1>HOW TO PLAY</h1>
+                <h3>when the game starts, the time will start counting down</h3>
+                <h3>get as many correct as you can</h3>
+                <h3>one correct answer gives you 1 second more</h3>
+                <h3>get 3 questions correct in a row to win a streak and get a 5-second bonus</h3>
+                <h3>try to beat the high score!!!</h3>
+                <button id = 'tutorial_button' class = 'button'>START</button>
+            </div>
+            
+        </div>
+    </div>
+
     
 
 
+    <div id = 'gameplay' class = 'hidden'>
+        <div class = 'score_container' style="display: none;">
+            <div class = 'score'>
+                <h3 id = score_text>Current Score:</h3>
+                <h3 id = score_number>0</h3>
+            </div>
+        </div>
 
-    <div class = 'score_container' style="display: none;">
-        <div class = 'score'>
-            <h3 id = score_text>Current Score:</h3>
-            <h3 id = score_number>0</h3>
+
+        <div id = 'winstreak'></div>
+        
+        
+        <div id = 'time_container'>
+            
+            
+            <div id = 'time'></div>
+            <div id = 'bomb'></div>
+
+        </div>
+        <div class = 'question_container'>
+            <h1 id = 'question_text'>hi</h1>
+            <div id = 'choices'>
+                <form id = 'question_form'>
+                    <input type="radio"  name="choice" value="a" id ='value1' class = ''>
+                    <label for="choice" id='choice1'class="label">{{choice1}}</label><br>
+                    <input type="radio"  name="choice" Value = "b" id = 'value2'>
+                    <label for="choice" id="choice2"class="label">{{choice2}}</label><br>
+                    <input type="radio"  name="choice" Value = "c" id = 'value3'>
+                    <label for="choice" id="choice3"class="label">{{choice3}}</label><br>
+                    <input type="radio"  name="choice"  Value = "d" id = 'value4'>
+                    <label for="choice" id="choice4"class="label">{{choice4}}</label><br>
+                    <div id = 'submit_container'><input type="submit" value="submit" id = 'submit_button'></div>
+                    
+                </form>
+            </div>
+        </div>
+
+        <div id = 'respone_box'>
+            <div id = 'correct_or_wrong'>
+                <p id = 'answer'  class = 'inline-space'>answer, </p>
+                <p id ='description'>description</p>  
+            </div>
+            <input type = 'submit' id = 'special' value="special Game!">
+            <input type = 'submit' id = 'next_question' value="Next Question">
+            
+
+            </div>
+            
+
         </div>
     </div>
 
-
-    <div id = 'winstreak'></div>
-    
-    
-    <div id = 'time_container'>
-        
-        
-        <div id = 'time'></div>
-        <div id = 'bomb'></div>
-
-    </div>
-    <div class = 'question_container'>
-        <h1 id = 'question_text'>hi</h1>
-        <div id = 'choices'>
-            <form id = 'question_form'>
-                <input type="radio"  name="choice" value="a" id ='value1' class = ''>
-                <label for="choice" id='choice1'class="label">{{choice1}}</label><br>
-                <input type="radio"  name="choice" Value = "b" id = 'value2'>
-                <label for="choice" id="choice2"class="label">{{choice2}}</label><br>
-                <input type="radio"  name="choice" Value = "c" id = 'value3'>
-                <label for="choice" id="choice3"class="label">{{choice3}}</label><br>
-                <input type="radio"  name="choice"  Value = "d" id = 'value4'>
-                <label for="choice" id="choice4"class="label">{{choice4}}</label><br>
-                <div id = 'submit_container'><input type="submit" value="submit" id = 'submit_button'></div>
-                
-            </form>
-        </div>
-    </div>
-
-    <div id = 'respone_box'>
-        <div id = 'correct_or_wrong'>
-            <p id = 'answer'  class = 'inline-space'>answer, </p>
-            <p id ='description'>description</p>  
-        </div>
-        <input type = 'submit' id = 'special' value="special Game!">
-        <input type = 'submit' id = 'next_question' value="Next Question">
-         
-
-        </div>
-        
-        
-    </div>
     <script>
         // dark mode
         window.onload = function() {
