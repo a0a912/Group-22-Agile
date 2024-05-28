@@ -41,6 +41,26 @@
     height: 100px;
 }
 
+#parent-element {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.dark-mode#update_duck{
+    position: relative;
+    width: 100px;
+    height: 90px;
+}
+
+.dark-mode#review_duck{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
 #Welcome{
     text-align: center;
     font-family: 'din-round', sans-serif;
@@ -348,6 +368,26 @@ body.dark-mode .form-text {
     width: 70px;
     height: 70px;
 }
+#parent-element {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.dark-mode#update_duck{
+    position: relative;
+    width: 70px;
+    height: 60px;
+}
+
+.dark-mode#review_duck{
+    position: relative;
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
+
 
 .NavBar {
     margin-right: 1vw;
@@ -372,6 +412,7 @@ h2 {
 
 .input-field {
     font-size: 16px;
+    margin-left: 35px;
 }
 
 .answers-button {
@@ -399,6 +440,9 @@ h2 {
 }
 
 @media screen and (max-width: 530px) {
+    .input-field{
+        margin-left: 25.7px;
+    }
     .input-field1 {
         width: 300px;
         padding: 10px;
@@ -408,7 +452,7 @@ h2 {
         text-align: center;
         color: white;
         border-radius: 4px;
-        margin-left: 20px;
+        margin-left: 25.7px;
         height: 20px;
     }
     .review-button {

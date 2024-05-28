@@ -29,7 +29,7 @@
 
   
       <div class="container">
-        <h1>Update Password</h1>
+        <h1><img class = "dark-mode" id="update_duck" src="static\assets\update.webp" alt="logo">Update Password </h1>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -45,7 +45,7 @@
                 {% endfor %}
             {% endif %}
             {% endwith %}
-
+            <br>
             <form action="/profile/update/password" method="POST">
             <!-- Current password-->
             <h2>Current password <input class="input-field" type="password" name="password" placeholder="Enter current password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}"></h2>
@@ -58,7 +58,8 @@
             <br>
             <br>
     <hr>
-            <h1>Review</h1>
+            <h1><img class = "dark-mode" id="review_duck" src="static\assets\review.webp" alt="logo">   Review</h1>
+            <br>
             <h2>Improve your Enlgish by reviewing the wrong questions</h2>
             <br>
             <button type="submit" class="review-button" onclick="window.location.href='{{ url_for('review') }}'">Review</button>
