@@ -42,7 +42,6 @@ def register_page():
     return render_template("register.html", list_of_secure_questions=list_of_secure_questions)
 
 
-
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
 @app.route('/auth/login', methods=['POST'])
 def login():
@@ -154,8 +153,11 @@ def update_password():
     print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
 
     current_password_db = select_password(username)
+    if password != current_password_db:
+        flash("Please enter your current password again.", 'error')
     if old_password_hash == current_password_db:
         update("account", "password", new_password_hash, f"username='{username}'")
+        flash("Password updated successfully.", 'success')
         return redirect(url_for('login_page'))
     else:
         return redirect(url_for('profile')) 
@@ -204,7 +206,6 @@ def test_get_question_dict():
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/forgot", methods=['GET', 'POST'])
 def forgot():
-    
     # print(username)
     if request.method == "POST":
         username = request.form.get('username')
@@ -218,46 +219,55 @@ def forgot():
         else:
             session['username'] = username
             session['questions'] = questions
-            return redirect(url_for('answer'))
+            return redirect(url_for('answer_questions'))
     else:
         return render_template("forgot.html")
     
-# to the reset password page, receive answers here and send it to the resetp route
-@app.route("/forgot/answer", methods=['GET'])
-def answer():
-    username = session.get('username')
-    questions = session.get('questions')
-    return render_template("answers.html",username=username, questions=questions)
-
-@app.route("/auth/forgot/answer", methods=['POST'])
+@app.route("/auth/forgot/answer", methods=['GET', 'POST'])
 def answer_questions():
-    username = request.form.get('username')
-    questions = show_secure_question(username)
-    answer1 = request.form.get('answer1')
-    answer2 = request.form.get('answer2')
-    answers = [answer1,answer2]
-    print(answers)
-    # print(list_of_secure_questions)
-    if check_secure_question(username, questions, answers):
-        change_password_temp = request.form.get('password')
-        hash_object = hashlib.sha256(change_password_temp.encode())
-        new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
-        print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+    if request.method == 'GET':
+        username = session.get('username')
+        questions = session.get('questions')
+        return render_template("answers.html", username=username, questions=questions)
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        questions = show_secure_question(username)
+        answer1 = request.form.get('answer1')
+        answer2 = request.form.get('answer2')
+        answers = [answer1,answer2]
+        print(answers)
+        result, message = check_secure_question(username, questions, answers)
+        if result:
+            new_password = request.form.get('new_password')
+            confirm_password = request.form.get('confirm_password')
 
-        update("account", "password", new_password_hash, f"username='{username}'")
-        return redirect(url_for("home"))
-    else:
-        session['fail_count'] = session.get('fail_count', 0) + 1
-        if 3 <= session.get('fail_count') < 5:
-            attempts = session.get('fail_count')
-            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-        if session.get('fail_count') == 5:
-            message = "You tried 5 attempts. Please try again later."
+            if new_password != confirm_password:
+                flash('Passwords do not match. Please try again.', 'error')
+                return redirect(url_for('answer_questions'))
 
-        return redirect(url_for('forgot_questions'), message) 
+            hash_object = hashlib.sha256(new_password.encode())
+            new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+            print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+
+            update("account", "password", new_password_hash, f"username='{username}'")
+            return redirect(url_for("home"))
+        else:
+            flash(message, 'error')
+            session['fail_count'] = session.get('fail_count', 0) + 1
+            if 3 <= session.get('fail_count') < 5:
+                attempts = session.get('fail_count')
+                message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+                flash(message, 'error')
+            if session.get('fail_count') == 5:
+                message = "You tried 5 attempts. Please try again later."
+                flash(message, 'error')
+            return redirect(url_for('answer_questions'))
     
-
-
+@app.route("/clear_session")
+def clear_session():
+    session.clear()
+    return redirect(url_for('home'))
+    
 
 @app.route("/endless", methods=['GET'])
 def endless():

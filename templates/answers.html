@@ -21,29 +21,6 @@
             <img src="/static/login/duck-spin.gif" alt="Logo">
             <h1></h1>
         </div>
-        <form class="answers-form" action="/auth/forgot/answer" method="POST">
-                <!-- Username -->
-                <label id="answers-label" for="username">Username : {{ username }}</label>
-                <input class="input-field" type="hidden" name="username" value="{{ username }}">
-                <br>
-                <!-- Security Question 1-->
-                <label id="answers-label" for="secure_question1">Security Question 1: <p>{{ questions[0]}}</p></label>
-                <input class="input-field" type="text" name="answer1" placeholder="Enter the answer">
-                <br>
-                <!-- Security Question 2-->
-                <label id="answers-label" for="secure_question2">Security Question 2: <p>{{ questions[1]}}</p></label>
-                <input class="input-field" type="text" name="answer2" placeholder="Enter the answer">
-                <br>
-                <!-- New password -->
-                <label id="answers-label" for="password">New password</label>
-                <input class="input-field" type="password" name="new_password" placeholder="Enter new password"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
-                <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
-                <br>
-                <!-- Confirm New Password-->
-                <label id="answers-label" for="password">Confirm new password</label>
-                <input class="input-field" type="password" name="confirm_password" placeholder="Enter new password again"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
-                <button type="submit" class="answers-button">Submit</button>
-        </form>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -59,6 +36,30 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
+        <form class="answers-form" action="/auth/forgot/answer" method="POST">
+                <!-- Username -->
+                <label id="answers-label" for="username">Username : {{ username }}</label>
+                <input class="input-field" type="hidden" name="username" value="{{ username }}">
+                <br>
+                <!-- Security Question 1-->
+                <label id="answers-label" for="secure_question1">Security Question 1: <p>{{ questions[0]}}</p></label>
+                <input class="input-field" type="text" name="answer1" placeholder="Enter the answer">
+                <br>
+                <!-- Security Question 2-->
+                <label id="answers-label" for="secure_question2">Security Question 2: <p>{{ questions[1]}}</p></label>
+                <input class="input-field" type="text" name="answer2" placeholder="Enter the answer">
+                <br>
+                <!-- New password -->
+                <label id="answers-label" for="new_password">New password</label>
+                <input class="input-field" type="password" name="new_password" placeholder="Enter new password"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
+                <br>
+                <!-- Confirm New Password-->
+                <label id="answers-label" for="confirm_password">Confirm new password</label>
+                <input class="input-field" type="password" name="confirm_password" placeholder="Enter new password again"  required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
+                <button type="submit" class="answers-button">Submit</button>
+        </form>
+
     </div>
 </body>
     <script>
