@@ -167,7 +167,7 @@ def test_check_secure_question(mock_cursor):
     mock_cursor.execute.return_value = mock_execute
     result = usermod.check_secure_question(username, [secure_question1, secure_question2],[answer1, answer2])
     mock_cursor.execute.assert_called=2
-    assert result == True
+    assert result == (True, 'Correct Answers')
 
 def test_create_account_table(mock_connection, mock_cursor):
     usermod.create_account_table()
