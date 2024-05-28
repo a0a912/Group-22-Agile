@@ -28,26 +28,34 @@
     </div>
     <div class="top3">
         {% for score in scores %}
-        {% if loop.index == 1 %}
-        <div>
-            <p>Rank 2</p>
-            <img src="/static/assets/2.webp" alt="Logo">
-            <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
-        </div>
-        {% elif loop.index == 2 %}
-        <div>
-            <p>Rank 1</p>
-            <img src="/static/assets/1.webp" alt="Logo">
-            <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
-        </div>
-        {% elif loop.index == 3 %}
-        <div>
-            <p>Rank 3</p>
-            <img src="/static/assets/3.webp" alt="Logo">
-            <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
-        </div>
-        {% endif %}
-    {% endfor %}
+            {% if loop.index == 2 %}
+            <div>
+                <p>Rank 2</p>
+                <img src="/static/assets/2.webp" alt="Logo">
+                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {% for score in scores %}
+            {% if loop.index == 1 %}
+            <div>
+                <p>Rank 1</p>
+                <img src="/static/assets/1.webp" alt="Logo">
+                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {% for score in scores %}
+            {% if loop.index == 3 %}
+            <div>
+                <p>Rank 3</p>
+                <img src="/static/assets/3.webp" alt="Logo">
+                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
     <!-- Read scores from flask, make a table and for loop through the scores variable to display scores[0], scores[1] in the table --->
     <table>
