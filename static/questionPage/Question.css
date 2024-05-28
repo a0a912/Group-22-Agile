@@ -162,9 +162,9 @@ li a {
    
 }
 
-div#choices input,label{
-    margin-bottom: 20px;
-    font-size: 18px;
+div#choices input, label{
+    /* margin-bottom: 20px; */
+    font-size: 25px;
     font-weight: lighter;
 }
 
@@ -224,7 +224,60 @@ div#choices input,label{
 
 #question_form{
     margin-top: 43px;
-    
+    width: 100%;
+    margin: auto;
+}
+
+.ButtonChoices {
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 46% 54%;
+    margin-top: 40px;
+}
+
+.ChoiceSet {
+    grid-column: 2;
+    display: inline;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+
+/* Style radio buttons */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid #7782DD;
+    outline: none;
+    background-color: white;
+}
+
+/* Style radio button when checked */
+input[type="radio"]:checked {
+    border: 5px solid #FFD117;
+}
+
+/* Style radio button label */
+.radio-label {
+    margin-left: 10px;
+    font-family: 'din-round', sans-serif;
+    font-size: 16px;
+    color: var(--dark-grey);
+}
+
+
+
+/* Style radio button container */
+.radio-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 #respone_box {
@@ -567,7 +620,7 @@ background-color: #F6F7FB;
 
 
 /* ------------------------------------- MOBILE ----------------------------------------- */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1050px) {
 
 .banner{
     display: flex;
