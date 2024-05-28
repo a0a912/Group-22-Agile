@@ -8,7 +8,7 @@ from usermod import execute, select_all, update, check_secure_question, select_p
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
 import ast
 from manage import get_existing_words
-from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
+from usermod import execute, select_all, select_username, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -209,12 +209,13 @@ def forgot():
     # print(username)
     if request.method == "POST":
         username = request.form.get('username')
-        if not username:
+        find_username = select_username(username, "username")
+        if not find_username:
             flash("Not existing username. Please try again.", 'error')
-            return render_template("forgot.html")
+            return redirect(url_for('forgot'))
         questions = show_secure_question(username)
         if not questions:
-            return render_template("forgot.html")
+            return redirect(url_for('forgot'))
         # return questions
         else:
             session['username'] = username
