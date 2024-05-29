@@ -530,8 +530,16 @@ body.dark-mode {
     font-family: sans-serif;
     
 }
+h3 {
+    font-family: 'din-round', sans-serif;
+    font-size: 30px
 
-
+}
+#redo {
+    width: 120px;
+    height: 60px;
+    font-size: 20px;
+}
 
 .QuestionReview{
     display: flex;
@@ -568,6 +576,8 @@ background-color: #F6F7FB;
 .QuestionReview p {
     transform-style: preserve-3d;
     transition: transform 0.5s;
+    font-size: 25px;
+    font-family: 'din-round', sans-serif;
   }
 
 #lesson_review{

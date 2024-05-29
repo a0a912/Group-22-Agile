@@ -295,6 +295,7 @@ def table():
     
     # Return a response with data for the next step
     return redirect(url_for('review'))
+
 @app.route("/review", methods=['GET'])
 def review():
     table = session.get('table_data')
