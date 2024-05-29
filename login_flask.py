@@ -1,7 +1,7 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list,tableMatch,question_from_ID_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table,update_score_endless
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table,update_score_endless,select_from_id
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
@@ -374,10 +374,23 @@ def endless_GRE_send():
     
     update_score_endless(session.get('username'),data.get('score'),data.get('correct_questions'),data.get('incorrect_questions'),"GRE_ENDLESS_BLANK")
     # update_score_endless('admin',100,[],[],"GRE_ENDLESS_BLANK")
+
+  
     
 
     return jsonify({'message': 'Data received successfully'}), 200
-
+@app.route('/ranking-endless', methods=['GET'])
+def endless_ranking():
+    scores = select_all("BASIC_ENDLESS_BLANK", "account_id, score")
+    # score_list = [list(item) for item in scores]
+    # print (score_list)
+    # for i in range(len(score_list)):
+    #     score_list[i][0] = select_from_id(score_list[i][0])
+    # scores_tuple= tuple(score_list)
+    # score_tuple =[tuple(item) for item in scores_tuple]
+    # print(score_tuple)
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return render_template("scores.html", scores=scores)
         
 
         

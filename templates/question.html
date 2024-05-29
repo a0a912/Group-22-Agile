@@ -20,8 +20,8 @@
 <body class="dark-mode">
     <header>
         <div class = 'banner'>
-            <img id="duck_no_sunglasses_image_as_button" src="static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100">
-            <img id="image_as_button" src="static\assets\duck_win_unmute.png" alt="logo" width="100" height="100">
+            <img id="duck_no_sunglasses_image_as_button" src="\static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100">
+            <img id="image_as_button" src="\static\assets\duck_win_unmute.png" alt="logo" width="100" height="100">
             <div class = 'banner_content'>
                 <div class="banner_text">
                     {% if "__" in questions_list %}
@@ -110,11 +110,11 @@
         document.getElementById("image_as_button").addEventListener("click", function() {
         let image_as_button = document.getElementById("image_as_button");
         if (image_as_button.src.includes("static/assets/duck_win_unmute.png")) {
-            image_as_button.src = "static/assets/duck_win_mute.png";
+            image_as_button.src = "/static/assets/duck_win_mute.png";
             oof_sound.muted = true; 
             murloc_sound.muted = true; 
         } else {
-            image_as_button.src = "static/assets/duck_win_unmute.png";
+            image_as_button.src = "/static/assets/duck_win_unmute.png";
             oof_sound.muted = false; 
             murloc_sound.muted = false; 
         }

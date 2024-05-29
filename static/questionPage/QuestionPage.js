@@ -531,6 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
     index++;
     
     const nextQuestionButton = document.getElementById('next_question');
+    
     nextQuestionButton.addEventListener('click', function(event) {
         event.preventDefault();
         console.log(point);

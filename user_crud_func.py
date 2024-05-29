@@ -398,4 +398,10 @@ def select_from_username(username:str) -> tuple:
     result = rows.fetchone()
     return result
 
+def select_from_id(id:int) -> tuple:
+    statement = f"SELECT username FROM account WHERE id={id}"
+    rows = cursor.execute(statement)
+    result = rows.fetchone()
+    return result
+
 
