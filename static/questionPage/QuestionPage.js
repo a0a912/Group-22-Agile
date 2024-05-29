@@ -253,6 +253,12 @@ function endGame(win, score, number_of_question, win_streak, question_length) {
     })
 
     clearInterval(countdownInterval); // Stop the countdown
+    bomb = document.getElementById('bomb');
+    if (bomb) {
+        score_outerdiv_incorrect.style.display = 'none';
+        reviewButton.style.display = 'none';
+        
+    }
 }
 //endless
 function startCountdown(win,score,number_of_question,question_length) {
@@ -573,8 +579,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (timeLeft <= 0) {
                 clearInterval(countdownInterval);
                 countdownElement.style.width = '0px'; // Set the width to 0
-                const win = point >= number_of_question / 2;
-                endGame(win, point, number_of_question, 0, full_object.length);
+                
+                endGame(true, point, number_of_question, 0, full_object.length);
                 let route;
                 if (full_object[0].table_name === 'GRE_BLANK') {
                     route = '/endless-GRE-send';
