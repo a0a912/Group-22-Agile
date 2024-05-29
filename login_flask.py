@@ -383,15 +383,23 @@ def endless_GRE_send():
 @app.route('/ranking-endless', methods=['GET'])
 def endless_ranking():
     scores = select_all("BASIC_ENDLESS_BLANK", "account_id, score")
-    # score_list = [list(item) for item in scores]
-    # print (score_list)
+    score_list = [list(item) for item in scores]
+    print(score_list[0][1])
+    
     # for i in range(len(score_list)):
-    #     score_list[i][0] = select_from_id(score_list[i][0])
-    # scores_tuple= tuple(score_list)
-    # score_tuple =[tuple(item) for item in scores_tuple]
-    # print(score_tuple)
-    scores.sort(key=lambda x: x[1], reverse=True)
-    return render_template("scores.html", scores=scores)
+    #     score_list[i][0] = select_id("account",score_list[i][0],'username')
+
+    scores = select_all("BASIC_ENDLESS_BLANK", "account_id, score") 
+    score_list = [list(item) for item in scores]
+
+    for i in range(len(score_list)):
+        username  = list(select_id("account",score_list[i][0],'username'))
+        score_list[i][0] = username[i]
+
+    print((score_list))
+
+    score_list.sort(key=lambda x: x[1], reverse=True)
+    return render_template("scores.html", scores=score_list)
         
 
         
