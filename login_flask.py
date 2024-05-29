@@ -1,14 +1,14 @@
 # a simple login page using flask for testing the usermod.py
 from flask import Flask, render_template, url_for, request, redirect, session, flash,jsonify
 from model import Word, get_question_dict,generate_question_list,tableMatch,question_from_ID_list
-from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table,update_score_endless
+from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,update_score_table,update_score_endless,select_from_id
 import ast
 
 from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from user_crud_func import auth, sign_up, select_all, show_secure_question,update,update_score,read_question_account,select_from_username
 import ast
 from manage import get_existing_words
-from usermod import execute, select_all, update, check_secure_question, select_password,select_max_id_by_account,select_id
+from usermod import execute, select_all, select_username, update, check_secure_question, select_password,select_max_id_by_account,select_id
 from manage import return_all_secure_question
 import secrets 
 import json
@@ -40,7 +40,6 @@ def login_page():
 def register_page():
     list_of_secure_questions = return_all_secure_question()
     return render_template("register.html", list_of_secure_questions=list_of_secure_questions)
-
 
 
 # login route making a post request to the server to check the username and password using the auth function from usermod.py
@@ -129,7 +128,7 @@ def ranking():
     scores = select_all("account", "username, score")
     #Sort the scores in descending order
     scores.sort(key=lambda x: x[1], reverse=True)
-    return render_template("scores.html", scores=scores)
+    return render_template("scores.html", scores=scores, username=session.get('username'))
 
 # profile route to show the profile of the user
 @app.route('/profile', methods=['GET'])
@@ -154,8 +153,11 @@ def update_password():
     print(f"Testing Registering user: {username}, Hashed password: {old_password_hash}")
 
     current_password_db = select_password(username)
+    if password != current_password_db:
+        flash("Please enter your current password again.", 'error')
     if old_password_hash == current_password_db:
         update("account", "password", new_password_hash, f"username='{username}'")
+        flash("Password updated successfully.", 'success')
         return redirect(url_for('login_page'))
     else:
         return redirect(url_for('profile')) 
@@ -204,60 +206,69 @@ def test_get_question_dict():
 # get the secure questions for the user, and send it to the resetq page
 @app.route("/forgot", methods=['GET', 'POST'])
 def forgot():
-    
     # print(username)
     if request.method == "POST":
         username = request.form.get('username')
-        if not username:
+        find_username = select_username(username, "username")
+        if not find_username:
             flash("Not existing username. Please try again.", 'error')
-            return render_template("forgot.html")
+            return redirect(url_for('forgot'))
         questions = show_secure_question(username)
         if not questions:
-            return render_template("forgot.html")
+            return redirect(url_for('forgot'))
         # return questions
         else:
             session['username'] = username
             session['questions'] = questions
-            return redirect(url_for('answer'))
+            return redirect(url_for('answer_questions'))
     else:
         return render_template("forgot.html")
     
-# to the reset password page, receive answers here and send it to the resetp route
-@app.route("/forgot/answer", methods=['GET'])
-def answer():
-    username = session.get('username')
-    questions = session.get('questions')
-    return render_template("answers.html",username=username, questions=questions)
-
-@app.route("/auth/forgot/answer", methods=['POST'])
+@app.route("/auth/forgot/answer", methods=['GET', 'POST'])
 def answer_questions():
-    username = request.form.get('username')
-    questions = show_secure_question(username)
-    answer1 = request.form.get('answer1')
-    answer2 = request.form.get('answer2')
-    answers = [answer1,answer2]
-    print(answers)
-    # print(list_of_secure_questions)
-    if check_secure_question(username, questions, answers):
-        change_password_temp = request.form.get('password')
-        hash_object = hashlib.sha256(change_password_temp.encode())
-        new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
-        print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+    if request.method == 'GET':
+        username = session.get('username')
+        questions = session.get('questions')
+        return render_template("answers.html", username=username, questions=questions)
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        questions = show_secure_question(username)
+        answer1 = request.form.get('answer1')
+        answer2 = request.form.get('answer2')
+        answers = [answer1,answer2]
+        print(answers)
+        result, message = check_secure_question(username, questions, answers)
+        if result:
+            new_password = request.form.get('new_password')
+            confirm_password = request.form.get('confirm_password')
 
-        update("account", "password", new_password_hash, f"username='{username}'")
-        return redirect(url_for("home"))
-    else:
-        session['fail_count'] = session.get('fail_count', 0) + 1
-        if 3 <= session.get('fail_count') < 5:
-            attempts = session.get('fail_count')
-            message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
-        if session.get('fail_count') == 5:
-            message = "You tried 5 attempts. Please try again later."
+            if new_password != confirm_password:
+                flash('Passwords do not match. Please try again.', 'error')
+                return redirect(url_for('answer_questions'))
 
-        return redirect(url_for('forgot_questions'), message) 
+            hash_object = hashlib.sha256(new_password.encode())
+            new_password_hash = base64.b64encode(hash_object.digest()).decode('utf-8')
+            print(f"Testing Registering user: {username}, Hashed password: {new_password_hash}")
+
+            update("account", "password", new_password_hash, f"username='{username}'")
+            return redirect(url_for("home"))
+        else:
+            flash(message, 'error')
+            session['fail_count'] = session.get('fail_count', 0) + 1
+            if 3 <= session.get('fail_count') < 5:
+                attempts = session.get('fail_count')
+                message = f"You tried {attempts} attempts. You have only {5 - attempts} more attempts."
+                flash(message, 'error')
+            if session.get('fail_count') == 5:
+                message = "You tried 5 attempts. Please try again later."
+                flash(message, 'error')
+            return redirect(url_for('answer_questions'))
     
-
-
+@app.route("/clear_session")
+def clear_session():
+    session.clear()
+    return redirect(url_for('home'))
+    
 
 @app.route("/endless", methods=['GET'])
 def endless():
@@ -284,6 +295,7 @@ def table():
     
     # Return a response with data for the next step
     return redirect(url_for('review'))
+
 @app.route("/review", methods=['GET'])
 def review():
     table = session.get('table_data')
@@ -363,10 +375,23 @@ def endless_GRE_send():
     
     update_score_endless(session.get('username'),data.get('score'),data.get('correct_questions'),data.get('incorrect_questions'),"GRE_ENDLESS_BLANK")
     # update_score_endless('admin',100,[],[],"GRE_ENDLESS_BLANK")
+
+  
     
 
     return jsonify({'message': 'Data received successfully'}), 200
-
+@app.route('/ranking-endless', methods=['GET'])
+def endless_ranking():
+    scores = select_all("BASIC_ENDLESS_BLANK", "account_id, score")
+    # score_list = [list(item) for item in scores]
+    # print (score_list)
+    # for i in range(len(score_list)):
+    #     score_list[i][0] = select_from_id(score_list[i][0])
+    # scores_tuple= tuple(score_list)
+    # score_tuple =[tuple(item) for item in scores_tuple]
+    # print(score_tuple)
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return render_template("scores.html", scores=scores)
         
 
         

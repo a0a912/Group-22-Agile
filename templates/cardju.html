@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Card Game</title>
+    <title>UNOLINGO-Card Game</title>
+    <link rel="stylesheet" href="static\bootstrap\css\BonusGame.css">
+    <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
+
     <style>
         body {
             text-align: center;
@@ -69,13 +72,63 @@
     </style>
 </head>
 <body>
-<h2>Game</h2>
+    <header>
+        <div class = "banner">
+            <img class = "dark-mode" id="duck_no_sunglasses_image_as_button" src="static\assets\duck_win_no_sunglasses.png" alt="logo" width="100" height="100">
+            <!-- Check if user is loged in -->
+            <h1 id = "Welcome">Bonus Game</h1>
+            <li class = NavBar>
+                <ul> <a href="{{ url_for('home') }}">Home </a></ul>
+                <ul> <a href="{{ url_for('ranking') }}">Ranking </a></ul>
+                <ul><a href="{{ url_for('profile') }}">Profile</a></ul>
+                <ul> <form id="logoutForm" action="{{ url_for('logout') }}" method="POST">
+                    <a href="{{ url_for('home') }}" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                </form> </ul>
+            </li>
+            
+        </div>
+    </header> 
+<h1>Welcome to the Bonus Card Game!</h1>
+<!-- <div id = "InstructionBody">
+    <h2 class = "instructions">How to play:</h2>
+    <ol class = "instructions">
+        <li>
+            Click on the "Start Game" button to start the game.
+        </li>
+        <li>
+            Click on the card you want to play.
+        </li>
+        <li>
+            Click on the "Play Card" button to play the card.
+        </li>
+        <li>
+            Click on the "Next Round" button to play the next round.
+        </li>
+        <li>
+            Click on the "Reset Game" button to reset the game.
+        </li>
+    <ul class = "instructions">
+        <li>
+             There are three elements for cards in the game: Fire, Water, and Snow.
+        </li>
+        <li>
+            Fire: Represented by red cards. <br>
+        </li>
+        <li>
+            Water: Represented by blue cards. <br>
+        </li>
+        <li>
+            Snow: Represented by white cards. <br>
+        </li>
+    </ul>
+</div> -->
+
 <div id="game_area">
-    <div id="log"></div>
+    <!-- <div id="log"><h2 class = "instructions">Match History</h2></div> -->
 
     <div id="player_area">
         <div id="player_ui">
-            <p>Player</p>
+            <p class = "player">Player</p>
             <p>Snow Cards: <span id="player_snow_card_score">0</span> </p>
             <p>Fire Cards: <span id="player_fire_card_score">0</span></p>
             <p>Water Cards: <span id="player_water_card_score">0</span></p>
@@ -84,7 +137,7 @@
     </div>
     <div id="computer_area">
         <div id="computer_ui">
-            <p>Computer</p>
+            <p class = "player">Computer</p>
             <p>Snow Cards: <span id="computer_snow_card_score">0</span> </p>
             <p>Fire Cards: <span id="computer_fire_card_score">0</span></p>
             <p>Water Cards: <span id="computer_water_card_score">0</span></p>
@@ -96,6 +149,7 @@
     </div>
 </div>
 <button id="start_game_button">Start Game</button>
+<div id="log"><h2 class = "instructions">Match History</h2></div>
 <script>
 
     //Add DOMContentLoaded event listener

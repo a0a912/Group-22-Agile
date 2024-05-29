@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duolingo</title>
     <link rel="stylesheet" href="static\bootstrap\css\profile.css">
     <script src="static\bootstrap\css\HomePageJS.JS" defer></script>
-    <title>UNOLINGO-Login</title>
+    <title>UNOLINGO-Profile</title>
 </head>
 
 <body class="dark-mode">
@@ -30,8 +29,7 @@
 
   
       <div class="container">
-        <h1>Update Password</h1>
-          <h2>Username: {{ username }}</h2>
+        <h1><img class = "dark-mode" id="update_duck" src="static\assets\update.webp" alt="logo">Update Password </h1>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -47,23 +45,24 @@
                 {% endfor %}
             {% endif %}
             {% endwith %}
-            <form class="answers-form" action="/profile/update/password" method="POST">
-                <!-- Current Password-->
-                <label id="answers-label" for="password">Current password</label>
-                <input class="input-field" type="password" name="password" placeholder="Enter current password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
-                <br>
-                <!-- New password -->
-                <label id="answers-label" for="new_password">New password</label>
-                <input class="input-field" type="password" name="new_password" placeholder="Enter new password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}">
-                <br>
-                <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
-                <br>
-                <button type="submit" class="answers-button">Update</button>
+            <br>
+            <form action="/profile/update/password" method="POST">
+            <!-- Current password-->
+            <h2>Current password <input class="input-field" type="password" name="password" placeholder="Enter current password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}"></h2>
+            <!-- New password -->
+            <h2>New password <input class="input-field1" type="password" name="new_password" placeholder="Enter new password" required minlength="6" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}"></h2>
+            <small class="form-text text-muted">Must contain more than 6 characters with at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</small>
+            <br>
+            <button type="submit" class="answers-button">Update</button>
             </form>
-            
-            <h1>Review</h1>
-            <h2>Click this button to review what you got wrong!!</h2>
-            <button type="submit" class="review-button" onclick="window.location.href='{{ url_for('review') }}'">Review</button> 
+            <br>
+            <br>
+    <hr>
+            <h1><img class = "dark-mode" id="review_duck" src="static\assets\review.webp" alt="logo">   Review</h1>
+            <br>
+            <h2>Improve your Enlgish by reviewing the wrong questions</h2>
+            <br>
+            <button type="submit" class="review-button" onclick="window.location.href='{{ url_for('review') }}'">Review</button>
 
 
       </div>

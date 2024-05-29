@@ -112,7 +112,7 @@ def show_secure_question(username:str) -> list:
 def check_secure_question(username:str, question:list, answer:list) -> bool:
     if select_username(username) == None:
         print(f"User {username} does not exist")
-        return False
+        return False, "User does not exist"
     else:
         [user_question1, user_question2] = question
         [user_answer1, user_answer2] = answer
@@ -120,7 +120,7 @@ def check_secure_question(username:str, question:list, answer:list) -> bool:
         [question1,question2] = [question_answer1.split(":")[0], question_answer2.split(":")[0]]
         [answer1,answer2] = [question_answer1.split(":")[1], question_answer2.split(":")[1]]
         if user_question1 == question1 and user_question2 == question2 and user_answer1 == answer1 and user_answer2 == answer2:
-            return True
+            return True, "Correct Answers"
         else:
             return False, "Incorrect Answers"
     
