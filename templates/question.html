@@ -102,9 +102,21 @@
     <script>
         // dark mode
         window.onload = function() {
-            var darkMode = localStorage.getItem('darkMode') === 'true';
-            document.body.classList.toggle("dark-mode", darkMode);
+        var darkMode = localStorage.getItem('darkMode') === 'true';
+        document.body.classList.toggle("dark-mode", darkMode);
+        const darkModeToggle = document.getElementById('duck_no_sunglasses_image_as_button');
+        darkModeToggle.addEventListener('click', toggleDarkmode);
         };
+        
+        document.getElementById("duck_no_sunglasses_image_as_button").addEventListener("click", function() {
+        let image_as_button = document.getElementById("duck_no_sunglasses_image_as_button");
+        if (image_as_button.src.includes("static\assets\duck_win_no_sunglasses.png")) {
+            image_as_button.src = "static\assets\duck_win_sunglasses.png";
+        } 
+        else if (image_as_button.src.includes("static\assets\duck_win_sunglasses.png")) {
+            image_as_button.src = "static\assets\duck_win_no_sunglasses.png";
+        }
+        });
 
         // mute button
         document.getElementById("image_as_button").addEventListener("click", function() {

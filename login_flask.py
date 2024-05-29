@@ -128,7 +128,7 @@ def ranking():
     scores = select_all("account", "username, score")
     #Sort the scores in descending order
     scores.sort(key=lambda x: x[1], reverse=True)
-    return render_template("scores.html", scores=scores)
+    return render_template("scores.html", scores=scores, username=session.get('username'))
 
 # profile route to show the profile of the user
 @app.route('/profile', methods=['GET'])

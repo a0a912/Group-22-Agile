@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     redobutton.addEventListener('click', () => {
         window.location.href= '/review/redo';
-        
+         
     })
 
     if (questions.length > 0) {

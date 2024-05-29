@@ -32,7 +32,7 @@
             <div>
                 <p>Rank 2</p>
                 <img src="/static/assets/2.webp" alt="Logo">
-                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+                <p class="{% if score[0] == username %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
             </div>
             {% endif %}
         {% endfor %}
@@ -42,7 +42,7 @@
             <div>
                 <p>Rank 1</p>
                 <img src="/static/assets/1.webp" alt="Logo">
-                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+                <p class="{% if score[0] == username %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
             </div>
             {% endif %}
         {% endfor %}
@@ -52,7 +52,7 @@
             <div>
                 <p>Rank 3</p>
                 <img src="/static/assets/3.webp" alt="Logo">
-                <p class="{% if score[0] == current_user %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
+                <p class="{% if score[0] == username %}highlight{% endif %}">{{ score[0] }}: {{ score[1] }}</p>
             </div>
             {% endif %}
         {% endfor %}
@@ -66,7 +66,7 @@
         </tr>
         {% for score in scores %}
             {% if loop.index >= 4 %}
-                <tr class="{% if score[0] == current_user %}highlight{% endif %}">
+                <tr class="{% if score[0] == username %}highlight{% endif %}">
                     <td>{{ loop.index }}</td>
                     <td>{{ score[0] }}</td>
                     <td>{{ score[1] }}</td>
