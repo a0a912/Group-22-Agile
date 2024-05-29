@@ -10,7 +10,7 @@ let isPaused = false; // Initialize timeLeft outside the function for global acc
 const sound_track = new Audio('static/Endless/soundtrack.mp3');
 sound_track.volume = 0.1;
 
-const correct_sound = new Audio('/static/endless/correct.mp3');
+const correct_sound = new Audio('static/Endless/correct.mp3');
 
 
 function resetAnswer() {
